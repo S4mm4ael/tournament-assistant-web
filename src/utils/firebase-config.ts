@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from '@firebase/firestore';
+import { collection, CollectionReference, DocumentData } from 'firebase/firestore';
+import { User } from 'types/User';
 
 const firebaseConfig = {
   apiKey: `${process.env.REACT_APP_API_KEY}`,
@@ -14,3 +16,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 export const db = getFirestore(app);
+
+const createCollection = <T = DocumentData>(collectionName: string) => {
+  return collection(db, collectionName) as CollectionReference<T>;
+};
+
+export const usersCol = createCollection<User>('users');

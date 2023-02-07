@@ -1,1 +1,1 @@
-export { UsersList } from './users-list.js';
+export { UsersList } from './users-list';
