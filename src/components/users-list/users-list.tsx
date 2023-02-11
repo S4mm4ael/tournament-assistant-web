@@ -7,30 +7,23 @@ export function UsersList() {
   const [users, setUsers] = useState<Array<User>>([]);
 
   useEffect(() => {
-    const getUsers = async () => {
+    (async () => {
       const usersDocs = await getDocs(usersCol);
-      usersDocs.docs.forEach((userDoc) => {
-        const user = userDoc.data();
-        setUsers((prevState) => [...prevState, user]);
-      });
-    };
-    getUsers();
+      setUsers(usersDocs.docs.map((userDoc) => userDoc.data()));
+    })();
   }, []);
+
   return (
     <div>
       <h1>Users:</h1>
-      {users &&
-        users.map((user) => {
-          return (
-            <div key={user.id}>
-              <ul>
-                <li>Name: {user.nickname}</li>
-                <li>Rating: {user.elo}</li>
-              </ul>
-              <br />
-            </div>
-          );
-        })}
+      {users.map((user) => (
+        <div key={user.id}>
+          <ul>
+            <li>Name: {user.nickname}</li>
+            <li>Rating: {user.elo}</li>
+          </ul>
+        </div>
+      ))}
     </div>
   );
 }
