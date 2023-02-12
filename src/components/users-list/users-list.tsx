@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { usersCol } from '../../utils/firebase-config';
 import { getDocs } from 'firebase/firestore';
-import { UserType } from 'types/User';
+import { UserType } from 'types/User.type';
 import styles from './users-list.module.css';
 import { User } from 'components/user';
 

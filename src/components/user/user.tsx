@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserType } from 'types/User';
+import { UserType } from 'types/User.type';
 import styles from './user.module.css';
 
 export function User(props: UserType) {

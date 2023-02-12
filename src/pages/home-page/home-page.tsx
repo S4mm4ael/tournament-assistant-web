@@ -1,12 +1,12 @@
 import { UsersList } from 'components/users-list';
-import { TournamentsList } from 'components/tournaments-list';
+import { EventsList } from 'components/events-list';
 import React from 'react';
 
 export function HomePage() {
   return (
-    <div>
+    <div className="MainPage">
       <UsersList />
-      <TournamentsList />
+      <EventsList />
     </div>
   );
 }
