@@ -5,11 +5,11 @@
 }
 body {
   margin: 0;
-  font-family: sans-serif ;
+  font-family: 'Roboto', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 1rem;
-  font-family: 'Roboto', sans-serif;
+
   min-height: 100vh;
 }
 
@@ -18,13 +18,13 @@ code {
 }
 
 a{
-  color: white;
+  color: rgb(0, 0, 0);
   text-decoration: none;
   font-weight: 400;
   transition: 0.3s;
 }
 a:hover{
-  color: red;
+  color: #ff0000;
 }
 main{
   display: flex;
@@ -43,7 +43,5 @@ list-style: none;
   background: rgb(233,229,231);
   background: linear-gradient(180deg, rgba(233,229,231,1) 0%, rgba(56,81,94,0.8127626050420168) 83%);
 }
-.MainPage{
-  display: flex;
-  justify-content: space-around;
-}
+
+

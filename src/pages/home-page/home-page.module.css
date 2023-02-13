@@ -1,0 +1,8 @@
+.MainPage{
+  display: flex;
+  justify-content: space-around;
+  min-height: calc(100vh - 100px - 110px);
+  overflow-y: scroll;
+  padding: 20px 0;
+  max-height: 100%;
+}

@@ -1,0 +1,20 @@
+.Footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1110px;
+  margin: 0 auto;
+  color: black;
+  height: 40px;
+  padding: 10px 20px;
+  font-weight: 700;
+  border-top: 1px solid #808080;
+}
+.Footer__socialListItem{
+  cursor: pointer;
+  transition: .3s;
+}
+.Footer__socialListItem:hover{
+  transform: scale(1.1);
+  filter: invert(24%) sepia(66%) saturate(7472%) hue-rotate(354deg) brightness(90%) contrast(126%);
+}
