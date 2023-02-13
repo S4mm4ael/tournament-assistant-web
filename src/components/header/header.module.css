@@ -15,7 +15,15 @@
   font-weight: 700;
 }
 .Header__text span{
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   color: rgb(125, 125, 125);
+}
+@media screen and (max-width:768px){
+  .Header__text{
+    font-size: 20px;
+  }
+  .Header__text span{
+    font-size: 12px;
+  }
 }
