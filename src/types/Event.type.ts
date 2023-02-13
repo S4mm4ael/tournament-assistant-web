@@ -2,7 +2,7 @@ export type EventType = {
   date: Date;
   description?: string | null;
   elo: number;
-  id?: string;
+  id: string;
   name: string;
   pts: number;
   tours: number;

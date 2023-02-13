@@ -19,6 +19,7 @@ export function EventsList() {
     return events.map((event: EventType) => (
       <Event
         key={event.id}
+        id={event.id}
         elo={event.elo}
         date={event.date}
         name={event.name}
