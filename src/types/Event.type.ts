@@ -7,7 +7,7 @@ export type EventType = {
   pts: number;
   tours: number;
   type: string;
-  players?: PlayerType[] | null;
+  players?: PlayerType[];
   tour1?: string[][];
 };
 

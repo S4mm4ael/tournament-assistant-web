@@ -7,7 +7,7 @@ import styles from './event-page.module.css';
 export function EventPage() {
   const [events, setEvents] = useState<Array<EventType>>([]);
   const [event, setEvent] = useState<EventType>();
-  const [players, setPlayers] = useState<Array<PlayerType> | null | undefined>([]);
+  const [players, setPlayers] = useState<Array<PlayerType>>([]);
 
   useEffect(() => {
     (async () => {
@@ -25,12 +25,24 @@ export function EventPage() {
   }, [events]);
 
   useEffect(() => {
-    if (event?.players) {
-      () => {
-        setPlayers(event?.players);
-      };
+    if (event?.players != undefined) {
+      setPlayers(event.players);
     }
   }, [event, players]);
+
+  function renderPlayers() {
+    return players
+      .sort((a, b) => b.to - a.to || b.toOpponents - a.toOpponents || b.vp - a.vp)
+      .map((player, index) => (
+        <tr key={player.id}>
+          <td>{index + 1}</td>
+          <td>{player.name}</td>
+          <td>{player.to}</td>
+          <td>{player.toOpponents}</td>
+          <td>{player.vp}</td>
+        </tr>
+      ));
+  }
 
   return event ? (
     <div className={styles.EventPage}>
@@ -62,10 +74,13 @@ export function EventPage() {
               <td>VP</td>
             </tr>
           </thead>
+          <tbody>{renderPlayers()}</tbody>
         </table>
       </div>
     </div>
   ) : (
-    <h1> Error </h1>
+    <div className={styles.EventPage}>
+      <h1> Loading... </h1>
+    </div>
   );
 }
