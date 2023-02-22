@@ -1,0 +1,29 @@
+.Header{
+  max-width: 1110px;
+  margin: 0 auto;
+  color: black;
+  height: 80px;
+  padding: 10px 20px;
+  border-bottom: 1px solid #808080;
+}
+.Header__logo{
+  display: flex;
+  align-items: center;
+}
+.Header__text{
+  font-size: 24px;
+  font-weight: 700;
+}
+.Header__text span{
+  font-size: 16px;
+  font-weight: 400;
+  color: rgb(125, 125, 125);
+}
+@media screen and (max-width:768px){
+  .Header__text{
+    font-size: 20px;
+  }
+  .Header__text span{
+    font-size: 12px;
+  }
+}
