@@ -1,3 +1,5 @@
+import { PairingType } from './Pairings.type';
+
 export type EventType = {
   date: Date;
   description?: string | null;
@@ -8,7 +10,9 @@ export type EventType = {
   tours: number;
   type: string;
   players?: PlayerType[];
-  tour1?: string[][];
+  tour1?: PairingType[];
+  tour2?: PairingType[];
+  tour3?: PairingType[];
 };
 
 export type PlayerType = {
