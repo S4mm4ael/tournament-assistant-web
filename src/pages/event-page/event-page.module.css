@@ -12,6 +12,11 @@
 .EventPage__info p{
   max-width: 1110px;
 }
+.EventPage__playersAndPairings{
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
 .EventPage__info,
 .EventPage__infoFormat
 {
@@ -30,6 +35,7 @@
 }
 .EventPage__table {
   font-size: 20px;
+  margin: 0 auto;
 }
 .EventPage__table td{
   width: 200px;
@@ -41,4 +47,13 @@
 .EventPage__table tr{
   height: 40px;
 }
+.EventPage__toursHeader{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin:  0 auto;
+  font-weight: 700;
+  font-size: 24px;
+  border: none;
 
+}
