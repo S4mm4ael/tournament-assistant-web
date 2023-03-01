@@ -32,7 +32,7 @@ export function EventsList() {
 
   return (
     <section className={styles.EventsList}>
-      <h2>Events:</h2>
+      <h2 className={styles.EventsList__title}>Events</h2>
       <ul className={styles.EventsList__list}>{renderEvent()}</ul>
     </section>
   );
