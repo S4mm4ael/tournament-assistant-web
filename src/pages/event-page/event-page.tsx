@@ -3,7 +3,6 @@ import { getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { eventsCol } from 'utils/firebase-config';
 import styles from './event-page.module.css';
-import { PairingType } from 'types/Pairings.type';
 import { Link } from 'react-router-dom';
 import { PairingTable } from 'components/pairing-table';
 
@@ -42,11 +41,11 @@ export function EventPage() {
         .sort((a, b) => b.to - a.to || b.toOpponents - a.toOpponents || b.vp - a.vp)
         .map((player, index) => (
           <tr key={player.id}>
-            <td>{index + 1}</td>
-            <td>{player.name}</td>
-            <td>{player.to}</td>
-            <td>{player.toOpponents}</td>
-            <td>{player.vp}</td>
+            <td className={styles.EventPage__tablePoints}>{index + 1}</td>
+            <td className={styles.EventPage__tableNames}>{player.name}</td>
+            <td className={styles.EventPage__tablePoints}>{player.to}</td>
+            <td className={styles.EventPage__tablePoints}>{player.toOpponents}</td>
+            <td className={styles.EventPage__tablePoints}>{player.vp}</td>
           </tr>
         ))
     );
@@ -79,23 +78,28 @@ export function EventPage() {
         </div>
         <div className={styles.EventPage__playersAndPairings}>
           <div className={styles.EventPage__players}>
-            <h3>Standings:</h3>
+            <div className={styles.EventPage__title}>
+              <h3>Standings:</h3>
+            </div>
+
             <table className={styles.EventPage__table} border={2} cellSpacing={2} cellPadding={1}>
               <thead>
                 <tr>
-                  <td>Position</td>
-                  <td>Player</td>
-                  <td>TO</td>
-                  <td>TO opponents</td>
-                  <td>VP</td>
+                  <td className={styles.EventPage__tablePoints}>Position</td>
+                  <td className={styles.EventPage__tableNames}>Player</td>
+                  <td className={styles.EventPage__tablePoints}>TO</td>
+                  <td className={styles.EventPage__tablePoints}>TO opponents</td>
+                  <td className={styles.EventPage__tablePoints}>VP</td>
                 </tr>
               </thead>
               <tbody>{renderPlayers()}</tbody>
             </table>
           </div>
           <div className={styles.EventPage__pairings}>
-            <h3>Pairings:</h3>
-            <PairingTable eventP={event} />
+            <div className={styles.EventPage__title}>
+              <h3>Pairings:</h3>
+            </div>
+            <PairingTable eventP={event} playersP={players} />
           </div>
         </div>
       </div>
