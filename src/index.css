@@ -43,5 +43,12 @@ list-style: none;
   background: rgb(233,229,231);
   background: linear-gradient(180deg, rgba(233,229,231,1) 0%, rgba(56,81,94,0.8127626050420168) 83%);
 }
-
+.breadCrumbs{
+  max-width: 1110px;
+  padding: 20px;
+  margin: 0 auto;
+}
+.backButton{
+  font-size: 1.3rem;
+}
 

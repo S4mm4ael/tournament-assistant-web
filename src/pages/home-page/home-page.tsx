@@ -20,10 +20,10 @@ export function HomePage() {
         modules={[Navigation, Pagination]}
       >
         <SwiperSlide className={styles.MainPage__slide}>
-          <UsersList />
+          <EventsList />
         </SwiperSlide>
         <SwiperSlide className={styles.MainPage__slide}>
-          <EventsList />
+          <UsersList />
         </SwiperSlide>
       </Swiper>
     </div>
