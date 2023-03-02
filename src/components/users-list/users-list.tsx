@@ -30,7 +30,7 @@ export function UsersList() {
 
   return (
     <div className={styles.UsersList}>
-      <h2>Users:</h2>
+      <h2 className={styles.UsersList__title}>Users</h2>
       <ul className={styles.UsersList__list}>{renderUser()}</ul>
     </div>
   );

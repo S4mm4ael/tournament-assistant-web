@@ -3,3 +3,8 @@
   flex-direction: column;
   gap: 10px;
 }
+.EventsList__title{
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
