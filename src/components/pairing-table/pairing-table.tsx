@@ -17,6 +17,7 @@ type EventProps = {
 export function PairingTable({ eventP, playersP }: EventProps) {
   const event = eventP;
   const players = playersP;
+  const tours = [1, 2, 3];
   function renderTour(tourNumber: number) {
     let tour: undefined | PairingType[];
     switch (tourNumber) {
@@ -60,18 +61,6 @@ export function PairingTable({ eventP, playersP }: EventProps) {
 
   return (
     <>
-      <table className={styles.EventPage__table} border={2} cellSpacing={2} cellPadding={1}>
-        <thead>
-          <tr>
-            <td className={styles.EventPage__tableNames}>Player1</td>
-            <td className={styles.EventPage__tablePoints}>Player1 TO</td>
-            <td className={styles.EventPage__tablePoints}>Player1 VP</td>
-            <td className={styles.EventPage__tablePoints}>Player2 VP</td>
-            <td className={styles.EventPage__tablePoints}>Player2 TO</td>
-            <td className={styles.EventPage__tableNames}>Player2</td>
-          </tr>
-        </thead>
-      </table>
       <div className={styles.EventPage__swiperContainer}>
         <Swiper
           pagination={true}
@@ -79,31 +68,34 @@ export function PairingTable({ eventP, playersP }: EventProps) {
           navigation={true}
           modules={[Navigation, Pagination]}
         >
-          <SwiperSlide className={styles.EventPage__slide}>
-            <div className={styles.EventPage__title}>
-              <h3>Tour 1</h3>
-            </div>
+          {tours.map((index) => {
+            return (
+              <SwiperSlide key={Math.random()} className={styles.EventPage__slide}>
+                <div className={styles.EventPage__title}>
+                  <h3>Tour {index}</h3>
+                </div>
 
-            <table className={styles.EventPage__table} border={2} cellSpacing={2} cellPadding={1}>
-              {renderTour(1)}
-            </table>
-          </SwiperSlide>
-          <SwiperSlide className={styles.EventPage__slide}>
-            <div className={styles.EventPage__title}>
-              <h3>Tour 2</h3>
-            </div>
-            <table className={styles.EventPage__table} border={2} cellSpacing={2} cellPadding={1}>
-              {renderTour(2)}
-            </table>
-          </SwiperSlide>
-          <SwiperSlide className={styles.EventPage__slide}>
-            <div className={styles.EventPage__title}>
-              <h3>Tour 3</h3>
-            </div>
-            <table className={styles.EventPage__table} border={2} cellSpacing={2} cellPadding={1}>
-              {renderTour(3)}
-            </table>
-          </SwiperSlide>
+                <table
+                  className={styles.EventPage__table}
+                  border={2}
+                  cellSpacing={2}
+                  cellPadding={1}
+                >
+                  <thead>
+                    <tr>
+                      <td className={styles.EventPage__tableNames}>Player1</td>
+                      <td className={styles.EventPage__tablePoints}>Player1 TO</td>
+                      <td className={styles.EventPage__tablePoints}>Player1 VP</td>
+                      <td className={styles.EventPage__tablePoints}>Player2 VP</td>
+                      <td className={styles.EventPage__tablePoints}>Player2 TO</td>
+                      <td className={styles.EventPage__tableNames}>Player2</td>
+                    </tr>
+                  </thead>
+                  <tbody>{renderTour(index)}</tbody>
+                </table>
+              </SwiperSlide>
+            );
+          })}
         </Swiper>
       </div>
     </>

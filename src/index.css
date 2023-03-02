@@ -51,4 +51,8 @@ list-style: none;
 .backButton{
   font-size: 1.3rem;
 }
+.swiper-pagination{
+  position: relative !important;
+  margin-top: 20px;
 
+}

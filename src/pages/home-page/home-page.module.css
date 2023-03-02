@@ -17,5 +17,10 @@
 .MainPage__slide{
   display: flex;
   justify-content: center;
-
+}
+.MainPage__swiperContainer{
+  display: flex;
+  margin: auto 0;
+  height: 100%;
+  width: 100%;
 }

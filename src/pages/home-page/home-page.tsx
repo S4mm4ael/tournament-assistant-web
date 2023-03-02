@@ -13,19 +13,21 @@ import styles from './home-page.module.css';
 export function HomePage() {
   return (
     <div className={styles.MainPage}>
-      <Swiper
-        pagination={true}
-        slidesPerView={1}
-        navigation={true}
-        modules={[Navigation, Pagination]}
-      >
-        <SwiperSlide className={styles.MainPage__slide}>
-          <EventsList />
-        </SwiperSlide>
-        <SwiperSlide className={styles.MainPage__slide}>
-          <UsersList />
-        </SwiperSlide>
-      </Swiper>
+      <div className={styles.MainPage__swiperContainer}>
+        <Swiper
+          pagination={true}
+          slidesPerView={1}
+          navigation={true}
+          modules={[Navigation, Pagination]}
+        >
+          <SwiperSlide className={styles.MainPage__slide}>
+            <EventsList />
+          </SwiperSlide>
+          <SwiperSlide className={styles.MainPage__slide}>
+            <UsersList />
+          </SwiperSlide>
+        </Swiper>
+      </div>
     </div>
   );
 }

@@ -45,3 +45,8 @@
   margin: 0 auto;
   margin-top: 10px;
 }
+@media screen and (max-width:450px){
+  .EventPage__table{
+    font-size: 14px;
+  }
+}
