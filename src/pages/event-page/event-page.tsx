@@ -35,17 +35,63 @@ export function EventPage() {
   }, [event, players]);
 
   function renderPlayers() {
+    function defineColors(place: number) {
+      const colors = ['#ffDE03', '#E0E0E0', '#F57C00'];
+      let color: string;
+      switch (place) {
+        case 0:
+          color = colors[0];
+          break;
+        case 1:
+          color = colors[1];
+          break;
+
+        case 2:
+          color = colors[2];
+          break;
+        default:
+          color = 'none';
+          break;
+      }
+      return color;
+    }
+
     return (
       players &&
       players
         .sort((a, b) => b.to - a.to || b.toOpponents - a.toOpponents || b.vp - a.vp)
         .map((player, index) => (
           <tr key={player.id}>
-            <td className={styles.EventPage__tablePoints}>{index + 1}</td>
-            <td className={styles.EventPage__tableNames}>{player.name}</td>
-            <td className={styles.EventPage__tablePoints}>{player.to}</td>
-            <td className={styles.EventPage__tablePoints}>{player.toOpponents}</td>
-            <td className={styles.EventPage__tablePoints}>{player.vp}</td>
+            <td
+              style={{ backgroundColor: defineColors(index) }}
+              className={styles.EventPage__tablePoints}
+            >
+              {index + 1}
+            </td>
+            <td
+              style={{ backgroundColor: defineColors(index) }}
+              className={styles.EventPage__tableNames}
+            >
+              {player.name}
+            </td>
+            <td
+              style={{ backgroundColor: defineColors(index) }}
+              className={styles.EventPage__tablePoints}
+            >
+              {player.to}
+            </td>
+            <td
+              style={{ backgroundColor: defineColors(index) }}
+              className={styles.EventPage__tablePoints}
+            >
+              {player.toOpponents}
+            </td>
+            <td
+              style={{ backgroundColor: defineColors(index) }}
+              className={styles.EventPage__tablePoints}
+            >
+              {player.vp}
+            </td>
           </tr>
         ))
     );
