@@ -14,10 +14,8 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/event/:eventId" element={<EventPage />} />
-        </Route>
-        <Route>
           <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/event/:eventId" element={<EventPage />} />
         </Route>
       </Routes>
     </div>
