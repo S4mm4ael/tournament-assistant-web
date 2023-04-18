@@ -7,7 +7,7 @@ import styles from './header.module.css';
 
 export function Header() {
   return (
-    <footer>
+    <header>
       <div className={styles.Header}>
         <Link className={styles.Header__logo} to="/">
           <img className={styles.Header__img} src={logo} alt="logo" height="80px" />
@@ -15,7 +15,15 @@ export function Header() {
             Tournament assistant <span>web</span>
           </p>
         </Link>
+        <div className={styles.Header__linkContainer}>
+          <Link className={styles.Header__link} to={'/registration'}>
+            Sign up
+          </Link>
+          <Link className={styles.Header__link} to={'/login'}>
+            Sign in
+          </Link>
+        </div>
       </div>
-    </footer>
+    </header>
   );
 }
