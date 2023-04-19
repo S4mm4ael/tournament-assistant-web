@@ -1,4 +1,4 @@
-.Header{
+.Header {
   display: flex;
   max-width: 1110px;
   margin: 0 auto;
@@ -9,29 +9,42 @@
   align-items: center;
   justify-content: space-between;
 }
-.Header__logo{
+
+.Header__link_button {
+  all: unset;
+  cursor: pointer;
+}
+
+.Header__logo {
   display: flex;
   align-items: center;
 }
-.Header__text{
+
+.Header__text {
   font-size: 24px;
   font-weight: 700;
 }
-.Header__text span{
+
+.Header__text span {
   font-size: 16px;
   font-weight: 400;
   color: rgb(125, 125, 125);
 }
-.Header__link{
+
+.Header__link {
   font-size: 14px;
   font-weight: 600;
   padding: 0 10px;
 }
-@media screen and (max-width:768px){
-  .Header__text{
+
+
+
+@media screen and (max-width: 768px) {
+  .Header__text {
     font-size: 20px;
   }
-  .Header__text span{
+
+  .Header__text span {
     font-size: 12px;
   }
 }
