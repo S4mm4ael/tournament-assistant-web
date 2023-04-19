@@ -3,7 +3,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 export interface AuthRouteProps {
-  children?: string;
+  children?: JSX.Element;
 }
 
 export function AuthRoute(props: AuthRouteProps) {
