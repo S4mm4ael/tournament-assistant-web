@@ -1,13 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": [
-      "dom",
-      "esnext",
-      "dom.iterable",
-      "es5",
-      "es6"
-    ],
+    "lib": ["dom", "esnext", "dom.iterable", "es5", "es6"],
     "jsx": "react",
     "module": "esnext",
     "moduleResolution": "node",
@@ -19,10 +13,7 @@
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": "./src",
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
-  "include": [
-    "./src/**/*",
-    "styled.d.ts"
-  ]
+  "include": ["./src/**/*", "styled.d.ts"]
 }

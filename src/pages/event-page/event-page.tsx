@@ -16,7 +16,7 @@ export function EventPage() {
       const eventsDocs = await getDocs(eventsCol);
       setEvents(eventsDocs.docs.map((eventDoc) => eventDoc.data()));
     })();
-  }, []);
+  });
 
   useEffect(() => {
     const id = window.location.href.slice(-8);
