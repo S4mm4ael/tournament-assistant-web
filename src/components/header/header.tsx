@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 
 import logo from '../../assets/png/logo.png';
@@ -8,7 +8,7 @@ import styles from './header.module.css';
 
 export function Header() {
   const auth = getAuth();
-
+  const navigate = useNavigate();
   return (
     <header>
       <div className={styles.Header}>
@@ -31,10 +31,11 @@ export function Header() {
             onClick={() => {
               signOut(auth)
                 .then(() => {
-                  // Sign-out successful.
+                  navigate('/login');
+                  localStorage.removeItem('user');
                 })
                 .catch((error) => {
-                  // An error happened.
+                  console.log(error);
                 });
             }}
           >

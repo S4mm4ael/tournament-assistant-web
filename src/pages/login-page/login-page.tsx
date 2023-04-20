@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { GoogleAuthProvider, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { Navigate, useNavigate } from 'react-router-dom';
+
+import styles from './login-page.module.css';
 
 export function LoginPage() {
   const auth = getAuth();
@@ -26,11 +28,11 @@ export function LoginPage() {
   }
 
   return (
-    <>
-      <h1>Login page</h1>;
+    <div className={styles.LoginPage}>
+      <h1>Login</h1>
       <button type="button" onClick={() => signInWithPassword()} disabled={authing}>
         Sign in with Email and Password
       </button>
-    </>
+    </div>
   );
 }
