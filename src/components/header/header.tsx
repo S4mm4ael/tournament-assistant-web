@@ -9,6 +9,8 @@ import styles from './header.module.css';
 export function Header() {
   const auth = getAuth();
   const navigate = useNavigate();
+  const user = localStorage.getItem('user');
+
   return (
     <header>
       <div className={styles.Header}>
@@ -25,22 +27,24 @@ export function Header() {
           <Link className={styles.Header__link} to={'/login'}>
             Sign in
           </Link>
-          <button
-            type="button"
-            className={`${styles.Header__link} ${styles.Header__link_button}`}
-            onClick={() => {
-              signOut(auth)
-                .then(() => {
-                  navigate('/login');
-                  localStorage.removeItem('user');
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-            }}
-          >
-            Sign out
-          </button>
+          {user && (
+            <button
+              type="button"
+              className={`${styles.Header__link} ${styles.Header__link_button}`}
+              onClick={() => {
+                signOut(auth)
+                  .then(() => {
+                    navigate('/');
+                    localStorage.removeItem('user');
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              }}
+            >
+              Sign out
+            </button>
+          )}
         </div>
       </div>
     </header>
