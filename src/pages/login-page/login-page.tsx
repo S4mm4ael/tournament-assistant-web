@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import styles from './login-page.module.css';
 
@@ -65,7 +65,7 @@ export function LoginPage() {
           Login
         </button>
       </form>
-      {errorMessage && <p>{errorMessage}</p>}
+      {errorMessage && <p>Sorry, {errorMessage.slice(22).slice(0, -2).replace(/-/g, ' ')}</p>}
       <Link className={styles.LoginPage__registrationLink} to="/registration">
         Registration
       </Link>
