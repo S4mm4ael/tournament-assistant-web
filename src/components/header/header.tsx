@@ -21,12 +21,17 @@ export function Header() {
           </p>
         </Link>
         <div className={styles.Header__linkContainer}>
-          <Link className={styles.Header__link} to={'/registration'}>
-            Sign up
-          </Link>
-          <Link className={styles.Header__link} to={'/login'}>
-            Sign in
-          </Link>
+          {!user && (
+            <>
+              <Link className={styles.Header__link} to={'/registration'}>
+                Sign up
+              </Link>
+              <Link className={styles.Header__link} to={'/login'}>
+                Sign in
+              </Link>
+            </>
+          )}
+
           {user && (
             <button
               type="button"
