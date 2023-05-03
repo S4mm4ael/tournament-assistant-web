@@ -4,6 +4,13 @@ import { Route, Routes } from 'react-router-dom';
 import { UserType } from 'types/User.type';
 import { PlayerType } from 'types/Event.type';
 
+// export type PairType = {
+//   player1: PlayerType;
+//   player2: PlayerType;
+//   table: number;
+// };
+
+
 export function Pairings() {
   const startPlayersArray: UserType[] = [
     {
@@ -35,12 +42,19 @@ export function Pairings() {
       nickname: 'Maxim',
     },
   ];
+
+  // To DO - wtf with endless hook 
   const [players, setPlayers] = useState<PlayerType[] | []>([])
+
+
   function makePairings(tour: number) {
     switch (tour) {
       case 1:
-        console.log('firstTurnPairings')
-        randomizePairs(createPlayersArrayForPairings())
+        // setPlayers()
+        // submitResults()
+
+        break;
+      case 2:
         break;
 
       default:
@@ -64,18 +78,31 @@ export function Pairings() {
     })
     return playersArrayForPairings
   }
-  function randomizePairs(players: PlayerType[]) {
-
+  function randomizePairs(players: PairType[]) {
+    const firstTourStandings: PlayerType[] = []
+    let table = 1;
     while (players.length) {
       let player1 = players.splice((Math.random() * 1000) % players.length, 1)
       let player2 = players.splice((Math.random() * 1000) % players.length, 1)
 
-      console.log(`${player1[0].name} -- ${player2[0].name}`)
+      const pair: PairType = {
+        player1: player1[0],
+        player2: player2[0],
+        table: table,
+      }
+
+      table++
+
+      firstTourStandings.push(pair)
+
     }
+    console.log(firstTourStandings)
+
   }
   useEffect(() => {
     function onRender() {
-      makePairings(1)
+      console.log('firstTurnPairings')
+      randomizePairs(createPlayersArrayForPairings())
     }
     onRender()
   })
