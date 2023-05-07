@@ -60,6 +60,7 @@ export function Pairings() {
 
   // To DO - wtf with endless hook 
   const [players, setPlayers] = useState<PlayerType[] | []>([])
+  const [pairs, setPairs] = useState<PairType[] | []>([])
 
 
   function makePairings(tour: number) {
@@ -111,23 +112,72 @@ export function Pairings() {
       firstTourStandings.push(pair)
 
     }
-    console.log(firstTourStandings)
+    setPairs(firstTourStandings)
 
   }
+  function resultSubmission() {
+    for (let i = 0; i < pairs.length; i++) {
+      let vp1 = '0'
+      let vp2 = '0'
+      prompt(`Enter pair ${i + 1} player 1 VP`, vp1)
+      prompt(`Enter pair ${i + 1} player 2 VP`, vp2)
+    }
+  }
+
+  function updatePair(vp1: number, vp2: number) {
+
+  }
+
+  const renderPlayers = () => {
+    return players.length > 0 ? players.map((player: PlayerType) => (
+      <p>{player.id} - {player.name}</p>
+    ))
+      : <p>There is no players</p>
+  };
+
+  const renderPairs = (tour?: number) => {
+    return pairs.length > 0 ? pairs.map((pair: PairType) => (
+      <div>
+        <p>{pair.player1.name} - {pair.player2.name}</p>
+        <p>Table: {pair.table}</p>
+      </div>
+    ))
+      : <p>There is no pairings</p>
+  };
+
+
+
+
   useEffect(() => {
     function onRender() {
       console.log('firstTurnPairings')
       randomizePairs(createPlayersArrayForPairings())
+      setPlayers(createPlayersArrayForPairings())
     }
     onRender()
-  })
+  }, [])
+
+
+  useEffect(() => {
+    if (pairs.length) {
+
+      resultSubmission()
+    }
+  }, [pairs])
 
 
 
 
   return (
     <div >
-      <h2>Test Pairings</h2>
+      <>
+        <h2>Test Pairings</h2>
+        { renderPlayers()}
+        <br />
+        <h3>First tour pairings</h3>
+        { renderPairs()}
+      </>
+
 
 
     </div>
