@@ -1,8 +1,16 @@
+import { PlayerType } from './Event.type';
+
 export type PairingType = {
   players: string[];
   toRes: number[];
   vpRes: number[];
 };
+
+export type PairType = {
+  player1: PlayerType;
+  player2: PlayerType;
+  table: number;
+}
 
 // const tour1: PairingType[] = [
 //   {

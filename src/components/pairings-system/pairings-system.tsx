@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { UserType } from 'types/User.type';
 import { PlayerType } from 'types/Event.type';
+import { PairType } from 'types/Pairings.type';
 
 // export type PairType = {
 //   player1: PlayerType;
@@ -41,6 +42,20 @@ export function Pairings() {
       lastname: 'Bokov',
       nickname: 'Maxim',
     },
+    {
+      id: '5',
+      elo: 1400,
+      firstname: 'Floppy',
+      lastname: 'Floppy',
+      nickname: 'Floppy',
+    },
+    {
+      id: '6',
+      elo: 2000,
+      firstname: 'Dima',
+      lastname: 'Senchenko',
+      nickname: 'Dima',
+    },
   ];
 
   // To DO - wtf with endless hook 
@@ -78,8 +93,8 @@ export function Pairings() {
     })
     return playersArrayForPairings
   }
-  function randomizePairs(players: PairType[]) {
-    const firstTourStandings: PlayerType[] = []
+  function randomizePairs(players: PlayerType[]) {
+    const firstTourStandings: PairType[] = []
     let table = 1;
     while (players.length) {
       let player1 = players.splice((Math.random() * 1000) % players.length, 1)
