@@ -116,12 +116,23 @@ export function Pairings() {
 
   }
   function resultSubmission() {
+
+    const pairsArray = pairs;
+
     for (let i = 0; i < pairs.length; i++) {
-      let vp1 = '0'
-      let vp2 = '0'
+      let vp1 = ''
+      let vp2 = ''
       prompt(`Enter pair ${i + 1} player 1 VP`, vp1)
       prompt(`Enter pair ${i + 1} player 2 VP`, vp2)
+
+      pairsArray[i].player1.vp = +vp1;
+      pairsArray[i].player2.vp = +vp2;
+
+      if (i === 2) {
+        console.log(pairsArray)
+      }
     }
+    //updatePair(+vp1, +vp2)
   }
 
   function updatePair(vp1: number, vp2: number) {
