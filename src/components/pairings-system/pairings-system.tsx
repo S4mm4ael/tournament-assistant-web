@@ -130,10 +130,16 @@ export function Pairings() {
         <form className={styles.PairingsPage__pairForm} onSubmit={(event) => submitPairResult(event, pair.player1.id, pair.player2.id, pair.table)}>
           <b>
             {pair.player1.name}</b>
-          <input type="number" min='0' max='100' name={`${pair.player1.name} VP`} id={pair.player1.id} />
+          <input type="number" min='0' max='100' name={`${pair.player1.name} VP`} id={pair.player1.id}
+            onChange={(e) => {
+              setVpFirstPlayer(+e.target.value)
+            }} />
           <b>
             {pair.player2.name}</b>
-          <input type="number" min='0' max='100' name={`${pair.player2.name} VP`} id={pair.player2.id} />
+          <input type="number" min='0' max='100' name={`${pair.player2.name} VP`} id={pair.player2.id}
+            onChange={(e) => {
+              setVpSecondPlayer(+e.target.value)
+            }} />
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -143,20 +149,35 @@ export function Pairings() {
 
   function submitPairResult(event: React.FormEvent<HTMLFormElement>, id1: string, id2: string, table: number) {
     event.preventDefault()
-    const vp1 = (document.getElementById(id1) as HTMLInputElement)?.value
-    const vp2 = (document.getElementById(id2) as HTMLInputElement)?.value
-    setVpFirstPlayer(+vp1)
-    setVpSecondPlayer(+vp2)
-
+    // const vp1 = (document.getElementById(id1) as HTMLInputElement)?.value
+    // const vp2 = (document.getElementById(id2) as HTMLInputElement)?.value
+    // setVpFirstPlayer(+vp1)
+    // setVpSecondPlayer(+vp2)
     updatePair(table)
   }
 
   function updatePair(table: number) {
-    const pairArrayToUpdate = pairs
-    const updatePair = pairArrayToUpdate.find(pair => pair.table == table)
-    updatePair?.player1.vp = vpFirstPlayer
-    updatePair?.player2.vp = vpSecondPlayer
-    console.log(updatePair)
+    let pairArrayToUpdate = pairs
+    let player1 = pairArrayToUpdate[table - 1].player1
+    let player2 = pairArrayToUpdate[table - 1].player2
+    if (vpFirstPlayer && vpSecondPlayer) {
+      player1.vp = vpFirstPlayer
+      player2.vp = vpSecondPlayer
+      console.log('Succesfully updated pair ', table)
+      console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
+      setVpFirstPlayer(-1)
+      setVpSecondPlayer(-1)
+      setPairs(pairArrayToUpdate)
+      console.log(pairs)
+    }
+    // TODO WTF with state update
+    else {
+      alert('Check VP inputs first!')
+    }
+    // const updatePair = pairArrayToUpdate.find(pair => pair.table == table)
+    // updatePair?.player1.vp = vpFirstPlayer
+    // updatePair?.player2.vp = vpSecondPlayer
+    // console.log(updatePair)
   }
 
 
