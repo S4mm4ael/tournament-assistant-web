@@ -5,11 +5,8 @@ import { UserType } from 'types/User.type';
 import { PlayerType } from 'types/Event.type';
 import { PairType } from 'types/Pairings.type';
 
-// export type PairType = {
-//   player1: PlayerType;
-//   player2: PlayerType;
-//   table: number;
-// };
+import styles from './pairings.module.css';
+import { SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
 
 
 export function Pairings() {
@@ -58,9 +55,10 @@ export function Pairings() {
     },
   ];
 
-  // To DO - wtf with endless hook 
   const [players, setPlayers] = useState<PlayerType[] | []>([])
   const [pairs, setPairs] = useState<PairType[] | []>([])
+  const [vpFirstPlayer, setVpFirstPlayer] = useState<number>()
+  const [vpSecondPlayer, setVpSecondPlayer] = useState<number>()
 
 
   function makePairings(tour: number) {
@@ -113,55 +111,57 @@ export function Pairings() {
 
     }
     setPairs(firstTourStandings)
-
-  }
-  function resultSubmission() {
-
-    const pairsArray = pairs;
-
-    for (let i = 0; i < pairs.length; i++) {
-      let vp1 = ''
-      let vp2 = ''
-      prompt(`Enter pair ${i + 1} player 1 VP`, vp1)
-      prompt(`Enter pair ${i + 1} player 2 VP`, vp2)
-
-      pairsArray[i].player1.vp = +vp1;
-      pairsArray[i].player2.vp = +vp2;
-
-      if (i === 2) {
-        console.log(pairsArray)
-      }
-    }
-    //updatePair(+vp1, +vp2)
   }
 
-  function updatePair(vp1: number, vp2: number) {
 
-  }
+
 
   const renderPlayers = () => {
     return players.length > 0 ? players.map((player: PlayerType) => (
-      <p>{player.id} - {player.name}</p>
+      <p>ID:{player.id} - <b>{player.name}</b> - VP:{player.vp}</p>
     ))
       : <p>There is no players</p>
   };
 
   const renderPairs = (tour?: number) => {
     return pairs.length > 0 ? pairs.map((pair: PairType) => (
-      <div>
-        <p>{pair.player1.name} - {pair.player2.name}</p>
+      <div className={styles.PairingsPage__pairCard}>
         <p>Table: {pair.table}</p>
+        <form className={styles.PairingsPage__pairForm} onSubmit={(event) => submitPairResult(event, pair.player1.id, pair.player2.id, pair.table)}>
+          <b>
+            {pair.player1.name}</b>
+          <input type="number" min='0' max='100' name={`${pair.player1.name} VP`} id={pair.player1.id} />
+          <b>
+            {pair.player2.name}</b>
+          <input type="number" min='0' max='100' name={`${pair.player2.name} VP`} id={pair.player2.id} />
+          <button type="submit">Submit</button>
+        </form>
       </div>
     ))
       : <p>There is no pairings</p>
   };
 
+  function submitPairResult(event: React.FormEvent<HTMLFormElement>, id1: string, id2: string, table: number) {
+    event.preventDefault()
+    const vp1 = (document.getElementById(id1) as HTMLInputElement)?.value
+    const vp2 = (document.getElementById(id2) as HTMLInputElement)?.value
+    setVpFirstPlayer(+vp1)
+    setVpSecondPlayer(+vp2)
 
+    updatePair(table)
+  }
+
+  function updatePair(table: number) {
+    const pairArrayToUpdate = pairs
+    const updatePair = pairArrayToUpdate.find(pair => pair.table == table)
+    updatePair?.player1.vp = vpFirstPlayer
+    updatePair?.player2.vp = vpSecondPlayer
+    console.log(updatePair)
+  }
 
 
   useEffect(() => {
     function onRender() {
-      console.log('firstTurnPairings')
       randomizePairs(createPlayersArrayForPairings())
       setPlayers(createPlayersArrayForPairings())
     }
@@ -169,27 +169,19 @@ export function Pairings() {
   }, [])
 
 
-  useEffect(() => {
-    if (pairs.length) {
-
-      resultSubmission()
-    }
-  }, [pairs])
-
 
 
 
   return (
-    <div >
+    <div className={styles.PairingsPage}>
       <>
         <h2>Test Pairings</h2>
+        <h3>Players List</h3>
         { renderPlayers()}
         <br />
         <h3>First tour pairings</h3>
         { renderPairs()}
       </>
-
-
 
     </div>
   );

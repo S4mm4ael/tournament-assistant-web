@@ -1,0 +1,25 @@
+.PairingsPage{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  min-height: calc(100vh - 100px - 110px);
+  padding: 20px 0;
+  max-height: 100%;
+  max-width: 1110px;
+  margin: 0 auto;
+}
+.PairingsPage__pairCard{
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+  justify-content: space-around;
+  margin-bottom: 5px;
+  width: 340px;
+  padding: 10px;
+  border: 1px solid black;
+}
+.PairingsPage__pairForm{
+  display: flex;
+  justify-content:flex-start;
+  gap: 5px;
+}
