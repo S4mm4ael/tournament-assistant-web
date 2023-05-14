@@ -60,7 +60,6 @@ export function Pairings() {
   const [vpFirstPlayer, setVpFirstPlayer] = useState<number>()
   const [vpSecondPlayer, setVpSecondPlayer] = useState<number>()
 
-
   function makePairings(tour: number) {
     switch (tour) {
       case 1:
@@ -112,17 +111,12 @@ export function Pairings() {
     }
     setPairs(firstTourStandings)
   }
-
-
-
-
   const renderPlayers = () => {
     return players.length > 0 ? players.map((player: PlayerType) => (
       <p>ID:{player.id} - <b>{player.name}</b> - VP:{player.vp}</p>
     ))
       : <p>There is no players</p>
   };
-
   const renderPairs = (tour?: number) => {
     return pairs.length > 0 ? pairs.map((pair: PairType) => (
       <div className={styles.PairingsPage__pairCard}>
@@ -146,41 +140,89 @@ export function Pairings() {
     ))
       : <p>There is no pairings</p>
   };
-
   function submitPairResult(event: React.FormEvent<HTMLFormElement>, id1: string, id2: string, table: number) {
     event.preventDefault()
-    // const vp1 = (document.getElementById(id1) as HTMLInputElement)?.value
-    // const vp2 = (document.getElementById(id2) as HTMLInputElement)?.value
-    // setVpFirstPlayer(+vp1)
-    // setVpSecondPlayer(+vp2)
     updatePair(table)
   }
-
   function updatePair(table: number) {
     let pairArrayToUpdate = pairs
-    let player1 = pairArrayToUpdate[table - 1].player1
-    let player2 = pairArrayToUpdate[table - 1].player2
+
     if (vpFirstPlayer && vpSecondPlayer) {
-      player1.vp = vpFirstPlayer
-      player2.vp = vpSecondPlayer
+      let vp1 = vpFirstPlayer
+      let vp2 = vpSecondPlayer
+      pairArrayToUpdate[table - 1] = calculatePairResults(pairArrayToUpdate[table - 1], vp1, vp2)
       console.log('Succesfully updated pair ', table)
-      console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
-      setVpFirstPlayer(-1)
-      setVpSecondPlayer(-1)
-      setPairs(pairArrayToUpdate)
-      console.log(pairs)
+      setPairs([...pairArrayToUpdate])
     }
-    // TODO WTF with state update
     else {
       alert('Check VP inputs first!')
     }
-    // const updatePair = pairArrayToUpdate.find(pair => pair.table == table)
-    // updatePair?.player1.vp = vpFirstPlayer
-    // updatePair?.player2.vp = vpSecondPlayer
-    // console.log(updatePair)
   }
+  function calculatePairResults(pair: PairType, vp1: number, vp2: number) {
+    let pairToCalculate = pair
+    let player1 = pairToCalculate.player1
+    let player2 = pairToCalculate.player2
 
+    let diff = Math.abs(vp1 - vp2)
+    let diff5 = Math.round(diff / 5)
+    if (diff5 > 10) {
+      diff5 = 11
+    }
 
+    player1.vp = vp1
+    player2.vp = vp2
+    // Primary calculating
+    if (vp1 - vp2 > 5) {
+      player1.primary = 3
+      player2.primary = 0
+
+    }
+    if (vp1 - vp2 <= 5) {
+      player1.primary = player2.primary = 1
+    }
+    if (vp2 - vp1 > 5) {
+      player2.primary = 3
+      player1.primary = 0
+    }
+    // TO Calculating
+    player1.to = Math.round(vp1 / 5)
+    player2.to = Math.round(vp2 / 5)
+    // Elo calculating
+
+    console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
+
+    return pairToCalculate
+  }
+  function calculateWTC(diff: number, winnerSecond?: boolean) {
+    let wtcPoints
+    switch (diff) {
+      case 2:
+        wtcPoints = [11, 9]
+        break
+      case 3:
+        wtcPoints = [12, 8]
+      case 4:
+        wtcPoints = [13, 7]
+      case 5:
+        wtcPoints = [14, 6]
+      case 6:
+        wtcPoints = [15, 5]
+      case 7:
+        wtcPoints = [16, 4]
+      case 8:
+        wtcPoints = [17, 3]
+      case 9:
+        wtcPoints = [18, 2]
+      case 10:
+        wtcPoints = [19, 1]
+      case 11:
+        wtcPoints = [20, 0]
+      default:
+        wtcPoints = [10, 10]
+    }
+
+    return wtcPoints
+  }
   useEffect(() => {
     function onRender() {
       randomizePairs(createPlayersArrayForPairings())
@@ -188,7 +230,10 @@ export function Pairings() {
     }
     onRender()
   }, [])
-
+  useEffect(() => {
+    console.log('Updated pairs state:')
+    console.log(pairs)
+  }, [pairs])
 
 
 
