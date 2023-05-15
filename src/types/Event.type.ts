@@ -23,4 +23,5 @@ export type PlayerType = {
   toOpponents: number;
   vp: number;
   opponentsIDs?: number[];
+  elo?: number;
 };

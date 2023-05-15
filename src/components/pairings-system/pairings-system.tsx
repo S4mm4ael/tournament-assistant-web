@@ -10,6 +10,8 @@ import { SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
 
 
 export function Pairings() {
+  const ELO_K = 100;
+
   const startPlayersArray: UserType[] = [
     {
       id: '1',
@@ -63,8 +65,6 @@ export function Pairings() {
   function makePairings(tour: number) {
     switch (tour) {
       case 1:
-        // setPlayers()
-        // submitResults()
 
         break;
       case 2:
@@ -85,7 +85,8 @@ export function Pairings() {
         to: 0,
         toOpponents: 0,
         vp: 0,
-        opponentsIDs: []
+        opponentsIDs: [],
+        elo: player.elo,
       }
       playersArrayForPairings.push(playerUpdated)
     })
