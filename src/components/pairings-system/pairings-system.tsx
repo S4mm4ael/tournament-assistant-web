@@ -163,33 +163,33 @@ export function Pairings() {
     let player1 = pairToCalculate.player1
     let player2 = pairToCalculate.player2
 
-    let diff = Math.abs(vp1 - vp2)
-    let diff5 = Math.round(diff / 5)
-    if (diff5 > 10) {
-      diff5 = 11
-    }
+    player1.vp += vp1
+    player2.vp += vp2
 
-    player1.vp = vp1
-    player2.vp = vp2
+    player2.opponentsIDs?.push(Number(player1.id))
+    player1.opponentsIDs?.push(Number(player2.id))
     // Primary calculating
     if (vp1 - vp2 > 5) {
-      player1.primary = 3
-      player2.primary = 0
-      player1.to = calculateWTC(Math.round((vp1 - vp2) / 5))[0]
-      player2.to = calculateWTC(Math.round((vp1 - vp2) / 5))[1]
+      const toWTC = calculateWTC(Math.round((vp1 - vp2) / 5))
+      player1.primary += 3
+      player2.primary += 0
+      player1.to += player2.toOpponents += toWTC[0]
+      player2.to += player1.toOpponents += toWTC[1]
     }
     if (vp1 - vp2 <= 5) {
-      player1.primary = player2.primary = 1
-      player1.to = player2.to = 10
+      player1.primary += player2.primary += 1
+      player1.toOpponents += player2.toOpponents += player1.to += player2.to += 10
     }
     if (vp2 - vp1 > 5) {
-      player2.primary = 3
-      player1.primary = 0
-      player2.to = calculateWTC(Math.round((vp2 - vp1) / 5))[0]
-      player1.to = calculateWTC(Math.round((vp2 - vp1) / 5))[1]
+      const toWTC = calculateWTC(Math.round((vp2 - vp1) / 5))
+      player2.primary += 3
+      player1.primary += 0
+      player2.to += player1.toOpponents += toWTC[0]
+      player1.to += player2.toOpponents += toWTC[1]
     }
     // Elo calculating
-    console.log(Math.round((vp1 - vp2) / 5))
+
+
     console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
 
     return pairToCalculate
