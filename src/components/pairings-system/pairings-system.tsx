@@ -119,7 +119,7 @@ export function Pairings() {
   };
   const renderPairs = (tour?: number) => {
     return pairs.length > 0 ? pairs.map((pair: PairType) => (
-      <div className={styles.PairingsPage__pairCard}>
+      <div key={pair.player1.name + '-' + pair.player2.name} className={styles.PairingsPage__pairCard}>
         <p>Table: {pair.table}</p>
         <form className={styles.PairingsPage__pairForm} onSubmit={(event) => submitPairResult(event, pair.player1.id, pair.player2.id, pair.table)}>
           <b>
@@ -175,50 +175,61 @@ export function Pairings() {
     if (vp1 - vp2 > 5) {
       player1.primary = 3
       player2.primary = 0
-
+      player1.to = calculateWTC(Math.round((vp1 - vp2) / 5))[0]
+      player2.to = calculateWTC(Math.round((vp1 - vp2) / 5))[1]
     }
     if (vp1 - vp2 <= 5) {
       player1.primary = player2.primary = 1
+      player1.to = player2.to = 10
     }
     if (vp2 - vp1 > 5) {
       player2.primary = 3
       player1.primary = 0
+      player2.to = calculateWTC(Math.round((vp2 - vp1) / 5))[0]
+      player1.to = calculateWTC(Math.round((vp2 - vp1) / 5))[1]
     }
-    // TO Calculating
-    player1.to = Math.round(vp1 / 5)
-    player2.to = Math.round(vp2 / 5)
     // Elo calculating
-
+    console.log(Math.round((vp1 - vp2) / 5))
     console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
 
     return pairToCalculate
   }
-  function calculateWTC(diff: number, winnerSecond?: boolean) {
+  function calculateWTC(diff: number) {
     let wtcPoints
     switch (diff) {
+      case 1:
+        wtcPoints = [11, 9]
+        break
       case 2:
         wtcPoints = [11, 9]
         break
       case 3:
         wtcPoints = [12, 8]
+        break
       case 4:
         wtcPoints = [13, 7]
+        break
       case 5:
         wtcPoints = [14, 6]
+        break
       case 6:
         wtcPoints = [15, 5]
+        break
       case 7:
         wtcPoints = [16, 4]
+        break
       case 8:
         wtcPoints = [17, 3]
+        break
       case 9:
         wtcPoints = [18, 2]
+        break
       case 10:
         wtcPoints = [19, 1]
-      case 11:
-        wtcPoints = [20, 0]
+        break
       default:
-        wtcPoints = [10, 10]
+        wtcPoints = [20, 0]
+        break
     }
 
     return wtcPoints
@@ -243,10 +254,10 @@ export function Pairings() {
       <>
         <h2>Test Pairings</h2>
         <h3>Players List</h3>
-        { renderPlayers()}
+        {renderPlayers()}
         <br />
         <h3>First tour pairings</h3>
-        { renderPairs()}
+        {renderPairs()}
       </>
 
     </div>
