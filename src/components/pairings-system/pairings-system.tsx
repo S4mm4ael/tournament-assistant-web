@@ -10,6 +10,8 @@ import { SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
 
 
 export function Pairings() {
+  const ELO_K = 100;
+
   const startPlayersArray: UserType[] = [
     {
       id: '1',
@@ -60,12 +62,9 @@ export function Pairings() {
   const [vpFirstPlayer, setVpFirstPlayer] = useState<number>()
   const [vpSecondPlayer, setVpSecondPlayer] = useState<number>()
 
-
   function makePairings(tour: number) {
     switch (tour) {
       case 1:
-        // setPlayers()
-        // submitResults()
 
         break;
       case 2:
@@ -86,7 +85,8 @@ export function Pairings() {
         to: 0,
         toOpponents: 0,
         vp: 0,
-        opponentsIDs: []
+        opponentsIDs: [],
+        elo: player.elo,
       }
       playersArrayForPairings.push(playerUpdated)
     })
@@ -112,20 +112,19 @@ export function Pairings() {
     }
     setPairs(firstTourStandings)
   }
-
-
-
-
   const renderPlayers = () => {
-    return players.length > 0 ? players.map((player: PlayerType) => (
-      <p>ID:{player.id} - <b>{player.name}</b> - VP:{player.vp}</p>
-    ))
+    return players.length > 0 ? players
+      .sort((a, b) => b.primary - a.primary)
+      .sort((a, b) => b.to - a.to)
+      .sort((a, b) => b.vp - a.vp)
+      .map((player: PlayerType) => (
+        <p>ID:{player.id} - <b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp}</p>
+      ))
       : <p>There is no players</p>
   };
-
   const renderPairs = (tour?: number) => {
     return pairs.length > 0 ? pairs.map((pair: PairType) => (
-      <div className={styles.PairingsPage__pairCard}>
+      <div key={pair.player1.name + '-' + pair.player2.name} className={styles.PairingsPage__pairCard}>
         <p>Table: {pair.table}</p>
         <form className={styles.PairingsPage__pairForm} onSubmit={(event) => submitPairResult(event, pair.player1.id, pair.player2.id, pair.table)}>
           <b>
@@ -146,41 +145,115 @@ export function Pairings() {
     ))
       : <p>There is no pairings</p>
   };
-
   function submitPairResult(event: React.FormEvent<HTMLFormElement>, id1: string, id2: string, table: number) {
     event.preventDefault()
-    // const vp1 = (document.getElementById(id1) as HTMLInputElement)?.value
-    // const vp2 = (document.getElementById(id2) as HTMLInputElement)?.value
-    // setVpFirstPlayer(+vp1)
-    // setVpSecondPlayer(+vp2)
     updatePair(table)
   }
-
   function updatePair(table: number) {
     let pairArrayToUpdate = pairs
-    let player1 = pairArrayToUpdate[table - 1].player1
-    let player2 = pairArrayToUpdate[table - 1].player2
+
     if (vpFirstPlayer && vpSecondPlayer) {
-      player1.vp = vpFirstPlayer
-      player2.vp = vpSecondPlayer
+      let vp1 = vpFirstPlayer
+      let vp2 = vpSecondPlayer
+      pairArrayToUpdate[table - 1] = calculatePairResults(pairArrayToUpdate[table - 1], vp1, vp2)
       console.log('Succesfully updated pair ', table)
-      console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
-      setVpFirstPlayer(-1)
-      setVpSecondPlayer(-1)
-      setPairs(pairArrayToUpdate)
-      console.log(pairs)
+      setPairs([...pairArrayToUpdate])
     }
-    // TODO WTF with state update
     else {
       alert('Check VP inputs first!')
     }
-    // const updatePair = pairArrayToUpdate.find(pair => pair.table == table)
-    // updatePair?.player1.vp = vpFirstPlayer
-    // updatePair?.player2.vp = vpSecondPlayer
-    // console.log(updatePair)
+  }
+  function calculatePairResults(pair: PairType, vp1: number, vp2: number) {
+    let pairToCalculate = pair
+    let player1 = pairToCalculate.player1
+    let player2 = pairToCalculate.player2
+
+    player1.vp += vp1
+    player2.vp += vp2
+
+    player2.opponentsIDs?.push(Number(player1.id))
+    player1.opponentsIDs?.push(Number(player2.id))
+    // Primary calculating
+    if (vp1 - vp2 > 5) {
+      const toWTC = calculateWTC(Math.round((vp1 - vp2) / 5))
+      player1.primary += 3
+      player2.primary += 0
+      player1.to += player2.toOpponents += toWTC[0]
+      player2.to += player1.toOpponents += toWTC[1]
+    }
+    if (vp1 - vp2 <= 5) {
+      player1.primary += player2.primary += 1
+      player1.toOpponents += player2.toOpponents += player1.to += player2.to += 10
+    }
+    if (vp2 - vp1 > 5) {
+      const toWTC = calculateWTC(Math.round((vp2 - vp1) / 5))
+      player2.primary += 3
+      player1.primary += 0
+      player2.to += player1.toOpponents += toWTC[0]
+      player1.to += player2.toOpponents += toWTC[1]
+    }
+    // Elo calculating
+
+
+    console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
+    // Setting to players array
+    updatePlayersList(player1)
+    updatePlayersList(player2)
+    setVpFirstPlayer(0)
+    setVpSecondPlayer(0)
+
+    return pairToCalculate
+  }
+  function updatePlayersList(playerUpdated: PlayerType) {
+    const playerListToUpdate = players
+    const playerToUpdateIndex = playerListToUpdate.findIndex((player) => player.id === playerUpdated.id)
+
+    playerListToUpdate[playerToUpdateIndex] = playerUpdated
+
+    setPlayers(playerListToUpdate)
+
   }
 
+  function calculateWTC(diff: number) {
+    let wtcPoints
+    switch (diff) {
+      case 1:
+        wtcPoints = [11, 9]
+        break
+      case 2:
+        wtcPoints = [11, 9]
+        break
+      case 3:
+        wtcPoints = [12, 8]
+        break
+      case 4:
+        wtcPoints = [13, 7]
+        break
+      case 5:
+        wtcPoints = [14, 6]
+        break
+      case 6:
+        wtcPoints = [15, 5]
+        break
+      case 7:
+        wtcPoints = [16, 4]
+        break
+      case 8:
+        wtcPoints = [17, 3]
+        break
+      case 9:
+        wtcPoints = [18, 2]
+        break
+      case 10:
+        wtcPoints = [19, 1]
+        break
+      default:
+        wtcPoints = [20, 0]
+        break
+    }
 
+    return wtcPoints
+  }
   useEffect(() => {
     function onRender() {
       randomizePairs(createPlayersArrayForPairings())
@@ -188,7 +261,10 @@ export function Pairings() {
     }
     onRender()
   }, [])
-
+  useEffect(() => {
+    console.log('Updated pairs state:')
+    console.log(pairs)
+  }, [pairs])
 
 
 
@@ -198,10 +274,10 @@ export function Pairings() {
       <>
         <h2>Test Pairings</h2>
         <h3>Players List</h3>
-        { renderPlayers()}
+        {renderPlayers()}
         <br />
         <h3>First tour pairings</h3>
-        { renderPairs()}
+        {renderPairs()}
       </>
 
     </div>
