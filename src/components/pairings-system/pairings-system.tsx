@@ -113,9 +113,13 @@ export function Pairings() {
     setPairs(firstTourStandings)
   }
   const renderPlayers = () => {
-    return players.length > 0 ? players.map((player: PlayerType) => (
-      <p>ID:{player.id} - <b>{player.name}</b> - VP:{player.vp}</p>
-    ))
+    return players.length > 0 ? players
+      .sort((a, b) => b.primary - a.primary)
+      .sort((a, b) => b.to - a.to)
+      .sort((a, b) => b.vp - a.vp)
+      .map((player: PlayerType) => (
+        <p>ID:{player.id} - <b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp}</p>
+      ))
       : <p>There is no players</p>
   };
   const renderPairs = (tour?: number) => {
@@ -192,9 +196,24 @@ export function Pairings() {
 
 
     console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
+    // Setting to players array
+    updatePlayersList(player1)
+    updatePlayersList(player2)
+    setVpFirstPlayer(0)
+    setVpSecondPlayer(0)
 
     return pairToCalculate
   }
+  function updatePlayersList(playerUpdated: PlayerType) {
+    const playerListToUpdate = players
+    const playerToUpdateIndex = playerListToUpdate.findIndex((player) => player.id === playerUpdated.id)
+
+    playerListToUpdate[playerToUpdateIndex] = playerUpdated
+
+    setPlayers(playerListToUpdate)
+
+  }
+
   function calculateWTC(diff: number) {
     let wtcPoints
     switch (diff) {
