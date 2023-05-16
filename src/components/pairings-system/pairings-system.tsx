@@ -10,7 +10,7 @@ import { SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
 
 
 export function Pairings() {
-  const ELO_K = 100;
+
 
   const startPlayersArray: UserType[] = [
     {
@@ -22,14 +22,14 @@ export function Pairings() {
     },
     {
       id: '2',
-      elo: 1500,
+      elo: 1700,
       firstname: 'Sasha',
       lastname: 'Kratkovskiy',
       nickname: 'Glin',
     },
     {
       id: '3',
-      elo: 1400,
+      elo: 1600,
       firstname: 'Hlopa',
       lastname: 'Turkov',
       nickname: 'Turok',
@@ -43,14 +43,14 @@ export function Pairings() {
     },
     {
       id: '5',
-      elo: 1400,
+      elo: 1700,
       firstname: 'Floppy',
       lastname: 'Floppy',
       nickname: 'Floppy',
     },
     {
       id: '6',
-      elo: 2000,
+      elo: 1600,
       firstname: 'Dima',
       lastname: 'Senchenko',
       nickname: 'Dima',
@@ -71,7 +71,6 @@ export function Pairings() {
         break;
 
       default:
-        console.log('nothing found!')
         break;
     }
   }
@@ -96,12 +95,10 @@ export function Pairings() {
     const firstTourStandings: PairType[] = []
     let table = 1;
     while (players.length) {
-      let player1 = players.splice((Math.random() * 1000) % players.length, 1)
-      let player2 = players.splice((Math.random() * 1000) % players.length, 1)
 
       const pair: PairType = {
-        player1: player1[0],
-        player2: player2[0],
+        player1id: players.splice((Math.random() * 1000) % players.length, 1)[0].id,
+        player2id: players.splice((Math.random() * 1000) % players.length, 1)[0].id,
         table: table,
       }
 
@@ -112,37 +109,47 @@ export function Pairings() {
     }
     setPairs(firstTourStandings)
   }
+  function findPlayerById(id: string) {
+    const playerIndex = players.findIndex(player => player.id === id)
+
+    return players[playerIndex]
+  }
   const renderPlayers = () => {
     return players.length > 0 ? players
-      .sort((a, b) => b.primary - a.primary)
-      .sort((a, b) => b.to - a.to)
       .sort((a, b) => b.vp - a.vp)
+      .sort((a, b) => b.to - a.to)
+      .sort((a, b) => b.primary - a.primary)
       .map((player: PlayerType) => (
-        <p>ID:{player.id} - <b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp}</p>
+        <p><b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp} TOop:{player.toOpponents} ELO:{player.elo} </p>
       ))
       : <p>There is no players</p>
   };
   const renderPairs = (tour?: number) => {
-    return pairs.length > 0 ? pairs.map((pair: PairType) => (
-      <div key={pair.player1.name + '-' + pair.player2.name} className={styles.PairingsPage__pairCard}>
+    return pairs.length > 0 ? pairs.map((pair: PairType) => {
+      const player1 = findPlayerById(pair.player1id)
+      const player2 = findPlayerById(pair.player2id)
+
+      return (<div key={player1.name + '-' + player2.name} className={styles.PairingsPage__pairCard}>
         <p>Table: {pair.table}</p>
-        <form className={styles.PairingsPage__pairForm} onSubmit={(event) => submitPairResult(event, pair.player1.id, pair.player2.id, pair.table)}>
+        <form className={styles.PairingsPage__pairForm} onSubmit={(event) => submitPairResult(event, player1.id, player2.id, pair.table)}>
           <b>
-            {pair.player1.name}</b>
-          <input type="number" min='0' max='100' name={`${pair.player1.name} VP`} id={pair.player1.id}
+            {player1.name}</b>
+          {player1.elo}
+          <input type="number" min='0' max='100' name={`${player1.name} VP`} id={findPlayerById(pair.player1id).id}
             onChange={(e) => {
               setVpFirstPlayer(+e.target.value)
             }} />
           <b>
-            {pair.player2.name}</b>
-          <input type="number" min='0' max='100' name={`${pair.player2.name} VP`} id={pair.player2.id}
+            {player2.name}</b>
+          {player2.elo}
+          <input type="number" min='0' max='100' name={`${player2.name} VP`} id={player2.id}
             onChange={(e) => {
               setVpSecondPlayer(+e.target.value)
             }} />
           <button type="submit">Submit</button>
         </form>
-      </div>
-    ))
+      </div>)
+    })
       : <p>There is no pairings</p>
   };
   function submitPairResult(event: React.FormEvent<HTMLFormElement>, id1: string, id2: string, table: number) {
@@ -156,7 +163,6 @@ export function Pairings() {
       let vp1 = vpFirstPlayer
       let vp2 = vpSecondPlayer
       pairArrayToUpdate[table - 1] = calculatePairResults(pairArrayToUpdate[table - 1], vp1, vp2)
-      console.log('Succesfully updated pair ', table)
       setPairs([...pairArrayToUpdate])
     }
     else {
@@ -165,8 +171,8 @@ export function Pairings() {
   }
   function calculatePairResults(pair: PairType, vp1: number, vp2: number) {
     let pairToCalculate = pair
-    let player1 = pairToCalculate.player1
-    let player2 = pairToCalculate.player2
+    const player1 = findPlayerById(pair.player1id)
+    const player2 = findPlayerById(pair.player2id)
 
     player1.vp += vp1
     player2.vp += vp2
@@ -193,9 +199,9 @@ export function Pairings() {
       player1.to += player2.toOpponents += toWTC[1]
     }
     // Elo calculating
+    player1.elo = calculateELO(player1.to, player1.elo!, player2.elo!)
+    player2.elo = calculateELO(player2.to, player2.elo!, player1.elo!)
 
-
-    console.log(player1.name, vpFirstPlayer, '-', vpSecondPlayer, player2.name)
     // Setting to players array
     updatePlayersList(player1)
     updatePlayersList(player2)
@@ -211,7 +217,6 @@ export function Pairings() {
     playerListToUpdate[playerToUpdateIndex] = playerUpdated
 
     setPlayers(playerListToUpdate)
-
   }
 
   function calculateWTC(diff: number) {
@@ -254,6 +259,19 @@ export function Pairings() {
 
     return wtcPoints
   }
+  function calculateELO(to: number, rating1: number, rating2: number,) {
+    const ELO_K = 100;
+    console.log(to)
+    const Ea = 1 / (1 + 10 ** ((rating2 - rating1) / 400))
+    console.log(Ea)
+    const Sa = to / 20
+    console.log(Sa)
+    console.log(+(rating1 + ELO_K * (Sa - Ea)).toFixed(2))
+    return +(rating1 + ELO_K * (Sa - Ea)).toFixed(2)
+
+  }
+
+
   useEffect(() => {
     function onRender() {
       randomizePairs(createPlayersArrayForPairings())
@@ -265,7 +283,10 @@ export function Pairings() {
     console.log('Updated pairs state:')
     console.log(pairs)
   }, [pairs])
-
+  useEffect(() => {
+    console.log('Updated players state:')
+    console.log(players)
+  }, [players])
 
 
 
