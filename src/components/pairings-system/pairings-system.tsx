@@ -120,7 +120,7 @@ export function Pairings() {
       .sort((a, b) => b.to - a.to)
       .sort((a, b) => b.primary - a.primary)
       .map((player: PlayerType) => (
-        <p><b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp} TOop:{player.toOpponents} ELO:{player.elo} </p>
+        <p><b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp} OPP_ID:{player.opponentsIDs} ELO:{player.elo} </p>
       ))
       : <p>There is no players</p>
   };
@@ -195,8 +195,8 @@ export function Pairings() {
       const toWTC = calculateWTC(Math.round((vp2 - vp1) / 5))
       player2.primary += 3
       player1.primary += 0
-      player2.to += player1.toOpponents += toWTC[0]
-      player1.to += player2.toOpponents += toWTC[1]
+      player2.to += toWTC[0]
+      player1.to += toWTC[1]
     }
     // Elo calculating
     player1.elo = calculateELO(player1.to, player1.elo!, player2.elo!)
