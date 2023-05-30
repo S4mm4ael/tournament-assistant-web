@@ -120,7 +120,7 @@ export function Pairings() {
       .sort((a, b) => b.to - a.to)
       .sort((a, b) => b.primary - a.primary)
       .map((player: PlayerType) => (
-        <p><b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp} OPP_ID:{player.opponentsIDs} ELO:{player.elo} </p>
+        <p key={player.id}><b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp} OPP_ID:{player.opponentsIDs} ELO:{player.elo} </p>
       ))
       : <p>There is no players</p>
   };
@@ -181,23 +181,28 @@ export function Pairings() {
     player1.opponentsIDs?.push(Number(player2.id))
     // Primary calculating
     if (vp1 - vp2 > 5) {
-      const toWTC = calculateWTC(Math.round((vp1 - vp2) / 5))
+      const diffWTC = vp2 > 48 ? Math.round((vp1 - vp2) / 5) : 20
+      const toWTC = calculateWTC(diffWTC)
+
       player1.primary += 3
       player2.primary += 0
-      player1.to += player2.toOpponents += toWTC[0]
-      player2.to += player1.toOpponents += toWTC[1]
+      player1.to += toWTC[0]
+      player2.to += toWTC[1]
     }
-    if (vp1 - vp2 <= 5) {
+    else if (Math.abs(vp1 - vp2) <= 5) {
       player1.primary += player2.primary += 1
       player1.toOpponents += player2.toOpponents += player1.to += player2.to += 10
     }
     if (vp2 - vp1 > 5) {
-      const toWTC = calculateWTC(Math.round((vp2 - vp1) / 5))
+      const diffWTC = vp1 > 48 ? Math.round((vp2 - vp1) / 5) : 20
+      const toWTC = calculateWTC(diffWTC)
+      console.log(player2.primary)
       player2.primary += 3
       player1.primary += 0
       player2.to += toWTC[0]
       player1.to += toWTC[1]
     }
+
     // Elo calculating
     player1.elo = calculateELO(player1.to, player1.elo!, player2.elo!)
     player2.elo = calculateELO(player2.to, player2.elo!, player1.elo!)
@@ -261,12 +266,8 @@ export function Pairings() {
   }
   function calculateELO(to: number, rating1: number, rating2: number,) {
     const ELO_K = 100;
-    console.log(to)
     const Ea = 1 / (1 + 10 ** ((rating2 - rating1) / 400))
-    console.log(Ea)
     const Sa = to / 20
-    console.log(Sa)
-    console.log(+(rating1 + ELO_K * (Sa - Ea)).toFixed(2))
     return +(rating1 + ELO_K * (Sa - Ea)).toFixed(2)
 
   }
@@ -280,12 +281,10 @@ export function Pairings() {
     onRender()
   }, [])
   useEffect(() => {
-    console.log('Updated pairs state:')
-    console.log(pairs)
+
   }, [pairs])
   useEffect(() => {
-    console.log('Updated players state:')
-    console.log(players)
+
   }, [players])
 
 
