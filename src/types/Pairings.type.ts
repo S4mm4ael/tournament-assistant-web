@@ -7,8 +7,8 @@ export type PairingType = {
 };
 
 export type PairType = {
-  player1: PlayerType;
-  player2: PlayerType;
+  player1id: string;
+  player2id: string;
   table: number;
 }
 
