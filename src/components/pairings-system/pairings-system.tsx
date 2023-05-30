@@ -61,6 +61,8 @@ export function Pairings() {
   const [pairs, setPairs] = useState<PairType[] | []>([])
   const [vpFirstPlayer, setVpFirstPlayer] = useState<number>()
   const [vpSecondPlayer, setVpSecondPlayer] = useState<number>()
+  const [enteredResCount, setEnteredResCount] = useState<number>()
+  const [tourNumber, setTourNumber] = useState<number>(1)
 
   function makePairings(tour: number) {
     switch (tour) {
@@ -120,7 +122,7 @@ export function Pairings() {
       .sort((a, b) => b.to - a.to)
       .sort((a, b) => b.primary - a.primary)
       .map((player: PlayerType) => (
-        <p key={player.id}><b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp} OPP_ID:{player.opponentsIDs} ELO:{player.elo} </p>
+        <p key={player.id}><b>{player.name}</b> - Primary:{player.primary}  TO:{player.to} VP:{player.vp} OPP_IDs:{player.opponentsIDs?.map(opp => opp + ", ")} ELO:{player.elo} </p>
       ))
       : <p>There is no players</p>
   };
@@ -174,6 +176,11 @@ export function Pairings() {
     const player1 = findPlayerById(pair.player1id)
     const player2 = findPlayerById(pair.player2id)
 
+    if (enteredResCount === pairs.length) {
+      setEnteredResCount(0)
+    }
+
+
     player1.vp += vp1
     player2.vp += vp2
 
@@ -196,7 +203,6 @@ export function Pairings() {
     if (vp2 - vp1 > 5) {
       const diffWTC = vp1 > 48 ? Math.round((vp2 - vp1) / 5) : 20
       const toWTC = calculateWTC(diffWTC)
-      console.log(player2.primary)
       player2.primary += 3
       player1.primary += 0
       player2.to += toWTC[0]
@@ -212,6 +218,12 @@ export function Pairings() {
     updatePlayersList(player2)
     setVpFirstPlayer(0)
     setVpSecondPlayer(0)
+    if (enteredResCount) {
+      setEnteredResCount(enteredResCount + 1)
+    }
+    if (!enteredResCount) {
+      setEnteredResCount(1)
+    }
 
     return pairToCalculate
   }
@@ -281,8 +293,12 @@ export function Pairings() {
     onRender()
   }, [])
   useEffect(() => {
+    if (enteredResCount === pairs.length) {
 
-  }, [pairs])
+      setTourNumber(tourNumber + 1)
+      console.log(tourNumber)
+    }
+  }, [enteredResCount])
   useEffect(() => {
 
   }, [players])
@@ -298,6 +314,12 @@ export function Pairings() {
         <br />
         <h3>First tour pairings</h3>
         {renderPairs()}
+        {tourNumber === 2 &&
+          <>
+            <br />
+            <h3>Second tour pairings</h3>
+          </>
+        }
       </>
 
     </div>
