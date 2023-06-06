@@ -230,7 +230,6 @@ export function Pairings() {
       setEnteredResCount(0)
     }
 
-
     player1.vp += vp1
     player2.vp += vp2
 
@@ -238,7 +237,7 @@ export function Pairings() {
     player1.opponentsIDs?.push(Number(player2.id))
     // Primary calculating
     if (vp1 - vp2 > 5) {
-      const diffWTC = vp2 > 48 ? Math.round((vp1 - vp2) / 5) : 20
+      const diffWTC = vp1 - vp2
       const toWTC = calculateWTC(diffWTC)
 
       player1.primary += 3
@@ -251,7 +250,7 @@ export function Pairings() {
       player1.toOpponents += player2.toOpponents += player1.to += player2.to += 10
     }
     if (vp2 - vp1 > 5) {
-      const diffWTC = vp1 > 48 ? Math.round((vp2 - vp1) / 5) : 20
+      const diffWTC = vp2 - vp1
       const toWTC = calculateWTC(diffWTC)
       player2.primary += 3
       player1.primary += 0
@@ -285,47 +284,42 @@ export function Pairings() {
 
     setPlayers(playerListToUpdate)
   }
-
   function calculateWTC(diff: number) {
-    let wtcPoints
-    switch (diff) {
-      case 1:
-        wtcPoints = [11, 9]
-        break
-      case 2:
-        wtcPoints = [11, 9]
-        break
-      case 3:
-        wtcPoints = [12, 8]
-        break
-      case 4:
-        wtcPoints = [13, 7]
-        break
-      case 5:
-        wtcPoints = [14, 6]
-        break
-      case 6:
-        wtcPoints = [15, 5]
-        break
-      case 7:
-        wtcPoints = [16, 4]
-        break
-      case 8:
-        wtcPoints = [17, 3]
-        break
-      case 9:
-        wtcPoints = [18, 2]
-        break
-      case 10:
-        wtcPoints = [19, 1]
-        break
-      default:
-        wtcPoints = [20, 0]
-        break
+    console.log(diff)
+    if (diff >= 6 && diff <= 10) {
+      return [11, 9]
     }
+    if (diff >= 11 && diff <= 15) {
+      return [12, 8]
+    }
+    if (diff >= 16 && diff <= 20) {
+      return [13, 7]
+    }
+    if (diff >= 21 && diff <= 25) {
+      return [14, 6]
+    }
+    if (diff >= 26 && diff <= 30) {
+      return [15, 5]
+    }
+    if (diff >= 31 && diff <= 35) {
+      return [16, 4]
+    }
+    if (diff >= 36 && diff <= 40) {
+      return [17, 3]
+    }
+    if (diff >= 41 && diff <= 45) {
+      return [18, 2]
+    }
+    if (diff >= 46 && diff <= 50) {
+      return [19, 1]
+    }
+    if (diff >= 51) {
+      return [20, 0]
+    }
+    else return [0, 0]
 
-    return wtcPoints
   }
+
   function calculateELO(to: number, rating1: number, rating2: number,) {
     const ELO_K = 100;
     const Ea = 1 / (1 + 10 ** ((rating2 - rating1) / 400))
@@ -342,6 +336,7 @@ export function Pairings() {
     }
     onRender()
   }, [])
+
   useEffect(() => {
     if (enteredResCount === pairs.length) {
       setTourNumber(tourNumber + 1)
