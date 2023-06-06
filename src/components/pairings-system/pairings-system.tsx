@@ -349,7 +349,6 @@ export function Pairings() {
   }, [players])
 
 
-
   return (
     <div className={styles.PairingsPage}>
       <>
