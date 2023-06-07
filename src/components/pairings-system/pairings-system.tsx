@@ -7,6 +7,7 @@ import { PairType } from 'types/Pairings.type';
 
 import styles from './pairings.module.css';
 import { SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
+import { isArray } from 'util';
 
 
 export function Pairings() {
@@ -58,11 +59,11 @@ export function Pairings() {
   ];
 
   const [players, setPlayers] = useState<PlayerType[] | []>([])
-  const [pairs, setPairs] = useState<PairType[] | []>([])
+  const [pairs, setPairs] = useState<PairType[][] | null>(null)
   const [vpFirstPlayer, setVpFirstPlayer] = useState<number>()
   const [vpSecondPlayer, setVpSecondPlayer] = useState<number>()
   const [enteredResCount, setEnteredResCount] = useState<number>()
-  const [tourNumber, setTourNumber] = useState<number>(1)
+  const [tourNumber, setTourNumber] = useState<number>(0)
 
   function makePairings(tour: number) {
     switch (tour) {
@@ -109,7 +110,7 @@ export function Pairings() {
       firstTourStandings.push(pair)
 
     }
-    setPairs(firstTourStandings)
+    setPairs([firstTourStandings])
   }
   function definePairs(players: PlayerType[]) {
     const tourStandings: PairType[] = []
@@ -127,7 +128,11 @@ export function Pairings() {
       tourStandings.push(pair)
 
     }
-    setPairs(tourStandings)
+
+    if (pairs?.length === 1) {
+      console.log(pairs)
+      //setPairs((pairs) => [...pairs, tourStandings])
+    }
   }
   function findPlayerById(id: string) {
     const playerIndex = players.findIndex(player => player.id === id)
@@ -144,10 +149,10 @@ export function Pairings() {
       ))
       : <p>There is no players</p>
   };
-  const renderPairs = (tour?: number) => {
+  const renderPairs = (tour: number) => {
 
-    if (tour) {
-      return pairs.map((pair: PairType) => {
+    if (pairs) {
+      return pairs[tour].map((pair: PairType) => {
         const player1 = findPlayerById(pair.player1id)
         const player2 = findPlayerById(pair.player2id)
 
@@ -175,67 +180,34 @@ export function Pairings() {
       })
     }
 
-    else {
-      return pairs.length > 0 ? pairs.map((pair: PairType) => {
-        const player1 = findPlayerById(pair.player1id)
-        const player2 = findPlayerById(pair.player2id)
-
-        return (<div key={player1.name + '-' + player2.name} className={styles.PairingsPage__pairCard}>
-          <p>Table: {pair.table}</p>
-          <form className={styles.PairingsPage__pairForm} onSubmit={(event) => submitPairResult(event, player1.id, player2.id, pair.table)}>
-            <b>
-              {player1.name}</b>
-            {player1.elo}
-            <input type="number" min='0' max='100' name={`${player1.name} VP`} id={`${player1.id}` + `-` + `${player2.id}`}
-              disabled={checkIfAlreadyPlayed(player1, player2)}
-              onChange={(e) => {
-                setVpFirstPlayer(+e.target.value)
-              }} />
-            <b>
-              {player2.name}</b>
-            {player2.elo}
-            <input type="number" min='0' max='100' name={`${player2.name} VP`} id={`${player2.id}` + `-` + `${player1.id}`}
-              disabled={checkIfAlreadyPlayed(player2, player1)}
-              onChange={(e) => {
-                setVpSecondPlayer(+e.target.value)
-              }} />
-            <button type="submit">Submit</button>
-          </form>
-        </div>)
-      })
-        : <p>There is no pairings</p>
-    }
-
   };
   function submitPairResult(event: React.FormEvent<HTMLFormElement>, id1: string, id2: string, table: number) {
     event.preventDefault()
-    updatePair(table)
-
-    // let inputToDisable = document.getElementById(`${id1}-${id2}`) as HTMLInputElement
-    // inputToDisable.disabled = true
-    // inputToDisable = document.getElementById(`${id2}-${id1}`) as HTMLInputElement
-    // inputToDisable.disabled = true
-
+    updatePair(tourNumber, table)
   }
-  function updatePair(table: number) {
-    let pairArrayToUpdate = pairs
+  function updatePair(tour: number, table: number) {
 
-    if (vpFirstPlayer && vpSecondPlayer) {
-      let vp1 = vpFirstPlayer
-      let vp2 = vpSecondPlayer
-      pairArrayToUpdate[table - 1] = calculatePairResults(pairArrayToUpdate[table - 1], vp1, vp2)
-      setPairs([...pairArrayToUpdate])
+    if (pairs) {
+      let pairArrayToUpdate = pairs[tour]
+      if (vpFirstPlayer && vpSecondPlayer) {
+        let vp1 = vpFirstPlayer
+        let vp2 = vpSecondPlayer
+        pairArrayToUpdate[table - 1] = calculatePairResults(pairArrayToUpdate[table - 1], vp1, vp2)
+        setPairs([...pairs, pairArrayToUpdate])
+      }
+      else {
+        alert('Check VP inputs first!')
+      }
     }
-    else {
-      alert('Check VP inputs first!')
-    }
+
+
   }
   function calculatePairResults(pair: PairType, vp1: number, vp2: number) {
     let pairToCalculate = pair
     const player1 = findPlayerById(pair.player1id)
     const player2 = findPlayerById(pair.player2id)
 
-    if (enteredResCount === pairs.length) {
+    if (pairs && enteredResCount === pairs.length) {
       setEnteredResCount(0)
     }
 
@@ -351,10 +323,10 @@ export function Pairings() {
   }, [])
 
   useEffect(() => {
-    if (enteredResCount === pairs.length) {
+    if (pairs && enteredResCount === pairs.length) {
       setTourNumber(tourNumber + 1)
       console.log(pairs)
-      definePairs(players)
+      //definePairs(players)
     }
   }, [enteredResCount])
   useEffect(() => {
@@ -370,12 +342,12 @@ export function Pairings() {
         {renderPlayers()}
         <br />
         <h3>First tour pairings</h3>
-        {renderPairs()}
+        {pairs && renderPairs(0)}
         {tourNumber === 2 &&
           <>
             <br />
             <h3>Second tour pairings</h3>
-            {renderPairs(2)}
+            {pairs?.length === 2 && renderPairs(1)}
           </>
         }
       </>
