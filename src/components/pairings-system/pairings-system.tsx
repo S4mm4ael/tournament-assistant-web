@@ -41,20 +41,20 @@ export function Pairings() {
       lastname: 'Bokov',
       nickname: 'Maxim',
     },
-    // {
-    //   id: '5',
-    //   elo: 1700,
-    //   firstname: 'Floppy',
-    //   lastname: 'Floppy',
-    //   nickname: 'Floppy',
-    // },
-    // {
-    //   id: '6',
-    //   elo: 1600,
-    //   firstname: 'Dima',
-    //   lastname: 'Senchenko',
-    //   nickname: 'Dima',
-    // },
+    {
+      id: '5',
+      elo: 1700,
+      firstname: 'Floppy',
+      lastname: 'Floppy',
+      nickname: 'Floppy',
+    },
+    {
+      id: '6',
+      elo: 1600,
+      firstname: 'Dima',
+      lastname: 'Senchenko',
+      nickname: 'Dima',
+    },
   ];
 
   const [players, setPlayers] = useState<PlayerType[] | []>([])
@@ -185,14 +185,14 @@ export function Pairings() {
             <b>
               {player1.name}</b>
             {player1.elo}
-            <input type="number" min='0' max='100' name={`${player1.name} VP`} id={findPlayerById(pair.player1id).id}
+            <input type="number" min='0' max='100' name={`${player1.name} VP`} id={`${player1.id}` + `-` + `${player2.id}`}
               onChange={(e) => {
                 setVpFirstPlayer(+e.target.value)
               }} />
             <b>
               {player2.name}</b>
             {player2.elo}
-            <input type="number" min='0' max='100' name={`${player2.name} VP`} id={player2.id}
+            <input type="number" min='0' max='100' name={`${player2.name} VP`} id={`${player2.id}` + `-` + `${player1.id}`}
               onChange={(e) => {
                 setVpSecondPlayer(+e.target.value)
               }} />
@@ -207,6 +207,12 @@ export function Pairings() {
   function submitPairResult(event: React.FormEvent<HTMLFormElement>, id1: string, id2: string, table: number) {
     event.preventDefault()
     updatePair(table)
+
+    let inputToDisable = document.getElementById(`${id1}-${id2}`) as HTMLInputElement
+    inputToDisable.disabled = true
+    inputToDisable = document.getElementById(`${id2}-${id1}`) as HTMLInputElement
+    inputToDisable.disabled = true
+
   }
   function updatePair(table: number) {
     let pairArrayToUpdate = pairs
