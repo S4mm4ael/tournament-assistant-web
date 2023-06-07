@@ -158,6 +158,7 @@ export function Pairings() {
               {player1.name}</b>
             {player1.elo}
             <input type="number" min='0' max='100' name={`${player1.name} VP`} id={findPlayerById(pair.player1id).id}
+
               onChange={(e) => {
                 setVpFirstPlayer(+e.target.value)
               }} />
@@ -186,6 +187,7 @@ export function Pairings() {
               {player1.name}</b>
             {player1.elo}
             <input type="number" min='0' max='100' name={`${player1.name} VP`} id={`${player1.id}` + `-` + `${player2.id}`}
+              disabled={checkIfAlreadyPlayed(player1, player2)}
               onChange={(e) => {
                 setVpFirstPlayer(+e.target.value)
               }} />
@@ -193,6 +195,7 @@ export function Pairings() {
               {player2.name}</b>
             {player2.elo}
             <input type="number" min='0' max='100' name={`${player2.name} VP`} id={`${player2.id}` + `-` + `${player1.id}`}
+              disabled={checkIfAlreadyPlayed(player2, player1)}
               onChange={(e) => {
                 setVpSecondPlayer(+e.target.value)
               }} />
@@ -208,10 +211,10 @@ export function Pairings() {
     event.preventDefault()
     updatePair(table)
 
-    let inputToDisable = document.getElementById(`${id1}-${id2}`) as HTMLInputElement
-    inputToDisable.disabled = true
-    inputToDisable = document.getElementById(`${id2}-${id1}`) as HTMLInputElement
-    inputToDisable.disabled = true
+    // let inputToDisable = document.getElementById(`${id1}-${id2}`) as HTMLInputElement
+    // inputToDisable.disabled = true
+    // inputToDisable = document.getElementById(`${id2}-${id1}`) as HTMLInputElement
+    // inputToDisable.disabled = true
 
   }
   function updatePair(table: number) {
@@ -291,7 +294,6 @@ export function Pairings() {
     setPlayers(playerListToUpdate)
   }
   function calculateWTC(diff: number) {
-    console.log(diff)
     if (diff >= 6 && diff <= 10) {
       return [11, 9]
     }
@@ -333,7 +335,12 @@ export function Pairings() {
     return +(rating1 + ELO_K * (Sa - Ea)).toFixed(2)
 
   }
-
+  function checkIfAlreadyPlayed(player1: PlayerType, player2: PlayerType) {
+    if (player1.opponentsIDs?.find((el) => el === +player2.id)) {
+      return true
+    }
+    return false
+  }
 
   useEffect(() => {
     function onRender() {
@@ -346,7 +353,7 @@ export function Pairings() {
   useEffect(() => {
     if (enteredResCount === pairs.length) {
       setTourNumber(tourNumber + 1)
-      console.log(players)
+      console.log(pairs)
       definePairs(players)
     }
   }, [enteredResCount])
