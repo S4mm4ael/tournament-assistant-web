@@ -7,6 +7,7 @@ import { PairType } from 'types/Pairings.type';
 
 import styles from './pairings.module.css';
 import { SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
+import { isArray } from 'util';
 
 
 export function Pairings() {
@@ -58,24 +59,14 @@ export function Pairings() {
   ];
 
   const [players, setPlayers] = useState<PlayerType[] | []>([])
-  const [pairs, setPairs] = useState<PairType[] | []>([])
+  const [pairs, setPairs] = useState<PairType[][] | null>(null)
+  const [pairsTour, setPairsTour] = useState<PairType[] | null>([])
   const [vpFirstPlayer, setVpFirstPlayer] = useState<number>()
   const [vpSecondPlayer, setVpSecondPlayer] = useState<number>()
-  const [enteredResCount, setEnteredResCount] = useState<number>()
-  const [tourNumber, setTourNumber] = useState<number>(1)
+  const [enteredResCount, setEnteredResCount] = useState<number>(0)
+  const [tourNumber, setTourNumber] = useState<number>(0)
 
-  function makePairings(tour: number) {
-    switch (tour) {
-      case 1:
 
-        break;
-      case 2:
-        break;
-
-      default:
-        break;
-    }
-  }
   function createPlayersArrayForPairings() {
     const playersArrayForPairings: PlayerType[] = []
     startPlayersArray.map((player) => {
@@ -96,11 +87,12 @@ export function Pairings() {
   function randomizePairs(players: PlayerType[]) {
     const firstTourStandings: PairType[] = []
     let table = 1;
-    while (players.length) {
+    const playersArray = players
+    while (playersArray.length) {
 
       const pair: PairType = {
-        player1id: players.splice((Math.random() * 1000) % players.length, 1)[0].id,
-        player2id: players.splice((Math.random() * 1000) % players.length, 1)[0].id,
+        player1id: playersArray.splice((Math.random() * 1000) % players.length, 1)[0].id,
+        player2id: playersArray.splice((Math.random() * 1000) % players.length, 1)[0].id,
         table: table,
       }
 
@@ -109,25 +101,31 @@ export function Pairings() {
       firstTourStandings.push(pair)
 
     }
-    setPairs(firstTourStandings)
+    setPairs([firstTourStandings])
   }
   function definePairs(players: PlayerType[]) {
-    const tourStandings: PairType[] = []
+    const tourPairs: PairType[] = []
+    const playersArray = [...players]
     let table = 1;
-    for (let i = 0; i < players.length; i += 2) {
+    while (playersArray.length) {
 
-      const pair: PairType = {
-        player1id: players[i].id,
-        player2id: players[i + 1].id,
+      let player1ID = playersArray.splice(0, 1)[0].id
+      let player2ID = playersArray.splice(0, 1)[0].id
+
+      let pair: PairType = {
+        player1id: player1ID,
+        player2id: player2ID,
         table: table,
       }
 
+      tourPairs.push(pair)
       table++
-
-      tourStandings.push(pair)
-
     }
-    setPairs(tourStandings)
+
+    if (pairs && tourPairs.length == pairs[0].length) {
+      setPairs([...pairs, tourPairs])
+      console.log("pairs after first tour", pairs)
+    }
   }
   function findPlayerById(id: string) {
     const playerIndex = players.findIndex(player => player.id === id)
@@ -144,10 +142,10 @@ export function Pairings() {
       ))
       : <p>There is no players</p>
   };
-  const renderPairs = (tour?: number) => {
+  const renderPairs = (tour: number) => {
 
-    if (tour) {
-      return pairs.map((pair: PairType) => {
+    if (pairs) {
+      return pairs[tour].map((pair: PairType) => {
         const player1 = findPlayerById(pair.player1id)
         const player2 = findPlayerById(pair.player2id)
 
@@ -158,6 +156,7 @@ export function Pairings() {
               {player1.name}</b>
             {player1.elo}
             <input type="number" min='0' max='100' name={`${player1.name} VP`} id={findPlayerById(pair.player1id).id}
+
               onChange={(e) => {
                 setVpFirstPlayer(+e.target.value)
               }} />
@@ -172,61 +171,37 @@ export function Pairings() {
           </form>
         </div>)
       })
-    }
-
-    else {
-      return pairs.length > 0 ? pairs.map((pair: PairType) => {
-        const player1 = findPlayerById(pair.player1id)
-        const player2 = findPlayerById(pair.player2id)
-
-        return (<div key={player1.name + '-' + player2.name} className={styles.PairingsPage__pairCard}>
-          <p>Table: {pair.table}</p>
-          <form className={styles.PairingsPage__pairForm} onSubmit={(event) => submitPairResult(event, player1.id, player2.id, pair.table)}>
-            <b>
-              {player1.name}</b>
-            {player1.elo}
-            <input type="number" min='0' max='100' name={`${player1.name} VP`} id={findPlayerById(pair.player1id).id}
-              onChange={(e) => {
-                setVpFirstPlayer(+e.target.value)
-              }} />
-            <b>
-              {player2.name}</b>
-            {player2.elo}
-            <input type="number" min='0' max='100' name={`${player2.name} VP`} id={player2.id}
-              onChange={(e) => {
-                setVpSecondPlayer(+e.target.value)
-              }} />
-            <button type="submit">Submit</button>
-          </form>
-        </div>)
-      })
-        : <p>There is no pairings</p>
     }
 
   };
   function submitPairResult(event: React.FormEvent<HTMLFormElement>, id1: string, id2: string, table: number) {
     event.preventDefault()
-    updatePair(table)
+    updatePair(tourNumber, table)
   }
-  function updatePair(table: number) {
-    let pairArrayToUpdate = pairs
+  function updatePair(tour: number, table: number) {
 
-    if (vpFirstPlayer && vpSecondPlayer) {
-      let vp1 = vpFirstPlayer
-      let vp2 = vpSecondPlayer
-      pairArrayToUpdate[table - 1] = calculatePairResults(pairArrayToUpdate[table - 1], vp1, vp2)
-      setPairs([...pairArrayToUpdate])
+    if (pairs) {
+      let pairArrayToUpdate = pairs[tour]
+      if (vpFirstPlayer && vpSecondPlayer) {
+        let vp1 = vpFirstPlayer
+        let vp2 = vpSecondPlayer
+        pairArrayToUpdate[table - 1] = calculatePairResults(pairArrayToUpdate[table - 1], vp1, vp2)
+        if (Array.isArray(pairsTour)) setPairsTour([...pairsTour].concat(pairArrayToUpdate))
+
+      }
+      else {
+        alert('Check VP inputs first!')
+      }
     }
-    else {
-      alert('Check VP inputs first!')
-    }
+
+
   }
   function calculatePairResults(pair: PairType, vp1: number, vp2: number) {
     let pairToCalculate = pair
     const player1 = findPlayerById(pair.player1id)
     const player2 = findPlayerById(pair.player2id)
 
-    if (enteredResCount === pairs.length) {
+    if (pairs && enteredResCount === pairs.length) {
       setEnteredResCount(0)
     }
 
@@ -285,7 +260,6 @@ export function Pairings() {
     setPlayers(playerListToUpdate)
   }
   function calculateWTC(diff: number) {
-    console.log(diff)
     if (diff >= 6 && diff <= 10) {
       return [11, 9]
     }
@@ -327,7 +301,12 @@ export function Pairings() {
     return +(rating1 + ELO_K * (Sa - Ea)).toFixed(2)
 
   }
-
+  function checkIfAlreadyPlayed(player1: PlayerType, player2: PlayerType) {
+    if (player1.opponentsIDs?.find((el) => el === +player2.id)) {
+      return true
+    }
+    return false
+  }
 
   useEffect(() => {
     function onRender() {
@@ -338,15 +317,16 @@ export function Pairings() {
   }, [])
 
   useEffect(() => {
-    if (enteredResCount === pairs.length) {
+    if (pairs && enteredResCount === pairs[0].length) {
       setTourNumber(tourNumber + 1)
-      console.log(players)
       definePairs(players)
+      console.log('Tour number is ' + tourNumber)
     }
+
   }, [enteredResCount])
   useEffect(() => {
-
-  }, [players])
+    console.log(pairs)
+  }, [pairs])
 
 
   return (
@@ -357,12 +337,12 @@ export function Pairings() {
         {renderPlayers()}
         <br />
         <h3>First tour pairings</h3>
-        {renderPairs()}
-        {tourNumber === 2 &&
+        {pairs && renderPairs(0)}
+        {tourNumber === 1 &&
           <>
             <br />
             <h3>Second tour pairings</h3>
-            {renderPairs(2)}
+            {pairs?.length === 2 && renderPairs(1)}
           </>
         }
       </>
