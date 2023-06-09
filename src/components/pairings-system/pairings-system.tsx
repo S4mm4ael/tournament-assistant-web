@@ -66,18 +66,7 @@ export function Pairings() {
   const [enteredResCount, setEnteredResCount] = useState<number>(0)
   const [tourNumber, setTourNumber] = useState<number>(0)
 
-  function makePairings(tour: number) {
-    switch (tour) {
-      case 1:
 
-        break;
-      case 2:
-        break;
-
-      default:
-        break;
-    }
-  }
   function createPlayersArrayForPairings() {
     const playersArrayForPairings: PlayerType[] = []
     startPlayersArray.map((player) => {
@@ -98,11 +87,12 @@ export function Pairings() {
   function randomizePairs(players: PlayerType[]) {
     const firstTourStandings: PairType[] = []
     let table = 1;
-    while (players.length) {
+    const playersArray = players
+    while (playersArray.length) {
 
       const pair: PairType = {
-        player1id: players.splice((Math.random() * 1000) % players.length, 1)[0].id,
-        player2id: players.splice((Math.random() * 1000) % players.length, 1)[0].id,
+        player1id: playersArray.splice((Math.random() * 1000) % players.length, 1)[0].id,
+        player2id: playersArray.splice((Math.random() * 1000) % players.length, 1)[0].id,
         table: table,
       }
 
@@ -114,25 +104,27 @@ export function Pairings() {
     setPairs([firstTourStandings])
   }
   function definePairs(players: PlayerType[]) {
-    const tourStandings: PairType[] = []
+    const tourPairs: PairType[] = []
+    const playersArray = [...players]
     let table = 1;
-    for (let i = 0; i < players.length; i += 2) {
+    while (playersArray.length) {
 
-      const pair: PairType = {
-        player1id: players[i].id,
-        player2id: players[i + 1].id,
+      let player1ID = playersArray.splice(0, 1)[0].id
+      let player2ID = playersArray.splice(0, 1)[0].id
+
+      let pair: PairType = {
+        player1id: player1ID,
+        player2id: player2ID,
         table: table,
       }
 
+      tourPairs.push(pair)
       table++
-
-      tourStandings.push(pair)
-
     }
 
-    if (pairs?.length === 1) {
-      console.log(pairs)
-      //setPairs((pairs) => [...pairs, tourStandings])
+    if (pairs && tourPairs.length == pairs[0].length) {
+      setPairs([...pairs, tourPairs])
+      console.log("pairs after first tour", pairs)
     }
   }
   function findPlayerById(id: string) {
@@ -326,10 +318,9 @@ export function Pairings() {
 
   useEffect(() => {
     if (pairs && enteredResCount === pairs[0].length) {
-
       setTourNumber(tourNumber + 1)
       definePairs(players)
-      console.log(tourNumber)
+      console.log('Tour number is ' + tourNumber)
     }
 
   }, [enteredResCount])
