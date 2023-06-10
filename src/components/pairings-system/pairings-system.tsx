@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { UserType } from 'types/User.type';
 import { PlayerType } from 'types/Event.type';
 import { PairType } from 'types/Pairings.type';
-
+import playersData from './players-mock.json'
 import styles from './pairings.module.css';
 
 type PairingsProps = {
@@ -13,50 +13,7 @@ type PairingsProps = {
 
 export function Pairings({ tourQuantity }: PairingsProps) {
 
-  const startPlayersArray: UserType[] = [
-    {
-      id: '1',
-      elo: 1600,
-      firstname: 'Semion',
-      lastname: 'Krapivin',
-      nickname: 'Sam',
-    },
-    {
-      id: '2',
-      elo: 1700,
-      firstname: 'Sasha',
-      lastname: 'Kratkovskiy',
-      nickname: 'Glin',
-    },
-    {
-      id: '3',
-      elo: 1600,
-      firstname: 'Hlopa',
-      lastname: 'Turkov',
-      nickname: 'Turok',
-    },
-    {
-      id: '4',
-      elo: 1700,
-      firstname: 'Max',
-      lastname: 'Bokov',
-      nickname: 'Maxim',
-    },
-    {
-      id: '5',
-      elo: 1700,
-      firstname: 'Floppy',
-      lastname: 'Floppy',
-      nickname: 'Floppy',
-    },
-    {
-      id: '6',
-      elo: 1600,
-      firstname: 'Dima',
-      lastname: 'Senchenko',
-      nickname: 'Dima',
-    },
-  ];
+  const startPlayersArray: UserType[] = playersData;
 
   const [players, setPlayers] = useState<PlayerType[] | []>([])
   const [pairs, setPairs] = useState<PairType[][] | null>(null)

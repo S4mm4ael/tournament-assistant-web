@@ -9,6 +9,8 @@ import { RegistrationPage } from 'pages/registration-page';
 import { LoginPage } from 'pages/login-page';
 import { Pairings } from 'components/pairings-system';
 
+
+
 function App() {
 
   return (
