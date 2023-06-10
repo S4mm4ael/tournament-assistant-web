@@ -1,62 +1,19 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import { UserType } from 'types/User.type';
 import { PlayerType } from 'types/Event.type';
 import { PairType } from 'types/Pairings.type';
-
+import playersData from './players-mock.json'
 import styles from './pairings.module.css';
-import { SubmitHandler, UseFormHandleSubmit } from 'react-hook-form';
-import { isArray } from 'util';
+
+type PairingsProps = {
+  tourQuantity: number;
+};
 
 
-export function Pairings() {
+export function Pairings({ tourQuantity }: PairingsProps) {
 
-
-  const startPlayersArray: UserType[] = [
-    {
-      id: '1',
-      elo: 1600,
-      firstname: 'Semion',
-      lastname: 'Krapivin',
-      nickname: 'Sam',
-    },
-    {
-      id: '2',
-      elo: 1700,
-      firstname: 'Sasha',
-      lastname: 'Kratkovskiy',
-      nickname: 'Glin',
-    },
-    {
-      id: '3',
-      elo: 1600,
-      firstname: 'Hlopa',
-      lastname: 'Turkov',
-      nickname: 'Turok',
-    },
-    {
-      id: '4',
-      elo: 1700,
-      firstname: 'Max',
-      lastname: 'Bokov',
-      nickname: 'Maxim',
-    },
-    // {
-    //   id: '5',
-    //   elo: 1700,
-    //   firstname: 'Floppy',
-    //   lastname: 'Floppy',
-    //   nickname: 'Floppy',
-    // },
-    // {
-    //   id: '6',
-    //   elo: 1600,
-    //   firstname: 'Dima',
-    //   lastname: 'Senchenko',
-    //   nickname: 'Dima',
-    // },
-  ];
+  const startPlayersArray: UserType[] = playersData;
 
   const [players, setPlayers] = useState<PlayerType[] | []>([])
   const [pairs, setPairs] = useState<PairType[][] | null>(null)
@@ -65,7 +22,7 @@ export function Pairings() {
   const [vpSecondPlayer, setVpSecondPlayer] = useState<number>()
   const [enteredResCount, setEnteredResCount] = useState<number>(0)
   const [tourNumber, setTourNumber] = useState<number>(0)
-
+  const TOUR_QUANTITY = tourQuantity
 
   function createPlayersArrayForPairings() {
     const playersArrayForPairings: PlayerType[] = []
@@ -99,14 +56,34 @@ export function Pairings() {
       table++
 
       firstTourStandings.push(pair)
-
     }
     setPairs([firstTourStandings])
   }
+
+  function checkStandingsDoubles(playersArray: PlayerType[]) {
+
+    for (let i = 0; i < playersArray.length - 1; i++) {
+      const player1 = playersArray[i]
+      const player2 = playersArray[i + 1]
+
+      if (checkIfAlreadyPlayed(player1, player2)) {
+        const playerToMove = playersArray.splice(i + 1, 1)[0]
+        playersArray.splice(i + 2, 0, playerToMove)
+        console.log('Moved:' + playerToMove.name + 'from' + `${i + 1}` + 'to' + `${i + 2}`)
+
+      }
+    }
+
+    return playersArray
+  }
+
   function definePairs(players: PlayerType[]) {
     const tourPairs: PairType[] = []
     const playersArray = [...players]
     let table = 1;
+
+    checkStandingsDoubles(playersArray)
+
     while (playersArray.length) {
 
       let player1ID = playersArray.splice(0, 1)[0].id
@@ -221,8 +198,10 @@ export function Pairings() {
       player2.to += toWTC[1]
     }
     else if (Math.abs(vp1 - vp2) <= 5) {
-      player1.primary += player2.primary += 1
-      player1.toOpponents += player2.toOpponents += player1.to += player2.to += 10
+      player1.primary += 1
+      player2.primary += 1
+      player1.to += 1
+      player2.to += 1
     }
     if (vp2 - vp1 > 5) {
       const diffWTC = vp2 - vp1
@@ -320,29 +299,54 @@ export function Pairings() {
     if (pairs && enteredResCount === pairs[0].length) {
       setTourNumber(tourNumber + 1)
       definePairs(players)
-      console.log('Tour number is ' + tourNumber)
+      setEnteredResCount(0)
     }
 
   }, [enteredResCount])
-  useEffect(() => {
-    console.log(pairs)
-  }, [pairs])
 
 
   return (
     <div className={styles.PairingsPage}>
       <>
         <h2>Test Pairings</h2>
-        <h3>Players List</h3>
+        <h3>Current Players Stangins for Tour №{tourNumber}</h3>
         {renderPlayers()}
         <br />
         <h3>First tour pairings</h3>
         {pairs && renderPairs(0)}
-        {tourNumber === 1 &&
+        {tourNumber >= 1 &&
           <>
             <br />
             <h3>Second tour pairings</h3>
-            {pairs?.length === 2 && renderPairs(1)}
+            {pairs && pairs?.length >= 2 && renderPairs(1)}
+          </>
+        }
+        {tourNumber >= 2 &&
+          <>
+            <br />
+            <h3>Third tour pairings</h3>
+            {pairs && pairs?.length >= 3 && renderPairs(2)}
+          </>
+        }
+        {tourNumber >= 3 &&
+          <>
+            <br />
+            <h3>Four tour pairings</h3>
+            {pairs && pairs?.length >= 4 && renderPairs(2)}
+          </>
+        }
+        {tourNumber >= 4 &&
+          <>
+            <br />
+            <h3>Five tour pairings</h3>
+            {pairs && pairs?.length >= 5 && renderPairs(2)}
+          </>
+        }
+        {tourNumber >= TOUR_QUANTITY &&
+          <>
+            <br />
+            <h3>Final standings</h3>
+            {renderPlayers()}
           </>
         }
       </>

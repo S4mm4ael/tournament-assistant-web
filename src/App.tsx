@@ -9,6 +9,8 @@ import { RegistrationPage } from 'pages/registration-page';
 import { LoginPage } from 'pages/login-page';
 import { Pairings } from 'components/pairings-system';
 
+
+
 function App() {
 
   return (
@@ -17,7 +19,7 @@ function App() {
         <Route path='/' element={<Layout />}>
           {/* <Route path='/' element={<AuthRoute />}></Route> */}
           <Route path='/' element={<HomePage />} />
-          <Route path='/pairings' element={<Pairings />} />
+          <Route path='/pairings' element={<Pairings tourQuantity={4} />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/registration' element={<RegistrationPage />} />
           <Route path='/event/:eventId' element={<EventPage />} />
