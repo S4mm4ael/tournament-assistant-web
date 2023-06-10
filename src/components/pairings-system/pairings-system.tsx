@@ -99,14 +99,34 @@ export function Pairings() {
       table++
 
       firstTourStandings.push(pair)
-
     }
     setPairs([firstTourStandings])
   }
+
+  function checkStandingsDoubles(playersArray: PlayerType[]) {
+
+    for (let i = 0; i < playersArray.length - 1; i++) {
+      const player1 = playersArray[i]
+      const player2 = playersArray[i + 1]
+
+      if (checkIfAlreadyPlayed(player1, player2)) {
+        const playerToMove = playersArray.splice(i + 1, 1)[0]
+        playersArray.splice(i + 2, 0, playerToMove)
+        console.log('Moved:' + playerToMove.name + 'from' + `${i + 1}` + 'to' + `${i + 2}`)
+
+      }
+    }
+
+    return playersArray
+  }
+
   function definePairs(players: PlayerType[]) {
     const tourPairs: PairType[] = []
     const playersArray = [...players]
     let table = 1;
+
+    checkStandingsDoubles(playersArray)
+
     while (playersArray.length) {
 
       let player1ID = playersArray.splice(0, 1)[0].id
@@ -320,13 +340,9 @@ export function Pairings() {
     if (pairs && enteredResCount === pairs[0].length) {
       setTourNumber(tourNumber + 1)
       definePairs(players)
-      console.log('Tour number is ' + tourNumber)
     }
 
   }, [enteredResCount])
-  useEffect(() => {
-    console.log(pairs)
-  }, [pairs])
 
 
   return (
