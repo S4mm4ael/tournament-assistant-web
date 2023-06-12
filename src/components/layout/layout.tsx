@@ -7,7 +7,7 @@ import { Header } from '../header';
 export function Layout() {
   return (
     <div className="layout">
-      {/* <Header /> */}
+      <Header />
       <Outlet />
       <Footer />
     </div>
