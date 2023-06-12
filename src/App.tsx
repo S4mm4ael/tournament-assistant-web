@@ -9,6 +9,7 @@ import { RegistrationPage } from 'pages/registration-page';
 import { LoginPage } from 'pages/login-page';
 import { Pairings } from 'components/pairings-system';
 import { AuthRoute } from 'components/auth-route';
+import { CreateEventPage } from 'pages/create-event-page';
 
 
 
@@ -24,7 +25,7 @@ function App() {
           <Route path='/login' element={<LoginPage />} />
           <Route path='/registration' element={<RegistrationPage />} />
           <Route path='/event/:eventId' element={<EventPage />} />
-
+          <Route path='/create-event' element={<CreateEventPage />} />
         </Route>
       </Routes >
     </div>
