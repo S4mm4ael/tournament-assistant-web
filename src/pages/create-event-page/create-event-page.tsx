@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './create-event-page.module.css';
 import { getAuth } from 'firebase/auth';
 import { EventType } from 'types/Event.type';
+import generateID from 'helpers/generateID';
 
 export function CreateEventPage() {
   const auth = getAuth();
@@ -22,7 +23,7 @@ export function CreateEventPage() {
   const [eventDate, setEventDate] = useState(eventInfo.date);
   const [eventDescription, setEventDescription] = useState(eventInfo.description);
   const [eventELO, setEventELO] = useState(eventInfo.elo);
-  const [eventID, setEventID] = useState(eventInfo.id);
+  const [eventID, setEventID] = useState(generateID());
   const [eventName, setEventName] = useState(eventInfo.name);
   const [eventPts, setEventPts] = useState(eventInfo.pts);
   const [eventTours, setEventTours] = useState(eventInfo.tours);
@@ -50,6 +51,7 @@ export function CreateEventPage() {
       {isAdmin && (
         <>
           <h1> Create event</h1>
+          <span className="id">{eventID}</span>
           <form
             className={styles.CreateEventPage__inputForm}
             onSubmit={(e) => {
