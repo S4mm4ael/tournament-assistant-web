@@ -19,6 +19,7 @@ export function CreateEventPage() {
     tours: 3,
     type: 'SOLO',
     link: '',
+    playersNumber: 0,
   });
   const [eventDate, setEventDate] = useState(eventInfo.date);
   const [eventDescription, setEventDescription] = useState(eventInfo.description);
@@ -26,6 +27,7 @@ export function CreateEventPage() {
   const [eventID, setEventID] = useState(generateID());
   const [eventName, setEventName] = useState(eventInfo.name);
   const [eventPts, setEventPts] = useState(eventInfo.pts);
+  const [eventPlayersNumber, setEventPlayersNumber] = useState(eventInfo.playersNumber);
   const [eventTours, setEventTours] = useState(eventInfo.tours);
   const [eventLink, setEventLink] = useState(eventInfo.link);
   const [eventType, setEventType] = useState(eventInfo.type);
@@ -94,6 +96,26 @@ export function CreateEventPage() {
                 <option value="1500">1500</option>
                 <option value="2000">2000</option>
               </select>
+            </div>
+            <div className={styles.CreateEventPage__inputContainer}>
+              <label htmlFor="elo">Max ELO</label>
+              <input
+                type="number"
+                min={0}
+                max={3000}
+                id="elo"
+                onChange={(e) => setEventELO(+e.target.value)}
+              />
+            </div>
+            <div className={styles.CreateEventPage__inputContainer}>
+              <label htmlFor="players">Max players</label>
+              <input
+                type="number"
+                min={0}
+                max={50}
+                id="players"
+                onChange={(e) => setEventPlayersNumber(+e.target.value)}
+              />
             </div>
             <input
               type="submit"
