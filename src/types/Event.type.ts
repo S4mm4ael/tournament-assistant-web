@@ -1,7 +1,7 @@
 import { PairingType } from './Pairings.type';
 
 export type EventType = {
-  date: Date;
+  date: string;
   description?: string | null;
   elo: number | null;
   id: string;
@@ -9,10 +9,14 @@ export type EventType = {
   pts: number;
   tours: number;
   type: string;
+  link?: string;
+  playersNumber?: number;
   players?: PlayerType[];
   tour1?: PairingType[];
   tour2?: PairingType[];
   tour3?: PairingType[];
+  tour4?: PairingType[];
+  tour5?: PairingType[];
 };
 
 export type PlayerType = {

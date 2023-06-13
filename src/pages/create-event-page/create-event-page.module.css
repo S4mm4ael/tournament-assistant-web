@@ -1,6 +1,7 @@
-.EventPage{
+.CreateEventPage {
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   min-height: calc(100vh - 100px - 110px);
   padding: 20px 0;
@@ -9,72 +10,61 @@
   margin: 0 auto;
   gap: 10px;
 }
-.EventPage__info p{
-  max-width: 1110px;
+
+.CreateEventPage__inputForm {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+    gap: 10px;
+}
+.CreateEventPage__inputForm input {
+  font-size: 1.1rem;
 }
 
-.EventPage__playersAndPairings{
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-  max-width: 100%;
+.CreateEventPage__inputDescription {
+  width: 250px;
+  height: 100px;
 }
-.EventPage__info,
-.EventPage__infoFormat
-{
+
+.CreateEventPage__inputContainer {
   display: flex;
+  font-size: 1.2rem;
   gap: 20px;
-  flex-direction: column;
+  padding: 10px;
+    border-bottom: 1px solid black;
+    cursor: pointer;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+    width: 100%;
 }
-.EventPage__infoItem{
-  color:gray;
-}
-.EventPage__info p{
-  font-size: 20px;
 
-}
-.EventPage__table {
-  font-size: 20px;
+.CreateEventPage__inputSubmit {
+  all: unset;
   margin: 0 auto;
-  width: 80%;
-}
-
-.EventPage__table thead{
- font-weight: 700;
-}
-.EventPage__table tr{
-  height: 40px;
-}
-.EventPage__toursHeader{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin:  0 auto;
-  font-weight: 700;
-  font-size: 24px;
-  border: none;
-
-}
-.EventPage__title{
-  width: 80%;
-  margin: 0 auto;
-}
-.EventPage__players h3,
-.EventPage__pairings h3{
-  margin-bottom: 10px;
-  font-size: 1.3rem;
-}
-.EventPage__tablePoints{
-  width: 10%;
   text-align: center;
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    transition: .3s;
+    outline: black 5px auto;
+    font-size: 1.1rem;
 }
-.EventPage__tableNames{
-  width: 60%;
+
+.CreateEventPage__inputSubmit:focus,
+.CreateEventPage__inputSubmit:hover {
+  outline: red 5px auto;
 }
-@media screen and (max-width:450px){
-  .EventPage__table{
-    font-size: 14px;
-  }
+
+.CreateEventPage__inputSelect,
+.CreateEventPage__inputDate {
+  cursor: pointer;
+  height: 40px;
+  width: 100px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.CreateEventPage__inputDate {
+  width: 150px;
 }

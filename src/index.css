@@ -66,3 +66,7 @@ list-style: none;
 :root {
   --swiper-theme-color: #B00020 !important;
 }
+.id {
+  color: darkgray;
+  font-size: 0.7rem;
+}
