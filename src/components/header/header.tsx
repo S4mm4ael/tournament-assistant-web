@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 
@@ -9,7 +9,7 @@ import styles from './header.module.css';
 export function Header() {
   const auth = getAuth();
   const navigate = useNavigate();
-  const user = localStorage.getItem('user');
+  const user = auth.currentUser;
 
   return (
     <header>
@@ -33,22 +33,29 @@ export function Header() {
           )}
 
           {user && (
-            <button
-              type="button"
-              className={`${styles.Header__link} ${styles.Header__link_button}`}
-              onClick={() => {
-                signOut(auth)
-                  .then(() => {
-                    navigate('/');
-                    localStorage.removeItem('user');
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-              }}
-            >
-              Sign out
-            </button>
+            <>
+              {user.email === 'homer1996@gmail.com' && (
+                <Link className={styles.Header__link} to={'/create-event'}>
+                  Create Event
+                </Link>
+              )}
+              <button
+                type="button"
+                className={`${styles.Header__link} ${styles.Header__link_button}`}
+                onClick={() => {
+                  signOut(auth)
+                    .then(() => {
+                      navigate('/');
+                      localStorage.removeItem('user');
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                }}
+              >
+                Sign out
+              </button>
+            </>
           )}
         </div>
       </div>
