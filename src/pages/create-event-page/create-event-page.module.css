@@ -20,8 +20,15 @@
 }
 .CreateEventPage__inputForm input {
   font-size: 1.1rem;
-}
 
+}
+.CreateEventPage__inputForm input:focus,
+.CreateEventPage__inputForm input:hover,
+.CreateEventPage__inputSelect:hover,
+.CreateEventPage__inputSelect:focus {
+  outline: red 5px auto;
+  transition: .3s;
+}
 .CreateEventPage__inputDescription {
   width: 250px;
   height: 100px;
@@ -64,7 +71,22 @@
   text-align: center;
   font-size: 1.1rem;
 }
+.CreateEventPage__inputText {
+  width: 400px;
+}
 
+.CreateEventPage__inputLink {
+  width: 100px;
+
+}
+
+.CreateEventPage__inputNumber {
+  width: 60px;
+}
 .CreateEventPage__inputDate {
   width: 150px;
+}
+.CreateEventPage__baseInfo {
+  display: flex;
+  gap: 20px;
 }
