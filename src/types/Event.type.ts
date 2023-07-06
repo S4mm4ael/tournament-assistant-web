@@ -28,4 +28,5 @@ export type PlayerType = {
   vp: number;
   opponentsIDs?: number[];
   elo?: number;
+  proxy?: boolean;
 };

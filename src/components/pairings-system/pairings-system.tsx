@@ -37,6 +37,7 @@ export function Pairings({ tourQuantity }: PairingsProps) {
         vp: 0,
         opponentsIDs: [],
         elo: player.elo,
+        proxy: player.proxy,
       };
       playersArrayForPairings.push(playerUpdated);
     });
@@ -146,10 +147,6 @@ export function Pairings({ tourQuantity }: PairingsProps) {
         const player1 = findPlayerById(pair.player1id);
         const player2 = findPlayerById(pair.player2id);
 
-
-
-
-
         return (
           <div key={player1.name + '-' + player2.name} className={styles.PairingsPage__pairCard}>
             <p>Table: {pair.table}</p>
@@ -161,11 +158,11 @@ export function Pairings({ tourQuantity }: PairingsProps) {
                 <div className={styles.PairingsPage__pairFormNames}>
                   <b>
                     {player1.name}</b>
-                  {player1.elo}
+                  {player1.proxy ? 'PROXY' : player1.elo}
 
                   <b>{player2.name}</b>
                   {
-                    player2.elo
+                    player2.proxy ? 'PROXY' : player2.elo
                   }
                 </div>
 

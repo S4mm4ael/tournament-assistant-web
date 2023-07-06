@@ -81,20 +81,23 @@
     "elo": 0,
     "firstname": "",
     "lastname": "",
-    "nickname": "PROXY Сорокин"
+    "nickname": "Сорокин",
+    "proxy": true
   },
   {
     "id": "14",
     "elo": 0,
     "firstname": "",
     "lastname": "",
-    "nickname": "PROXY Краткович"
+    "nickname": "Краткович",
+    "proxy": true
   },
   {
     "id": "15",
     "elo": 0,
     "firstname": "",
     "lastname": "",
-    "nickname": "PROXY Сенченко"
+    "nickname": "Сенченко",
+    "proxy": true
   }
 ]
