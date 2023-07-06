@@ -10,6 +10,7 @@ import { LoginPage } from 'pages/login-page';
 import { Pairings } from 'components/pairings-system';
 import { AuthRoute } from 'components/auth-route';
 import { CreateEventPage } from 'pages/create-event-page';
+import { EloCalculatorPage } from 'pages/elo-calculator';
 
 
 
@@ -22,6 +23,7 @@ function App() {
           {/* <Route path='/' element={<AuthRoute />}></Route> */}
           <Route path='/' element={<HomePage />} />
           <Route path='/pairings' element={<Pairings tourQuantity={4} />} />
+          <Route path='/calculator' element={<EloCalculatorPage />} />
           <Route path='/login' element={<LoginPage />} />
           <Route path='/registration' element={<RegistrationPage />} />
           <Route path='/event/:eventId' element={<EventPage />} />

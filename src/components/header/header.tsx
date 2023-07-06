@@ -21,6 +21,9 @@ export function Header() {
           </p>
         </Link>
         <div className={styles.Header__linkContainer}>
+          <Link className={styles.Header__link} to={'/calculator'}>
+            ELO calculator
+          </Link>
           {!user && (
             <>
               <Link className={styles.Header__link} to={'/registration'}>
