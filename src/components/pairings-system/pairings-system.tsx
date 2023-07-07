@@ -121,7 +121,6 @@ export function Pairings({ tourQuantity }: PairingsProps) {
   function findPlayerById(id: string) {
     const playerIndex = players.findIndex((player) => player.id === id);
 
-
     return players[playerIndex];
 
   }
@@ -297,8 +296,6 @@ export function Pairings({ tourQuantity }: PairingsProps) {
     playerListToUpdate[playerToUpdateIndex] = playerUpdated;
 
     setPlayers(playerListToUpdate);
-
-
 
   }
   function calculateWTC(diff: number) {
