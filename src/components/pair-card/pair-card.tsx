@@ -2,6 +2,7 @@ import React from 'react';
 
 import styles from './pair-card.module.css';
 import { PlayerType } from 'types/Event.type';
+import { submitPairResult } from 'utils/pairs-calculation';
 
 type PairCardProps = {
   player1: PlayerType;
@@ -16,7 +17,7 @@ export function PairCard({ player1, player2, table }: PairCardProps) {
       <div className={styles.PairingsPage__pairFormWrapper}>
         <form
           className={styles.PairingsPage__pairForm}
-          onSubmit={(event) => submitPairResult(event, player1.id, player2.id, table)}
+          onSubmit={(event) => submitPairResult(event, table, player1.id, player2.id)}
         >
           <div className={styles.PairingsPage__pairFormNames}>
             <b>{player1.name}</b>

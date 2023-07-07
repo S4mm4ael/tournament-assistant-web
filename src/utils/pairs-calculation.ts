@@ -10,20 +10,20 @@ export function submitPairResult(
   pairs: PairType[][],
   vpFirstPlayer: number,
   vpSecondPlayer: number,
-  enteredResCount: number,
+  setVpFirstPlayer: (arg: number) => void,
+  setVpSecondPlayer: (arg: number) => void,
   pairsTour: PairType[],
   setPairsTour: (arg: PairType[]) => void,
-  setEnteredResCount: (arg: number) => void,
-  setPlayers: (arg: PlayerType[]) => void,
-  setVpFirstPlayer: (arg: number) => void,
-  setVpSecondPlayer: (arg: number) => void
+  enteredResCount?: number,
+  setEnteredResCount?: (arg: number) => void,
+  setPlayers?: (arg: PlayerType[]) => void
 ) {
   function calculatePairResults(pair: PairType, vp1: number, vp2: number) {
     const pairToCalculate = pair;
     const player1 = findPlayerById(pair.player1id, players);
     const player2 = findPlayerById(pair.player2id, players);
 
-    if (pairs && enteredResCount === pairs.length) {
+    if (pairs && setEnteredResCount && enteredResCount === pairs.length) {
       setEnteredResCount(0);
     }
 
@@ -67,10 +67,10 @@ export function submitPairResult(
     setVpFirstPlayer(0);
     setVpSecondPlayer(0);
 
-    if (enteredResCount) {
+    if (enteredResCount && setEnteredResCount) {
       setEnteredResCount(enteredResCount + 1);
     }
-    if (!enteredResCount) {
+    if (!enteredResCount && setEnteredResCount) {
       setEnteredResCount(1);
     }
 
@@ -85,7 +85,7 @@ export function submitPairResult(
 
     playerListToUpdate[playerToUpdateIndex] = playerUpdated;
 
-    setPlayers(playerListToUpdate);
+    if (setPlayers) setPlayers(playerListToUpdate);
   }
 
   function updatePair() {
