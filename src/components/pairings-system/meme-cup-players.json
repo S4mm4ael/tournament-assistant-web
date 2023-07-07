@@ -1,0 +1,103 @@
+[
+  {
+    "id": "1",
+    "elo": 1707.1,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Talix"
+  },
+  {
+    "id": "2",
+    "elo": 1490,
+    "firstname": "3",
+    "lastname": "",
+    "nickname": "Marat"
+  },
+  {
+    "id": "4",
+    "elo": 1641.5,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Тупик"
+  },
+  {
+    "id": "5",
+    "elo": 1580.1,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Веталь"
+  },
+  {
+    "id": "6",
+    "elo": 1600,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Екушенко"
+  },
+  {
+    "id": "7",
+    "elo": 1579.7,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Монк"
+  },
+  {
+    "id": "8",
+    "elo": 1600,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Нестер"
+  },
+  {
+    "id": "9",
+    "elo": 1518.9,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Войтех"
+  },
+  {
+    "id": "10",
+    "elo": 1361.8,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Иванов"
+  },
+  {
+    "id": "11",
+    "elo": 1421.1,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Хацкевич"
+  },
+  {
+    "id": "12",
+    "elo": 1600,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Труханович"
+  },
+  {
+    "id": "13",
+    "elo": 0,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Сорокин",
+    "proxy": true
+  },
+  {
+    "id": "14",
+    "elo": 0,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Краткович",
+    "proxy": true
+  },
+  {
+    "id": "15",
+    "elo": 0,
+    "firstname": "",
+    "lastname": "",
+    "nickname": "Сенченко",
+    "proxy": true
+  }
+]

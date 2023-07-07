@@ -53,7 +53,10 @@ export function CreateEventPage() {
       {isAdmin && (
         <>
           <h1> Create event</h1>
-          <span className="id">{eventID}</span>
+          <div className={styles.CreateEventPage__baseInfo}>
+            <span className="id">ID - {eventID}</span>
+            <span className="id">Organizer - {user?.email}</span>
+          </div>
           <form
             className={styles.CreateEventPage__inputForm}
             onSubmit={(e) => {
@@ -72,7 +75,12 @@ export function CreateEventPage() {
             </div>
             <div className={styles.CreateEventPage__inputContainer}>
               <label htmlFor="name">Name</label>
-              <input type="text" id="name" onChange={(e) => setEventName(e.target.value)} />
+              <input
+                type="text"
+                id="name"
+                className={styles.CreateEventPage__inputText}
+                onChange={(e) => setEventName(e.target.value)}
+              />
             </div>
             <div className={styles.CreateEventPage__inputContainer}>
               <label htmlFor="Description">Description</label>
@@ -81,6 +89,27 @@ export function CreateEventPage() {
                 onChange={(e) => setEventDescription(e.target.value)}
                 className={styles.CreateEventPage__inputDescription}
               />
+              <label htmlFor="link">Reglament link</label>
+              <input
+                type="text"
+                id="link"
+                className={styles.CreateEventPage__inputLink}
+                onChange={(e) => setEventLink(e.target.value)}
+              />
+            </div>
+            <div className={styles.CreateEventPage__inputContainer}>
+              <p>Event type</p>
+              <select
+                className={styles.CreateEventPage__inputSelect}
+                name="type"
+                id="type"
+                value={eventType.toString()}
+                onChange={(e) => setEventType(e.target.value)}
+              >
+                <option value="SOLO">SOLO</option>
+                <option value="TEAM">TEAM</option>
+                <option value="PAIRS">PAIRS</option>
+              </select>
             </div>
             <div className={styles.CreateEventPage__inputContainer}>
               <p>Points</p>
@@ -104,6 +133,7 @@ export function CreateEventPage() {
                 min={0}
                 max={3000}
                 id="elo"
+                className={styles.CreateEventPage__inputNumber}
                 onChange={(e) => setEventELO(+e.target.value)}
               />
             </div>
@@ -114,8 +144,25 @@ export function CreateEventPage() {
                 min={0}
                 max={50}
                 id="players"
+                className={styles.CreateEventPage__inputNumber}
                 onChange={(e) => setEventPlayersNumber(+e.target.value)}
               />
+            </div>
+
+            <div className={styles.CreateEventPage__inputContainer}>
+              <p>Tours number</p>
+              <select
+                className={styles.CreateEventPage__inputSelect}
+                name="status"
+                id="status"
+                value={eventTours.toString()}
+                onChange={(e) => setEventTours(+e.target.value)}
+              >
+                <option value="2">2</option>
+                <option value="2">3</option>
+                <option value="2">4</option>
+                <option value="2">5</option>
+              </select>
             </div>
             <input
               type="submit"

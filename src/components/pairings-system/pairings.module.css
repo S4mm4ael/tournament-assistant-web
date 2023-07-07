@@ -11,17 +11,48 @@
 
 .PairingsPage__pairCard {
   display: flex;
-  justify-content: flex-start;
   gap: 5px;
-  justify-content: space-around;
+  justify-content: space-between;
+    align-items: center;
   margin-bottom: 5px;
-  width: 500px;
+  width: 600px;
+    height: 40px;
   padding: 10px;
   border: 1px solid black;
 }
+.PairingsPage__pairFormWrapper {
+  width: 80%;
 
+}
 .PairingsPage__pairForm {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
+  
+    gap: 5px;
+    align-items: center;
+  }
+  
+  .PairingsPage__pairForm input {
+    font-size: 1.2rem;
+    width: 50px;
+    height: 30px;
+  }
+  
+  .PairingsPage__pairForm button {
+    height: 33px;
+    width: 33px;
+  }
+  
+  .PairingsPage__pairFormInputs {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+    margin-right: 0;
+  }
+  
+  .PairingsPage__pairFormNames {
+    display: flex;
+    flex-direction: row;
   gap: 5px;
 }

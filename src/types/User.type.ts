@@ -6,4 +6,5 @@ export type UserType = {
   lastname: string;
   nickname: string;
   userType?: string[];
+  proxy?: boolean;
 };
