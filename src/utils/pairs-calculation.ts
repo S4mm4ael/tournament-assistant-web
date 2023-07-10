@@ -2,22 +2,39 @@ import { PlayerType } from 'types/Event.type';
 import { PairType } from 'types/Pairings.type';
 import { findPlayerById } from './find-player';
 
-export function submitPairResult(
-  event: React.FormEvent<HTMLFormElement>,
-  table: number,
-  tourNumber: number,
-  players: PlayerType[],
-  pairs: PairType[][],
-  vpFirstPlayer: number,
-  vpSecondPlayer: number,
-  setVpFirstPlayer: (arg: number) => void,
-  setVpSecondPlayer: (arg: number) => void,
-  pairsTour: PairType[],
-  setPairsTour: (arg: PairType[]) => void,
-  enteredResCount?: number,
-  setEnteredResCount?: (arg: number) => void,
-  setPlayers?: (arg: PlayerType[]) => void
-) {
+type submitPairProps = {
+  event: React.FormEvent<HTMLFormElement>;
+  table: number;
+  tourNumber: number;
+  players: PlayerType[];
+  pairs: PairType[][];
+  vpFirstPlayer: number;
+  vpSecondPlayer: number;
+  setVpFirstPlayer: (arg: number) => void;
+  setVpSecondPlayer: (arg: number) => void;
+  pairsTour: PairType[];
+  setPairsTour: (arg: PairType[]) => void;
+  enteredResCount?: number;
+  setEnteredResCount?: (arg: number) => void;
+  setPlayers?: (arg: PlayerType[]) => void;
+};
+
+export function submitPairResult({
+  event,
+  table,
+  tourNumber,
+  players,
+  pairs,
+  vpFirstPlayer,
+  vpSecondPlayer,
+  setVpFirstPlayer,
+  setVpSecondPlayer,
+  pairsTour,
+  setPairsTour,
+  enteredResCount,
+  setEnteredResCount,
+  setPlayers,
+}: submitPairProps) {
   function calculatePairResults(pair: PairType, vp1: number, vp2: number) {
     const pairToCalculate = pair;
     const player1 = findPlayerById(pair.player1id, players);

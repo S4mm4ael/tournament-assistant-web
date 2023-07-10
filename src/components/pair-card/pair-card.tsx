@@ -7,7 +7,7 @@ import { submitPairResult } from 'utils/pairs-calculation';
 type PairCardProps = {
   player1: PlayerType;
   player2: PlayerType;
-  table: number | undefined;
+  table: number;
 };
 
 export function PairCard({ player1, player2, table }: PairCardProps) {
@@ -17,7 +17,10 @@ export function PairCard({ player1, player2, table }: PairCardProps) {
       <div className={styles.PairingsPage__pairFormWrapper}>
         <form
           className={styles.PairingsPage__pairForm}
-          onSubmit={(event) => submitPairResult(event, table, player1.id, player2.id)}
+          onSubmit={(event) => submitPairResult({
+            event, table, tourNumber, players, pairs, vpFirstPlayer, vpSecondPlayer, setVpFirstPlayer, setVpSecondPlayer, 
+            , pairsTour, setPairsTour
+           })}
         >
           <div className={styles.PairingsPage__pairFormNames}>
             <b>{player1.name}</b>
