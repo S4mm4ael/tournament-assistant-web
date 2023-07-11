@@ -152,7 +152,7 @@ export function Pairings({ tourQuantity }: PairingsProps) {
             <div className={styles.PairingsPage__pairFormWrapper}>
               <form
                 className={styles.PairingsPage__pairForm}
-                onSubmit={(event) => submitPairResult(event, player1.id, player2.id, pair.table)}
+                onSubmit={(event) => submitPairResult(event, pair.table)}
               >
                 <div className={styles.PairingsPage__pairFormNames}>
                   <b>
@@ -199,8 +199,6 @@ export function Pairings({ tourQuantity }: PairingsProps) {
   };
   function submitPairResult(
     event: React.FormEvent<HTMLFormElement>,
-    id1: string,
-    id2: string,
     table: number
   ) {
     event.preventDefault();
