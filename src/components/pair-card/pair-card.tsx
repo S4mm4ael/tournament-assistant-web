@@ -3,11 +3,15 @@ import React from 'react';
 import styles from './pair-card.module.css';
 import { PlayerType } from 'types/Event.type';
 
-type PairCardProps = {
-  player1: PlayerType;
-  player2: PlayerType;
+type PlayerPairType = {
+  eloNew?: number;
 };
 
+type PlayerTypePairCard = PlayerType & PlayerPairType;
+type PairCardProps = {
+  player1: PlayerTypePairCard;
+  player2: PlayerTypePairCard;
+};
 export function PairCard({ player1, player2 }: PairCardProps) {
   return (
     <div key={player1.name + '-' + player2.name} className={styles.pairCard}>
@@ -16,6 +20,7 @@ export function PairCard({ player1, player2 }: PairCardProps) {
           <div className={styles.pairFormNames}>
             <b>{player1.name}</b>
             <b className={styles.pairFormElo}>Previous ELO:{player1.elo}</b>
+            <b className={styles.pairFormElo}>New ELO:{player1.eloNew}</b>
           </div>
 
           <div className={styles.pairFormInputs}>
@@ -42,9 +47,12 @@ export function PairCard({ player1, player2 }: PairCardProps) {
           <div className={styles.pairFormNames}>
             <b>{player2.name}</b>
             <b className={styles.pairFormElo}>Previous ELO:{player2.elo}</b>
+            <b className={styles.pairFormElo}>New ELO:{player2.eloNew}</b>
           </div>
-          <button type="submit">✔</button>
         </form>
+        <button className={styles.pairFormSubmitBtn} type="submit">
+          ✔
+        </button>
       </div>
     </div>
   );

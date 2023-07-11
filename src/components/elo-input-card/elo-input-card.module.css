@@ -1,0 +1,11 @@
+.EloInputCard {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 600px;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid black;
+}
