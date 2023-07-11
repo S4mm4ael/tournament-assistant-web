@@ -1,8 +1,4 @@
-import { PlayerType } from 'types/Event.type';
-import { PairType } from 'types/Pairings.type';
-import { findPlayerById } from './find-player';
-
-function calculateWTC(diff: number) {
+export function calculateWTC(diff: number) {
   if (diff >= 6 && diff <= 10) {
     return [11, 9];
   }
@@ -35,7 +31,7 @@ function calculateWTC(diff: number) {
   } else return [0, 0];
 }
 
-function calculateELO(to: number, rating1: number, rating2: number) {
+export function calculateELO(to: number, rating1: number, rating2: number) {
   const ELO_K = 100;
   const Ea = 1 / (1 + 10 ** ((rating2 - rating1) / 400));
   const Sa = to / 20;

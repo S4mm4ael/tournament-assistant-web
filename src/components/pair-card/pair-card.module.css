@@ -5,7 +5,7 @@
   align-items: center;
   margin-bottom: 5px;
   width: 600px;
-  height: 40px;
+  height: 100px;
   padding: 10px;
   border: 1px solid black;
 }
@@ -14,7 +14,30 @@
   width: 80%;
 
 }
+.pairFormInputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+}
 
+.pairFormInputs h4 {
+  text-align: center;
+}
+
+.pairFormVPBox {
+  display: flex;
+  gap: 5px
+}
+
+.pairFormInputs>*:first-child {
+  align-self: stretch;
+}
+
+.pairFormElo {
+  font-size: 1.2rem;
+}
 .pairForm {
   display: flex;
   justify-content: space-between;
@@ -27,6 +50,8 @@
   font-size: 1.2rem;
   width: 50px;
   height: 30px;
+  text-align: center;
+    font-weight: 700;
 }
 
 .pairForm button {
@@ -42,7 +67,7 @@
 
 .pairFormNames {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 5px;
   font-size: 2rem;
 }

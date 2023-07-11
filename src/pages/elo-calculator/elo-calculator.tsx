@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './elo-calculator.module.css';
 import { PairCard } from 'components/pair-card';
 import { PlayerType } from 'types/Event.type';
@@ -25,7 +25,7 @@ export function EloCalculatorPage() {
 
   return (
     <div className={styles.EloCalculatorPage}>
-      Calculate!
+      Here you can easily count your ELO after game.
       <PairCard player1={player1} player2={player2}></PairCard>
     </div>
   );
