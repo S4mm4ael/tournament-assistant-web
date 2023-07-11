@@ -10,22 +10,21 @@ type PairCardProps = {
 
 export function PairCard({ player1, player2 }: PairCardProps) {
   return (
-    <div key={player1.name + '-' + player2.name} className={styles.PairingsPage__pairCard}>
-      <div className={styles.PairingsPage__pairFormWrapper}>
-        <form className={styles.PairingsPage__pairForm}>
-          <div className={styles.PairingsPage__pairFormNames}>
+    <div key={player1.name + '-' + player2.name} className={styles.pairCard}>
+      <div className={styles.pairFormWrapper}>
+        <form className={styles.pairForm}>
+          <div className={styles.pairFormNames}>
             <b>{player1.name}</b>
-            {player1.proxy ? 'PROXY' : player1.elo}
-
-            <b>{player2.name}</b>
-            {player2.proxy ? 'PROXY' : player2.elo}
           </div>
 
-          <div className={styles.PairingsPage__pairFormInputs}>
+          <div className={styles.pairFormInputs}>
             <input type="number" min="0" max="100" name={`${player1.name} VP`} />
             <input type="number" min="0" max="100" name={`${player2.name} VP`} id={player2.id} />
-            <button type="submit">✔</button>
           </div>
+          <div className={styles.pairFormNames}>
+            <b>{player2.name}</b>
+          </div>
+          <button type="submit">✔</button>
         </form>
       </div>
     </div>

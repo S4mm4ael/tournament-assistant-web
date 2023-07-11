@@ -1,0 +1,48 @@
+.pairCard {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 600px;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.pairFormWrapper {
+  width: 80%;
+
+}
+
+.pairForm {
+  display: flex;
+  justify-content: space-between;
+
+  gap: 5px;
+  align-items: center;
+}
+
+.pairForm input {
+  font-size: 1.2rem;
+  width: 50px;
+  height: 30px;
+}
+
+.pairForm button {
+  height: 33px;
+  width: 33px;
+}
+
+.pairFormInputs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pairFormNames {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  font-size: 2rem;
+}
