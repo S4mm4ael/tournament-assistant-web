@@ -1,6 +1,7 @@
 .EloInputCard {
   display: flex;
-  gap: 5px;
+  font-size: 1.2rem;
+    gap: 100px;
   justify-content: center;
   align-items: center;
   margin-bottom: 5px;
@@ -8,4 +9,7 @@
   height: 100px;
   padding: 10px;
   border: 1px solid black;
+}
+.EloInputCard h4 {
+  font-size: 1.5rem;
 }

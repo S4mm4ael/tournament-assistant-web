@@ -3,6 +3,7 @@ import React from 'react';
 
 import styles from './elo-input-card.module.css';
 import { PlayerType } from 'types/Event.type';
+import { PlayersDropdown } from 'components/players-dropdown';
 
 type PlayerMockData = {
   id: string;
@@ -34,5 +35,19 @@ export function EloInputCard({
   setPlayerOne,
   setPlayerTwo,
 }: EloInputCardProps) {
-  return <div className={styles.EloInputCard}>Input here</div>;
+  return <div className={styles.EloInputCard}>
+    <div className={styles.EloInputCard__sideWrapper}>
+      <h4>Select first Player</h4>
+      <PlayersDropdown></PlayersDropdown>
+
+      <input type="checkbox" name="player-one-check" />
+      <label htmlFor="player-one-check"> Custom ELO</label><br></br>
+    </div>
+    <div className={styles.EloInputCard__sideWrapper}>
+      <h4>Select second Player</h4>
+      <PlayersDropdown></PlayersDropdown>
+      <input type="checkbox" name="player-two-check" />
+      <label htmlFor="player-two-check"> Custom ELO</label><br></br>
+    </div>
+  </div>;
 }
