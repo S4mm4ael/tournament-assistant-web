@@ -1,0 +1,28 @@
+.EloInputCard {
+  display: flex;
+  font-size: 1.2rem;
+    gap: 100px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 600px;
+  height: 100px;
+  padding: 10px;
+  border: 1px solid black;
+}
+.EloInputCard h4 {
+  font-size: 1.5rem;
+}
+.EloInputCard__sideWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.EloInputCard__customElo {
+  font-size: 1.2rem;
+  width: 195px;
+    height: 28px;
+  text-align: center;
+  font-weight: 700;
+}

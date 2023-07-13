@@ -1,0 +1,82 @@
+.pairCard {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 5px;
+  width: 600px;
+  height: 200px;
+  padding: 10px;
+  border: 1px solid black;
+}
+
+.pairFormWrapper {
+display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+.pairFormInputs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+}
+
+.pairFormInputs h4 {
+  text-align: center;
+}
+
+.pairFormVPBox {
+  display: flex;
+  gap: 5px
+}
+
+.pairFormInputs>*:first-child {
+  align-self: stretch;
+}
+
+.pairFormElo {
+  font-size: 1.1rem;
+}
+.pairForm {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  align-items: center;
+}
+
+.pairForm input {
+  font-size: 1.2rem;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+    font-weight: 700;
+}
+
+.pairForm button {
+  height: 33px;
+  width: 33px;
+}
+
+.pairFormInputs {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.pairFormNames {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 2rem;
+}
+.pairFormSubmitBtn {
+  width: 100%;
+  height: 50px;
+margin-top: 20px;
+  font-size: 1.5rem;
+}

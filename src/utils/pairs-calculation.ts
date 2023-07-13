@@ -1,112 +1,4 @@
-import { PlayerType } from 'types/Event.type';
-import { PairType } from 'types/Pairings.type';
-import { findPlayerById } from './find-player';
-
-export function submitPairResult(
-  event: React.FormEvent<HTMLFormElement>,
-  table: number,
-  tourNumber: number,
-  players: PlayerType[],
-  pairs: PairType[][],
-  vpFirstPlayer: number,
-  vpSecondPlayer: number,
-  setVpFirstPlayer: (arg: number) => void,
-  setVpSecondPlayer: (arg: number) => void,
-  pairsTour: PairType[],
-  setPairsTour: (arg: PairType[]) => void,
-  enteredResCount?: number,
-  setEnteredResCount?: (arg: number) => void,
-  setPlayers?: (arg: PlayerType[]) => void
-) {
-  function calculatePairResults(pair: PairType, vp1: number, vp2: number) {
-    const pairToCalculate = pair;
-    const player1 = findPlayerById(pair.player1id, players);
-    const player2 = findPlayerById(pair.player2id, players);
-
-    if (pairs && setEnteredResCount && enteredResCount === pairs.length) {
-      setEnteredResCount(0);
-    }
-
-    player1.vp += vp1;
-    player2.vp += vp2;
-
-    player2.opponentsIDs?.push(Number(player1.id));
-    player1.opponentsIDs?.push(Number(player2.id));
-
-    // Primary calculating
-    if (vp1 - vp2 > 5) {
-      const diffWTC = vp1 - vp2;
-      const toWTC = calculateWTC(diffWTC);
-
-      player1.primary += 3;
-      player2.primary += 0;
-      player1.to += toWTC[0];
-      player2.to += toWTC[1];
-    } else if (Math.abs(vp1 - vp2) <= 5) {
-      player1.primary += 1;
-      player2.primary += 1;
-      player1.to += 1;
-      player2.to += 1;
-    }
-    if (vp2 - vp1 > 5) {
-      const diffWTC = vp2 - vp1;
-      const toWTC = calculateWTC(diffWTC);
-      player2.primary += 3;
-      player1.primary += 0;
-      player2.to += toWTC[0];
-      player1.to += toWTC[1];
-    }
-
-    // Elo calculating
-    player1.elo = calculateELO(player1.to, player1.elo!, player2.elo!);
-    player2.elo = calculateELO(player2.to, player2.elo!, player1.elo!);
-
-    // Setting to players array
-    updatePlayersList(player1);
-    updatePlayersList(player2);
-    setVpFirstPlayer(0);
-    setVpSecondPlayer(0);
-
-    if (enteredResCount && setEnteredResCount) {
-      setEnteredResCount(enteredResCount + 1);
-    }
-    if (!enteredResCount && setEnteredResCount) {
-      setEnteredResCount(1);
-    }
-
-    return pairToCalculate;
-  }
-
-  function updatePlayersList(playerUpdated: PlayerType) {
-    const playerListToUpdate = players;
-    const playerToUpdateIndex = playerListToUpdate.findIndex(
-      (player) => player.id === playerUpdated.id
-    );
-
-    playerListToUpdate[playerToUpdateIndex] = playerUpdated;
-
-    if (setPlayers) setPlayers(playerListToUpdate);
-  }
-
-  function updatePair() {
-    if (pairs) {
-      const pairArrayToUpdate = pairs[tourNumber];
-
-      if (vpFirstPlayer && vpSecondPlayer) {
-        const vp1 = vpFirstPlayer;
-        const vp2 = vpSecondPlayer;
-        pairArrayToUpdate[table - 1] = calculatePairResults(pairArrayToUpdate[table - 1], vp1, vp2);
-        if (Array.isArray(pairsTour)) setPairsTour([...pairsTour].concat(pairArrayToUpdate));
-      } else {
-        alert('Check VP inputs first!');
-      }
-    }
-  }
-
-  event.preventDefault();
-  updatePair();
-}
-function calculateWTC(diff: number) {
+export function calculateWTC(diff: number) {
   if (diff >= 6 && diff <= 10) {
     return [11, 9];
   }
@@ -139,9 +31,9 @@ function calculateWTC(diff: number) {
   } else return [0, 0];
 }
 
-function calculateELO(to: number, rating1: number, rating2: number) {
+export function calculateELO(to: number, rating1: number, rating2: number) {
   const ELO_K = 100;
   const Ea = 1 / (1 + 10 ** ((rating2 - rating1) / 400));
   const Sa = to / 20;
-  return +(rating1 + ELO_K * (Sa - Ea)).toFixed(2);
+  return +(rating1 + ELO_K * (Sa - Ea)).toFixed(1);
 }
