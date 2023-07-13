@@ -35,5 +35,5 @@ export function calculateELO(to: number, rating1: number, rating2: number) {
   const ELO_K = 100;
   const Ea = 1 / (1 + 10 ** ((rating2 - rating1) / 400));
   const Sa = to / 20;
-  return +(rating1 + ELO_K * (Sa - Ea)).toFixed(2);
+  return +(rating1 + ELO_K * (Sa - Ea)).toFixed(1);
 }
