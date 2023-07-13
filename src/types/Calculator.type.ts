@@ -1,26 +1,16 @@
-import { PlayerType } from './Event.type';
-
-export type PlayerMockData =
-  | {
-      id: string;
-      elo: number;
-      firstname: string;
-      lastname: string;
-      nickname: string;
-      proxy?: undefined;
-    }
-  | {
-      id: string;
-      elo: number;
-      firstname: string;
-      lastname: string;
-      nickname: string;
-      proxy: boolean;
-    };
+export type EloCalcPlayerData = {
+  id: string;
+  elo: number;
+  firstname: string;
+  lastname: string;
+  nickname: string;
+  eloNew?: number;
+};
 
 export type EloInputCardProps = {
-  playersList: PlayerMockData[];
-  setPlayersList: React.Dispatch<React.SetStateAction<PlayerMockData[]>>;
-  setPlayerOne: React.Dispatch<React.SetStateAction<PlayerType>>;
-  setPlayerTwo: React.Dispatch<React.SetStateAction<PlayerType>>;
+  playersList: EloCalcPlayerData[];
+  setPlayersList: React.Dispatch<React.SetStateAction<EloCalcPlayerData[]>>;
+  setPlayer?: React.Dispatch<React.SetStateAction<EloCalcPlayerData>>;
+  setPlayerOne?: React.Dispatch<React.SetStateAction<EloCalcPlayerData>>;
+  setPlayerTwo?: React.Dispatch<React.SetStateAction<EloCalcPlayerData>>;
 };

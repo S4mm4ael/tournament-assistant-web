@@ -21,6 +21,9 @@ export type EventType = {
 
 export type PlayerType = {
   id: string;
+  firstname?: string;
+  lastname?: string;
+  nickname?: string;
   name: string;
   primary: number;
   to: number;

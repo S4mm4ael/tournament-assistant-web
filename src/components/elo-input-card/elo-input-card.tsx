@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 
 import styles from './elo-input-card.module.css';
-import { PlayerType } from 'types/Event.type';
 import { PlayersDropdown } from 'components/players-dropdown';
 import { EloInputCardProps } from 'types/Calculator.type';
 
@@ -37,8 +36,8 @@ export function EloInputCard({
         className={styles.EloInputCard__customElo}></input> :
         <PlayersDropdown playersList={playersList}
           setPlayersList={setPlayersList}
-          setPlayerOne={setPlayerOne}
-          setPlayerTwo={setPlayerTwo}></PlayersDropdown>}
+          setPlayer={setPlayerOne}
+        ></PlayersDropdown>}
       <div className=""><input type="checkbox" name="player-one-check" onChange={() => handleCustomCheck(1)} />
         <label htmlFor="player-one-check"> Custom ELO</label><br></br></div>
 
@@ -50,8 +49,8 @@ export function EloInputCard({
         className={styles.EloInputCard__customElo}></input> :
         <PlayersDropdown playersList={playersList}
           setPlayersList={setPlayersList}
-          setPlayerOne={setPlayerOne}
-          setPlayerTwo={setPlayerTwo}></PlayersDropdown>}
+          setPlayer={setPlayerTwo}
+        ></PlayersDropdown>}
       <div className="">
         <input type="checkbox" name="player-two-check" onChange={() => handleCustomCheck(2)} />
       <label htmlFor="player-two-check"> Custom ELO</label><br></br>

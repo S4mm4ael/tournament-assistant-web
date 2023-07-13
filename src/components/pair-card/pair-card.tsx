@@ -1,24 +1,19 @@
 import React from 'react';
 
 import styles from './pair-card.module.css';
-import { PlayerType } from 'types/Event.type';
+import { EloCalcPlayerData } from 'types/Calculator.type';
 
-type PlayerPairType = {
-  eloNew?: number;
-};
-
-type PlayerTypePairCard = PlayerType & PlayerPairType;
 type PairCardProps = {
-  player1: PlayerTypePairCard;
-  player2: PlayerTypePairCard;
+  player1: EloCalcPlayerData;
+  player2: EloCalcPlayerData;
 };
 export function PairCard({ player1, player2 }: PairCardProps) {
   return (
-    <div key={player1.name + '-' + player2.name} className={styles.pairCard}>
+    <div key={player1.nickname + '-' + player2.nickname} className={styles.pairCard}>
       <div className={styles.pairFormWrapper}>
         <form className={styles.pairForm}>
           <div className={styles.pairFormNames}>
-            <b>{player1.name}</b>
+            <b>{player1.nickname}</b>
             <b className={styles.pairFormElo}>Previous ELO:{player1.elo}</b>
             <b className={styles.pairFormElo}>New ELO:{player1.eloNew}</b>
           </div>
@@ -30,7 +25,7 @@ export function PairCard({ player1, player2 }: PairCardProps) {
                 type="number"
                 min="0"
                 max="100"
-                name={`${player1.name} VP`}
+                name={`${player1.nickname} VP`}
                 id={player1.id}
                 placeholder="VP"
               />
@@ -38,14 +33,14 @@ export function PairCard({ player1, player2 }: PairCardProps) {
                 type="number"
                 min="0"
                 max="100"
-                name={`${player2.name} VP`}
+                name={`${player2.nickname} VP`}
                 id={player2.id}
                 placeholder="VP"
               />
             </div>
           </div>
           <div className={styles.pairFormNames}>
-            <b>{player2.name}</b>
+            <b>{player2.nickname}</b>
             <b className={styles.pairFormElo}>Previous ELO:{player2.elo}</b>
             <b className={styles.pairFormElo}>New ELO:{player2.eloNew}</b>
           </div>
