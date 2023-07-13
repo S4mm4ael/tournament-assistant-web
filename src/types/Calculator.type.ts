@@ -9,7 +9,6 @@ export type EloCalcPlayerData = {
 
 export type EloInputCardProps = {
   playersList: EloCalcPlayerData[];
-  setPlayersList: React.Dispatch<React.SetStateAction<EloCalcPlayerData[]>>;
   setPlayer?: React.Dispatch<React.SetStateAction<EloCalcPlayerData>>;
   setPlayerOne?: React.Dispatch<React.SetStateAction<EloCalcPlayerData>>;
   setPlayerTwo?: React.Dispatch<React.SetStateAction<EloCalcPlayerData>>;

@@ -3,10 +3,12 @@ import React from 'react';
 import styles from './players-dropdown.module.css';
 import { EloInputCardProps } from 'types/Calculator.type';
 
-export function PlayersDropdown({ playersList, setPlayersList, setPlayer }: EloInputCardProps) {
+export function PlayersDropdown({ playersList, setPlayer }: EloInputCardProps) {
   function handleSelect(id: string) {
     const player = playersList.find((player) => player.id === id);
-    if (player != undefined) setPlayer?.(player);
+    if (player != undefined) {
+      setPlayer?.(player);
+    }
 
     console.log(player);
   }

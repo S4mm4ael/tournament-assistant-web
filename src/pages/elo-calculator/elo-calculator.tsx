@@ -33,7 +33,6 @@ export function EloCalculatorPage() {
       Here you can easily count your ELO after game.
       <EloInputCard
         playersList={playersList}
-        setPlayersList={setPlayersList}
         setPlayerOne={setPlayerOne}
         setPlayerTwo={setPlayerTwo}
       ></EloInputCard>

@@ -7,7 +7,6 @@ import { EloInputCardProps } from 'types/Calculator.type';
 
 export function EloInputCard({
   playersList,
-  setPlayersList,
   setPlayerOne,
   setPlayerTwo,
 }: EloInputCardProps) {
@@ -35,7 +34,6 @@ export function EloInputCard({
         max="3000"
         className={styles.EloInputCard__customElo}></input> :
         <PlayersDropdown playersList={playersList}
-          setPlayersList={setPlayersList}
           setPlayer={setPlayerOne}
         ></PlayersDropdown>}
       <div className=""><input type="checkbox" name="player-one-check" onChange={() => handleCustomCheck(1)} />
@@ -48,7 +46,6 @@ export function EloInputCard({
         max="3000"
         className={styles.EloInputCard__customElo}></input> :
         <PlayersDropdown playersList={playersList}
-          setPlayersList={setPlayersList}
           setPlayer={setPlayerTwo}
         ></PlayersDropdown>}
       <div className="">
