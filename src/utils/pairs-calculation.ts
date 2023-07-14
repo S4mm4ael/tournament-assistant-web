@@ -28,7 +28,7 @@ export function calculateWTC(diff: number) {
   }
   if (diff >= 51) {
     return [20, 0];
-  } else return [0, 0];
+  } else return [10, 10];
 }
 
 export function calculateELO(to: number, rating1: number, rating2: number) {
