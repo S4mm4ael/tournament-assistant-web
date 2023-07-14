@@ -13,14 +13,15 @@ export function PairCard({ player1, player2 }: PairCardProps) {
   const [playerTwoElo, setPlayerTwoElo] = useState(player2.elo);
   const [playerOneNewElo, setPlayerOneNewElo] = useState<number | undefined>();
   const [playerTwoNewElo, setPlayerTwoNewElo] = useState<number | undefined>();
-  const [playerOneVP, setPlayerOneVP] = useState(0);
-  const [playerTwoVP, setPlayerTwoVP] = useState(0);
+  const [playerOneVP, setPlayerOneVP] = useState<number | undefined>();
+  const [playerTwoVP, setPlayerTwoVP] = useState<number | undefined>();
   const [playerOneTO, setPlayerOneTO] = useState<number | undefined>();
   const [playerTwoTO, setPlayerTwoTO] = useState<number | undefined>();
   function handleSubmit() {
     if (playerOneVP && playerTwoVP) {
       const vpDiff = playerOneVP - playerTwoVP;
       const playersWTC = calculateWTC(vpDiff);
+
       setPlayerOneTO(playersWTC[0]);
       setPlayerTwoTO(playersWTC[1]);
 
@@ -32,7 +33,6 @@ export function PairCard({ player1, player2 }: PairCardProps) {
       }
     }
   }
-
   return (
     <div key={player1.nickname + '-' + player2.nickname} className={styles.pairCard}>
       <div className={styles.pairFormWrapper}>
@@ -75,11 +75,11 @@ export function PairCard({ player1, player2 }: PairCardProps) {
                   }}
                 />
               </div>
-              {playerOneTO && playerTwoTO && (
+              {playerOneTO != undefined && playerTwoTO != undefined && (
                 <>
                   <h4>WTC points</h4>
                   <b>
-                    {playerOneTO} - {playerTwoTO}
+                    <b>{playerOneTO}</b> - <b>{playerTwoTO}</b>
                   </b>
                 </>
               )}
