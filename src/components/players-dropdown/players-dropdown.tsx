@@ -8,11 +8,13 @@ export function PlayersDropdown({ playersList, setPlayer }: EloInputCardProps) {
     const player = playersList.find((player) => player.id === id);
     if (player != undefined) {
       setPlayer?.(player);
+      console.log(player);
     }
   }
 
   return (
     <select className={styles.PlayersDropdown} onChange={(e) => handleSelect(e.target.value)}>
+      <option>Select player</option>
       {playersList.map((player) => (
         <option key={player.id} value={player.id}>
           {player.nickname}

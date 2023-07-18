@@ -9,43 +9,40 @@ type PairCardProps = {
   player2: EloCalcPlayerData;
 };
 export function PairCard({ player1, player2 }: PairCardProps) {
-  const [playerOneElo, setPlayerOneElo] = useState(player1.elo);
-  const [playerTwoElo, setPlayerTwoElo] = useState(player2.elo);
   const [playerOneNewElo, setPlayerOneNewElo] = useState<number | undefined>();
   const [playerTwoNewElo, setPlayerTwoNewElo] = useState<number | undefined>();
-  const [playerOneVP, setPlayerOneVP] = useState(0);
-  const [playerTwoVP, setPlayerTwoVP] = useState(0);
-  const [playerOneTO, setPlayerOneTO] = useState<number | undefined>();
-  const [playerTwoTO, setPlayerTwoTO] = useState<number | undefined>();
-  function handleSubmit() {
+  const [playerOneVP, setPlayerOneVP] = useState<number>();
+  const [playerTwoVP, setPlayerTwoVP] = useState<number>();
+  const [playerOneTO, setPlayerOneTO] = useState<number>();
+  const [playerTwoTO, setPlayerTwoTO] = useState<number>();
+
+  function handleVPchange() {
     if (playerOneVP && playerTwoVP) {
       const vpDiff = playerOneVP - playerTwoVP;
       const playersWTC = calculateWTC(vpDiff);
+
       setPlayerOneTO(playersWTC[0]);
       setPlayerTwoTO(playersWTC[1]);
 
-      if (playerOneTO && playerTwoTO) {
-        const player1Elo = calculateELO(playerOneTO, playerOneElo, playerTwoElo);
-        const player2Elo = calculateELO(playerTwoTO, playerTwoElo, playerOneElo);
-        setPlayerOneNewElo(player1Elo);
-        setPlayerTwoNewElo(player2Elo);
-      }
+      const player1Elo = calculateELO(playersWTC[0], player1.elo, player2.elo);
+      const player2Elo = calculateELO(playersWTC[1], player2.elo, player1.elo);
+      setPlayerOneNewElo(player1Elo);
+      setPlayerTwoNewElo(player2Elo);
     }
   }
-
   return (
     <div key={player1.nickname + '-' + player2.nickname} className={styles.pairCard}>
       <div className={styles.pairFormWrapper}>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            handleSubmit();
+            handleVPchange();
           }}
         >
           <div className={styles.pairForm}>
             <div className={styles.pairFormNames}>
               <b>{player1.nickname}</b>
-              <b className={styles.pairFormElo}>Previous ELO:{playerOneElo}</b>
+              <b className={styles.pairFormElo}>Previous ELO:{player1.elo}</b>
               <b className={styles.pairFormElo}>New ELO:{playerOneNewElo ? playerOneNewElo : ''}</b>
             </div>
 
@@ -75,18 +72,18 @@ export function PairCard({ player1, player2 }: PairCardProps) {
                   }}
                 />
               </div>
-              {playerOneTO && playerTwoTO && (
+              {playerOneTO != undefined && playerTwoTO != undefined && (
                 <>
                   <h4>WTC points</h4>
                   <b>
-                    {playerOneTO} - {playerTwoTO}
+                    <b>{playerOneTO}</b> - <b>{playerTwoTO}</b>
                   </b>
                 </>
               )}
             </div>
             <div className={styles.pairFormNames}>
               <b>{player2.nickname}</b>
-              <b className={styles.pairFormElo}>Previous ELO:{playerTwoElo}</b>
+              <b className={styles.pairFormElo}>Previous ELO:{player2.elo}</b>
               <b className={styles.pairFormElo}>New ELO:{playerTwoNewElo ? playerTwoNewElo : ''}</b>
             </div>
           </div>

@@ -139,8 +139,8 @@ export function Pairings({ tourQuantity }: PairingsProps) {
           </p>
         ))
     ) : (
-      <p>There is no players</p>
-    );
+        <p>There is no players</p>
+      );
   };
   const renderPairs = (tour: number) => {
     if (pairs) {
@@ -192,7 +192,7 @@ export function Pairings({ tourQuantity }: PairingsProps) {
                 </div>
 
               </form>
-</div>
+            </div>
 
           </div>
         );
@@ -239,28 +239,20 @@ export function Pairings({ tourQuantity }: PairingsProps) {
 
 
     // Primary calculating
+
+    const toWTC = calculateWTC(vp1 - vp2);
+    player1.to += toWTC[0];
+    player2.to += toWTC[1];
     if (vp1 - vp2 > 5) {
-      const diffWTC = vp1 - vp2;
-      const toWTC = calculateWTC(diffWTC);
-
-
       player1.primary += 3;
       player2.primary += 0;
-      player1.to += toWTC[0];
-      player2.to += toWTC[1];
     } else if (Math.abs(vp1 - vp2) <= 5) {
       player1.primary += 1;
       player2.primary += 1;
-      player1.to += 1;
-      player2.to += 1;
     }
     if (vp2 - vp1 > 5) {
-      const diffWTC = vp2 - vp1;
-      const toWTC = calculateWTC(diffWTC);
       player2.primary += 3;
       player1.primary += 0;
-      player2.to += toWTC[0];
-      player1.to += toWTC[1];
 
     }
 
