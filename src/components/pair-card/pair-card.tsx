@@ -9,8 +9,6 @@ type PairCardProps = {
   player2: EloCalcPlayerData;
 };
 export function PairCard({ player1, player2 }: PairCardProps) {
-  const [playerOneElo, setPlayerOneElo] = useState(player1.elo);
-  const [playerTwoElo, setPlayerTwoElo] = useState(player2.elo);
   const [playerOneNewElo, setPlayerOneNewElo] = useState<number | undefined>();
   const [playerTwoNewElo, setPlayerTwoNewElo] = useState<number | undefined>();
   const [playerOneVP, setPlayerOneVP] = useState<number | undefined>();
@@ -26,8 +24,8 @@ export function PairCard({ player1, player2 }: PairCardProps) {
       setPlayerTwoTO(playersWTC[1]);
 
       if (playerOneTO && playerTwoTO) {
-        const player1Elo = calculateELO(playerOneTO, playerOneElo, playerTwoElo);
-        const player2Elo = calculateELO(playerTwoTO, playerTwoElo, playerOneElo);
+        const player1Elo = calculateELO(playerOneTO, player1.elo, player2.elo);
+        const player2Elo = calculateELO(playerTwoTO, player2.elo, player1.elo);
         setPlayerOneNewElo(player1Elo);
         setPlayerTwoNewElo(player2Elo);
       }
@@ -45,7 +43,7 @@ export function PairCard({ player1, player2 }: PairCardProps) {
           <div className={styles.pairForm}>
             <div className={styles.pairFormNames}>
               <b>{player1.nickname}</b>
-              <b className={styles.pairFormElo}>Previous ELO:{playerOneElo}</b>
+              <b className={styles.pairFormElo}>Previous ELO:{player1.elo}</b>
               <b className={styles.pairFormElo}>New ELO:{playerOneNewElo ? playerOneNewElo : ''}</b>
             </div>
 
@@ -86,7 +84,7 @@ export function PairCard({ player1, player2 }: PairCardProps) {
             </div>
             <div className={styles.pairFormNames}>
               <b>{player2.nickname}</b>
-              <b className={styles.pairFormElo}>Previous ELO:{playerTwoElo}</b>
+              <b className={styles.pairFormElo}>Previous ELO:{player2.elo}</b>
               <b className={styles.pairFormElo}>New ELO:{playerTwoNewElo ? playerTwoNewElo : ''}</b>
             </div>
           </div>

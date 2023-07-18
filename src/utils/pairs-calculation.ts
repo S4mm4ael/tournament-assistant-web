@@ -1,34 +1,45 @@
-export function calculateWTC(diff: number) {
+export function calculateWTC(diffPlayers: number) {
+  let isReverse = false;
+  let diff = diffPlayers;
+  let resultArray = [10, 10];
+  if (diff < 0) {
+    isReverse = true;
+    diff = Math.abs(diffPlayers);
+  }
+  if (diff <= 5) {
+    resultArray = [10, 10];
+  }
   if (diff >= 6 && diff <= 10) {
-    return [11, 9];
+    resultArray = [11, 9];
   }
   if (diff >= 11 && diff <= 15) {
-    return [12, 8];
+    resultArray = [12, 8];
   }
   if (diff >= 16 && diff <= 20) {
-    return [13, 7];
+    resultArray = [13, 7];
   }
   if (diff >= 21 && diff <= 25) {
-    return [14, 6];
+    resultArray = [14, 6];
   }
   if (diff >= 26 && diff <= 30) {
-    return [15, 5];
+    resultArray = [15, 5];
   }
   if (diff >= 31 && diff <= 35) {
-    return [16, 4];
+    resultArray = [16, 4];
   }
   if (diff >= 36 && diff <= 40) {
-    return [17, 3];
+    resultArray = [17, 3];
   }
   if (diff >= 41 && diff <= 45) {
-    return [18, 2];
+    resultArray = [18, 2];
   }
   if (diff >= 46 && diff <= 50) {
-    return [19, 1];
+    resultArray = [19, 1];
   }
   if (diff >= 51) {
-    return [20, 0];
-  } else return [10, 10];
+    resultArray = [20, 0];
+  }
+  return isReverse ? resultArray.reverse() : resultArray;
 }
 
 export function calculateELO(to: number, rating1: number, rating2: number) {
