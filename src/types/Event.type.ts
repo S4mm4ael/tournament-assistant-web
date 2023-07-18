@@ -11,7 +11,7 @@ export type EventType = {
   type: string;
   link?: string;
   playersNumber?: number;
-  players?: PlayerType[];
+  appliedPlayers?: PlayerType[];
   tour1?: PairingType[];
   tour2?: PairingType[];
   tour3?: PairingType[];

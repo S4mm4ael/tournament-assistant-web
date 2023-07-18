@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { EventType, PlayerType } from 'types/Event.type';
 import { getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
@@ -7,34 +8,37 @@ import { Link } from 'react-router-dom';
 import { PairingTable } from 'components/pairing-table';
 
 export function EventPage() {
-  const [events, setEvents] = useState<Array<EventType>>([]);
   const [event, setEvent] = useState<EventType>();
-  const [players, setPlayers] = useState<Array<PlayerType> | null>([]);
+  const [players, setPlayers] = useState<Array<PlayerType> | undefined>([]);
+  const id = window.location.href.slice(-8);
 
-  useEffect(() => {
-    (async () => {
+  useEffect((() => {
+    async function fetchDocs() {
       const eventsDocs = await getDocs(eventsCol);
-      setEvents(eventsDocs.docs.map((eventDoc) => eventDoc.data()));
-    })();
-  });
-
-  useEffect(() => {
-    const id = window.location.href.slice(-8);
-    const getEvent = () => {
-      setEvent(events.find((x) => x.id === id));
-    };
-    getEvent();
-  }, [events]);
-
-  useEffect(() => {
-    if (event?.players != undefined) {
-      setPlayers(event.players);
-    } else {
-      setPlayers(null);
+      const eventsList = eventsDocs.docs.map((eventDoc) => eventDoc.data());
+      console.log(eventsList)
+      return eventsList
     }
-  }, [event, players]);
+    async function findEvent(events: EventType[]) {
+      const currentEvent = await events.find((x) => x.id === id)
+      setEvent(currentEvent)
+      return currentEvent
+    }
+    async function getPlayers(currentEvent: EventType) {
+      const players = await currentEvent.appliedPlayers
+      console.log(players)
+      setPlayers(players)
+    }
+
+    fetchDocs()
+      .then((eventList) => findEvent(eventList))
+      .then((event) => { if (event) getPlayers(event) })
+
+
+  }), [])
 
   function renderPlayers() {
+
     function defineColors(place: number) {
       const colors = ['#ffDE03', '#E0E0E0', '#F57C00'];
       let color: string;
@@ -145,14 +149,14 @@ export function EventPage() {
             <div className={styles.EventPage__title}>
               <h3>Pairings:</h3>
             </div>
-            <PairingTable eventP={event} playersP={players} />
+            {players && <PairingTable eventP={event} playersP={players} />}
           </div>
         </div>
       </div>
     </>
   ) : (
-    <div className={styles.EventPage}>
-      <h1> Loading... </h1>
-    </div>
-  );
+      <div className={styles.EventPage}>
+        <h1> Loading... </h1>
+      </div>
+    );
 }
