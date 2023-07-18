@@ -1,7 +1,7 @@
 export function calculateWTC(diffPlayers: number) {
   let isReverse = false;
   let diff = diffPlayers;
-  let resultArray = [10, 10];
+  let resultArray = [0, 0];
   if (diff < 0) {
     isReverse = true;
     diff = Math.abs(diffPlayers);
