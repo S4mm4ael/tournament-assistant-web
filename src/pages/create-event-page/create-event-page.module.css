@@ -10,7 +10,9 @@
   margin: 0 auto;
   gap: 10px;
 }
-
+label span{
+  color:red;
+}
 .CreateEventPage__inputForm {
   display: flex;
   justify-content: flex-start;
