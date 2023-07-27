@@ -44,7 +44,24 @@
     font-size: 20px;
   }
 
+  .Header img {
+    height: 50px;
+  }
+
+  .header_Header__link {
+    padding: 5px;
+  }
+
   .Header__text span {
     font-size: 12px;
+  }
+
+}
+
+@media screen and (max-width: 580px) {
+
+  .Header__linkContainer {
+    display: flex;
+    flex-direction: column;
   }
 }
