@@ -11,7 +11,7 @@ export function Event(props: EventType) {
           <b>{props.name}</b>
         </li>
         <li>
-          Date: <b>{props.date.toString().slice(0, 10)}</b>
+          Date: <b>{props.date && props.date.toString().slice(0, 10)}</b>
         </li>
         <li>Format: {props.type}</li>
         <li>pts: {props.pts}</li>

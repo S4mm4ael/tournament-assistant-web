@@ -1,16 +1,16 @@
 import { PairingType } from './Pairings.type';
 
 export type EventType = {
-  date: string;
-  description?: string | null;
-  elo: number | null;
-  id: string;
-  name: string;
-  pts: number;
-  tours: number;
-  type: string;
+  date: string | undefined;
+  description?: string | undefined;
+  elo: number | undefined;
+  id: string | undefined;
+  name: string | undefined;
+  pts: number | undefined;
+  tours: number | undefined;
+  type: string | undefined;
   link?: string;
-  playersNumber?: number;
+  memberNumber?: number;
   appliedPlayers?: PlayerType[];
   tour1?: PairingType[];
   tour2?: PairingType[];

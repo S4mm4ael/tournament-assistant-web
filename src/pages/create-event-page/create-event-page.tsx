@@ -4,6 +4,7 @@ import { getAuth } from 'firebase/auth';
 import { EventType } from 'types/Event.type';
 import generateID from 'helpers/generateID';
 import uploadEvent from 'utils/upload-event';
+import { useNavigate } from 'react-router-dom';
 
 export function CreateEventPage() {
   const auth = getAuth();
@@ -11,31 +12,22 @@ export function CreateEventPage() {
   const email = user?.email;
   // const isAdmin = email === 'homer1996@gmail.com';
   const isAdmin = true;
-  const [eventInfo, setEventInfo] = useState<EventType>({
-    date: ' ',
-    description: null,
-    elo: null,
-    id: ' ',
-    name: ' ',
-    pts: 2000,
-    tours: 3,
-    type: 'SOLO',
-    link: '',
-    playersNumber: 0,
-  });
-  const [eventDate, setEventDate] = useState(eventInfo.date);
-  const [eventDescription, setEventDescription] = useState(eventInfo.description);
-  const [eventELO, setEventELO] = useState(eventInfo.elo);
-  const [eventID, setEventID] = useState(generateID());
-  const [eventName, setEventName] = useState(eventInfo.name);
-  const [eventPts, setEventPts] = useState(eventInfo.pts);
-  const [eventPlayersNumber, setEventPlayersNumber] = useState(eventInfo.playersNumber);
-  const [eventTours, setEventTours] = useState(eventInfo.tours);
-  const [eventLink, setEventLink] = useState(eventInfo.link);
-  const [eventType, setEventType] = useState(eventInfo.type);
 
-  function handleFormSubmit() {
-    const newEventInfo: EventType = {
+  const [eventDate, setEventDate] = useState<string>(String(new Date()));
+  const [eventDescription, setEventDescription] = useState<string>();
+  const [eventELO, setEventELO] = useState<number>(2500);
+  const [eventID, setEventID] = useState(generateID());
+  const [eventName, setEventName] = useState<string>();
+  const [eventPts, setEventPts] = useState<number>(2000);
+  const [memberNumber, setMemberNumber] = useState<number>();
+  const [eventTours, setEventTours] = useState<number>(3);
+  const [eventLink, setEventLink] = useState<string>();
+  const [eventType, setEventType] = useState<string>('SOLO');
+  const [uploadStatus, setUploadStatus] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  async function handleFormSubmit() {
+    const newEventInfo: EventType = await {
       date: eventDate,
       description: eventDescription,
       elo: eventELO,
@@ -45,10 +37,12 @@ export function CreateEventPage() {
       tours: eventTours,
       type: eventType,
       link: eventLink,
+      memberNumber: memberNumber,
     };
     console.log(newEventInfo);
-    setEventInfo(newEventInfo);
-    uploadEvent(eventInfo);
+    uploadEvent(newEventInfo)
+      .then(() => setUploadStatus(true))
+      .then(() => navigate('/'));
   }
 
   return (
@@ -165,7 +159,7 @@ export function CreateEventPage() {
                 max={50}
                 id="players"
                 className={styles.CreateEventPage__inputNumber}
-                onChange={(e) => setEventPlayersNumber(+e.target.value)}
+                onChange={(e) => setMemberNumber(+e.target.value)}
                 required={true}
               />
             </div>
@@ -180,9 +174,9 @@ export function CreateEventPage() {
                 onChange={(e) => setEventTours(+e.target.value)}
               >
                 <option value="2">2</option>
-                <option value="2">3</option>
-                <option value="2">4</option>
-                <option value="2">5</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
               </select>
             </div>
             <input

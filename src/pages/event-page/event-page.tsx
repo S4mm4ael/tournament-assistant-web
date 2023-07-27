@@ -114,7 +114,7 @@ export function EventPage() {
           <p className={styles.EventPage__infoItem}>
             {event.type === 'SOLO' ? 'Single tournament' : 'Team tournament'}
           </p>
-          <p className={styles.EventPage__infoItem}>{event.date.toString().slice(0, 10)}</p>
+          <p className={styles.EventPage__infoItem}>{event.date && event.date.toString().slice(0, 10)}</p>
           <div className={styles.EventPage__infoFormat}>
             <p>
               <b>ELO restriction: </b>
@@ -155,8 +155,8 @@ export function EventPage() {
       </div>
     </>
   ) : (
-      <div className={styles.EventPage}>
-        <h1> Loading... </h1>
-      </div>
-    );
+    <div className={styles.EventPage}>
+      <h1> Loading... </h1>
+    </div>
+  );
 }
