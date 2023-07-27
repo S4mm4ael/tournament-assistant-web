@@ -16,7 +16,7 @@ export function EventPage() {
     async function fetchDocs() {
       const eventsDocs = await getDocs(eventsCol);
       const eventsList = eventsDocs.docs.map((eventDoc) => eventDoc.data());
-      console.log(eventsList)
+
       return eventsList
     }
     async function findEvent(events: EventType[]) {
@@ -26,7 +26,7 @@ export function EventPage() {
     }
     async function getPlayers(currentEvent: EventType) {
       const players = await currentEvent.appliedPlayers
-      console.log(players)
+
       setPlayers(players)
     }
 

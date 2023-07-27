@@ -24,10 +24,6 @@ export function EloCalculatorPage() {
   const [playerOne, setPlayerOne] = useState(player1);
   const [playerTwo, setPlayerTwo] = useState(player2);
 
-  // useEffect(() => {
-  //   console.log(playersList);
-  // }, playersList);
-
   return (
     <div className={styles.EloCalculatorPage}>
       Here you can easily count your ELO after game.
