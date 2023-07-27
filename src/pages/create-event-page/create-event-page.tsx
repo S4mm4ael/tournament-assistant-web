@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './create-event-page.module.css';
 import { getAuth } from 'firebase/auth';
 import { EventType } from 'types/Event.type';
@@ -10,8 +10,8 @@ export function CreateEventPage() {
   const auth = getAuth();
   const user = auth.currentUser;
   const email = user?.email;
-  // const isAdmin = email === 'homer1996@gmail.com';
-  const isAdmin = true;
+  const isAdmin = email === 'homer1996@gmail.com';
+  //const isAdmin = true;
 
   const [eventDate, setEventDate] = useState<string>(String(new Date()));
   const [eventDescription, setEventDescription] = useState<string>();
@@ -39,9 +39,9 @@ export function CreateEventPage() {
       link: eventLink,
       memberNumber: memberNumber,
     };
-    console.log(newEventInfo);
     uploadEvent(newEventInfo)
       .then(() => setUploadStatus(true))
+      .then(() => alert('Event is created!'))
       .then(() => navigate('/'));
   }
 
