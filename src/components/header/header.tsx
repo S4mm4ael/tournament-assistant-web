@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAuth, signOut } from 'firebase/auth';
 
 import logo from '../../assets/png/logo.png';
 
 import styles from './header.module.css';
+import { Burger } from 'components/burger-menu';
 
 export function Header() {
   const auth = getAuth();
@@ -20,6 +21,7 @@ export function Header() {
             Tournament assistant <span>web</span>
           </p>
         </Link>
+        <Burger />
         <div className={styles.Header__linkContainer}>
           <Link className={styles.Header__link} to={'/calculator'}>
             ELO calculator

@@ -40,6 +40,10 @@
 
 
 @media screen and (max-width: 768px) {
+  .Header__linkContainer {
+    display: none;
+  }
+
   .Header__text {
     font-size: 20px;
   }
@@ -56,12 +60,4 @@
     font-size: 12px;
   }
 
-}
-
-@media screen and (max-width: 580px) {
-
-  .Header__linkContainer {
-    display: flex;
-    flex-direction: column;
-  }
 }
