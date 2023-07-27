@@ -15,19 +15,31 @@ export function EventsList() {
     })();
   }, []);
 
+  function sortEventsByDate(eventOne: EventType, eventTwo: EventType) {
+    if (eventOne.date < eventTwo.date) {
+      return -1;
+    }
+    if (eventOne.date > eventTwo.date) {
+      return 1;
+    }
+    return 0;
+  }
+
   const renderEvent = () => {
-    return events.map((event: EventType) => (
-      <Event
-        key={event.id}
-        id={event.id}
-        elo={event.elo}
-        date={event.date}
-        name={event.name}
-        pts={event.pts}
-        tours={event.tours}
-        type={event.type}
-      />
-    ));
+    return events
+      .sort(sortEventsByDate)
+      .map((event: EventType) => (
+        <Event
+          key={event.id}
+          id={event.id}
+          elo={event.elo}
+          date={event.date}
+          name={event.name}
+          pts={event.pts}
+          tours={event.tours}
+          type={event.type}
+        />
+      ));
   };
 
   return (
