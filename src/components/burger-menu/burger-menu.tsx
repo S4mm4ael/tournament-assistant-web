@@ -24,8 +24,7 @@ export function Burger() {
       <button
         type="button"
         id="burger-button"
-        data-test-id="button-burger"
-        className={(styles.Burger, isBurgerOpen ? `${styles.Burger_open}` : '')}
+        className={`${styles.Burger}  ${isBurgerOpen ? styles.Burger_open : ''}`}
         onClick={() => handleClick()}
       >
         <span className={styles.Burger__line} />
@@ -33,7 +32,10 @@ export function Burger() {
         <span className={styles.Burger__line} />
       </button>
       {isBurgerOpen && (
-        <div className={styles.Burger__menu}>
+        <div className={`${styles.Burger__menu} ${isBurgerOpen ? styles.Burger___menu_open : ''}`}>
+          <Link className={styles.Burger__menu__link} to={'/'}>
+            Main page
+          </Link>
           <Link className={styles.Burger__menu__link} to={'/calculator'}>
             ELO calculator
           </Link>
