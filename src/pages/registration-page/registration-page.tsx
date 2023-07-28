@@ -10,9 +10,8 @@ export function RegistrationPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
 
-  const hasOnlyLatinAndNumbers = (value: string) => /^[a-zA-Z0-9]*$/.test(value);
-  const hasLatinSymbol = (value: string) => /[a-zA-Z]/.test(value);
   const hasUpperCaseLetter = (value: string) => /[A-ZА-Я]/.test(value);
   const hasNumber = (value: string) => /\d+/.test(value);
   const minLength = (value: string) => /^(?=.*\d).{8,}$/.test(value);
@@ -41,6 +40,7 @@ export function RegistrationPage() {
       validate: {
         hasUpperCaseLetter,
         hasNumber,
+        minLength,
       },
     },
   });
@@ -68,8 +68,12 @@ export function RegistrationPage() {
 
   return (
     <div className={styles.RegistrationPage}>
+      <h1>Registration</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className={styles.RegistrationPage__inputWrapper}>
+          <label htmlFor="e-mail" className={styles.RegistrationPage__placeholder}>
+            E-mail
+          </label>
           <input
             className={styles.RegistrationPage__formItem}
             key="email"
@@ -77,8 +81,9 @@ export function RegistrationPage() {
             value={emailField.value || ''}
             type="text"
             required={true}
+            id="e-mail"
           />
-          <span className={styles.RegistrationPage__placeholder}>E-mail</span>
+
           {!emailFieldState.invalid && <p className={styles.RegistrationPage__formTips}></p>}
           {emailFieldState.invalid && (
             <p
@@ -89,6 +94,9 @@ export function RegistrationPage() {
           )}
         </div>
         <div className={styles.RegistrationPage__inputWrapper}>
+          <label htmlFor="password" className={styles.RegistrationPage__placeholder}>
+            Password
+          </label>
           <input
             key="password"
             id="password"
@@ -100,9 +108,39 @@ export function RegistrationPage() {
             required={true}
             autoFocus={true}
           />
-          <span className={styles.RegistrationPage__placeholder}>Password</span>
+          {passwordFieldState.invalid && (
+            <p
+              className={`${styles.RegistrationPage__formTips} ${styles.RegistrationPage__formTips_error}`}
+            >
+              Password must be at least 8 characters, has upper case letter and has a number.
+            </p>
+          )}
         </div>
-
+        <div className={styles.RegistrationPage__inputWrapper}>
+          <label htmlFor="repeat-password" className={styles.RegistrationPage__placeholder}>
+            Repeat password
+          </label>
+          <input
+            key="repeat-password"
+            id="repeat-password"
+            {...passwordField}
+            value={repeatPassword}
+            onChange={(e) => {
+              setRepeatPassword(e.target.value);
+            }}
+            className={styles.RegistrationPage__formItem}
+            type={'password'}
+            required={true}
+            autoFocus={true}
+          />
+          {password != repeatPassword && (
+            <p
+              className={`${styles.RegistrationPage__formTips} ${styles.RegistrationPage__formTips_error}`}
+            >
+              Passwords arent equal
+            </p>
+          )}
+        </div>
         <button className={styles.RegistrationPage__formButton} type="submit">
           Sign up
         </button>
