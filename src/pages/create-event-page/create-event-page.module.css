@@ -10,20 +10,24 @@
   margin: 0 auto;
   gap: 10px;
 }
-label span{
-  color:red;
+
+label span {
+  color: red;
 }
+
 .CreateEventPage__inputForm {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
   align-items: flex-start;
-    gap: 10px;
+  gap: 10px;
 }
+
 .CreateEventPage__inputForm input {
   font-size: 1.1rem;
 
 }
+
 .CreateEventPage__inputForm input:focus,
 .CreateEventPage__inputForm input:hover,
 .CreateEventPage__inputSelect:hover,
@@ -31,6 +35,7 @@ label span{
   outline: red 5px auto;
   transition: .3s;
 }
+
 .CreateEventPage__inputDescription {
   width: 250px;
   height: 100px;
@@ -41,23 +46,23 @@ label span{
   font-size: 1.2rem;
   gap: 20px;
   padding: 10px;
-    border-bottom: 1px solid black;
-    cursor: pointer;
+  border-bottom: 1px solid black;
+  cursor: pointer;
   align-items: center;
   justify-content: space-between;
-    width: 100%;
+  width: 100%;
 }
 
 .CreateEventPage__inputSubmit {
   all: unset;
   margin: 0 auto;
   text-align: center;
-    width: 80px;
-    height: 30px;
-    cursor: pointer;
-    transition: .3s;
-    outline: black 5px auto;
-    font-size: 1.1rem;
+  width: 80px;
+  height: 30px;
+  cursor: pointer;
+  transition: .3s;
+  outline: black 5px auto;
+  font-size: 1.1rem;
 }
 
 .CreateEventPage__inputSubmit:focus,
@@ -73,6 +78,7 @@ label span{
   text-align: center;
   font-size: 1.1rem;
 }
+
 .CreateEventPage__inputText {
   width: 400px;
 }
@@ -85,10 +91,34 @@ label span{
 .CreateEventPage__inputNumber {
   width: 60px;
 }
+
 .CreateEventPage__inputDate {
   width: 150px;
 }
+
 .CreateEventPage__baseInfo {
   display: flex;
   gap: 20px;
+}
+
+@media screen and (max-width:768px) {
+
+
+  .CreateEventPage__inputContainer {
+    width: 355px;
+  }
+
+  .CreateEventPage__inputContainer_description {
+    flex-direction: column;
+  }
+
+  .CreateEventPage__inputDescription {
+    width: 350px;
+    height: 100px;
+  }
+
+  .CreateEventPage__inputLink {
+    width: 350px;
+
+  }
 }

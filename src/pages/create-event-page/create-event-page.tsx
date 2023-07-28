@@ -85,12 +85,14 @@ export function CreateEventPage() {
                 required={true}
               />
             </div>
-            <div className={styles.CreateEventPage__inputContainer}>
+            <div
+              className={`${styles.CreateEventPage__inputContainer} ${styles.CreateEventPage__inputContainer_description}`}
+            >
               <label htmlFor="Description">
                 Description<span>*</span>
               </label>
               <textarea
-                id="Description<span>*</span>"
+                id="Description"
                 onChange={(e) => setEventDescription(e.target.value)}
                 className={styles.CreateEventPage__inputDescription}
                 required={true}

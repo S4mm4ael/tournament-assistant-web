@@ -32,7 +32,10 @@ export function Burger() {
         <span className={styles.Burger__line} />
       </button>
       {isBurgerOpen && (
-        <div className={`${styles.Burger__menu} ${isBurgerOpen ? styles.Burger___menu_open : ''}`}>
+        <div
+          onClick={() => handleClick()}
+          className={`${styles.Burger__menu} ${isBurgerOpen ? styles.Burger___menu_open : ''}`}
+        >
           <Link className={styles.Burger__menu__link} to={'/'}>
             Main page
           </Link>
