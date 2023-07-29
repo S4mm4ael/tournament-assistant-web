@@ -8,7 +8,6 @@ export function PlayersDropdown({ playersList, setPlayer }: EloInputCardProps) {
     const player = playersList.find((player) => player.id === id);
     if (player != undefined) {
       setPlayer?.(player);
-      console.log(player);
     }
   }
 

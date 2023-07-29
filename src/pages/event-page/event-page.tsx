@@ -3,36 +3,48 @@ import { getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { eventsCol } from 'utils/firebase-config';
 import styles from './event-page.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { PairingTable } from 'components/pairing-table';
+import { getAuth } from 'firebase/auth';
+import { deleteEvent } from 'utils/delete-event';
 
 export function EventPage() {
-  const [events, setEvents] = useState<Array<EventType>>([]);
   const [event, setEvent] = useState<EventType>();
-  const [players, setPlayers] = useState<Array<PlayerType> | null>([]);
+  const [players, setPlayers] = useState<Array<PlayerType> | undefined>([]);
+  const id = window.location.href.slice(-8);
+
+  const navigate = useNavigate();
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const email = user?.email;
+  const isAdmin = email === 'homer1996@gmail.com';
+  //const isAdmin = true;
 
   useEffect(() => {
-    (async () => {
+    async function fetchDocs() {
       const eventsDocs = await getDocs(eventsCol);
-      setEvents(eventsDocs.docs.map((eventDoc) => eventDoc.data()));
-    })();
-  });
+      const eventsList = eventsDocs.docs.map((eventDoc) => eventDoc.data());
 
-  useEffect(() => {
-    const id = window.location.href.slice(-8);
-    const getEvent = () => {
-      setEvent(events.find((x) => x.id === id));
-    };
-    getEvent();
-  }, [events]);
-
-  useEffect(() => {
-    if (event?.players != undefined) {
-      setPlayers(event.players);
-    } else {
-      setPlayers(null);
+      return eventsList;
     }
-  }, [event, players]);
+    async function findEvent(events: EventType[]) {
+      const currentEvent = await events.find((x) => x.id === id);
+      setEvent(currentEvent);
+      return currentEvent;
+    }
+    async function getPlayers(currentEvent: EventType) {
+      const players = await currentEvent.appliedPlayers;
+
+      setPlayers(players);
+    }
+
+    fetchDocs()
+      .then((eventList) => findEvent(eventList))
+      .then((event) => {
+        if (event) getPlayers(event);
+      });
+  }, []);
 
   function renderPlayers() {
     function defineColors(place: number) {
@@ -97,6 +109,17 @@ export function EventPage() {
     );
   }
 
+  function handleEventDelete() {
+    const result = confirm('Are you sure to delete this event?');
+    if (result) {
+      deleteEvent(id);
+      navigate('/');
+      alert('Event succesfuly deleted!');
+    } else {
+      console.log('aborted!');
+    }
+  }
+
   return event ? (
     <>
       <div className="breadCrumbs">
@@ -105,12 +128,19 @@ export function EventPage() {
         </Link>
       </div>
       <div className={styles.EventPage}>
+        {isAdmin && (
+          <button className={styles.EventPage__deleteButton} onClick={() => handleEventDelete()}>
+            Delete event
+          </button>
+        )}
         <h1>{event.name}</h1>
         <div className={styles.EventPage__info}>
           <p className={styles.EventPage__infoItem}>
             {event.type === 'SOLO' ? 'Single tournament' : 'Team tournament'}
           </p>
-          <p className={styles.EventPage__infoItem}>{event.date.toString().slice(0, 10)}</p>
+          <p className={styles.EventPage__infoItem}>
+            {event.date && event.date.toString().slice(0, 10)}
+          </p>
           <div className={styles.EventPage__infoFormat}>
             <p>
               <b>ELO restriction: </b>
@@ -145,7 +175,7 @@ export function EventPage() {
             <div className={styles.EventPage__title}>
               <h3>Pairings:</h3>
             </div>
-            <PairingTable eventP={event} playersP={players} />
+            {players && <PairingTable eventP={event} playersP={players} />}
           </div>
         </div>
       </div>

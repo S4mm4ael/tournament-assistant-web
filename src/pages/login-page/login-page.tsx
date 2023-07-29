@@ -39,6 +39,9 @@ export function LoginPage() {
       >
         <div className={styles.LoginPage__ItemWrapper}>
           <div className={styles.LoginPage__inputWrapper}>
+            <label htmlFor="e-mail" className={styles.LoginPage__placeholder}>
+              E-mail
+            </label>
             <input
               className={styles.LoginPage__formItem}
               required={true}
@@ -46,10 +49,13 @@ export function LoginPage() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="true"
+              id="e-mail"
             />
-            <span className={styles.LoginPage__placeholder}>E-mail</span>
           </div>
           <div className={styles.LoginPage__inputWrapper}>
+            <label htmlFor="password" className={styles.LoginPage__placeholder}>
+              Password
+            </label>
             <input
               className={styles.LoginPage__formItem}
               required={true}
@@ -57,8 +63,8 @@ export function LoginPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               autoComplete="true"
+              id="password"
             />
-            <span className={styles.LoginPage__placeholder}>Password</span>
           </div>
         </div>
         <button className={styles.LoginPage__formButton} type="submit" disabled={authing}>

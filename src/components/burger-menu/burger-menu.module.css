@@ -1,0 +1,89 @@
+.Burger {
+  display: none;
+  z-index: 10;
+  all: unset;
+}
+
+@keyframes smooth-appear {
+  to {
+    top: 20px;
+    opacity: 1;
+  }
+}
+
+.Burger__menu {
+  background: gray;
+  color: white;
+  padding: 20px;
+  position: fixed;
+  display: flex;
+  gap: 20px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  flex-direction: column;
+  top: -100%;
+  opacity: 0;
+  transform: translateX(-50%);
+  border-radius: 10px;
+  animation: smooth-appear .3s ease forwards;
+}
+
+.Burger__menu button {
+  all: unset;
+}
+
+.Burger___menu_open {
+  left: 100px;
+}
+
+.Burger__menu__link {
+  color: rgb(255, 255, 255);
+}
+
+
+
+@media screen and (max-width:768px) {
+
+  .Burger {
+    background-color: white;
+    cursor: pointer;
+    display: block;
+  }
+
+  .Burger__line {
+    background-color: #ff0000;
+    display: block;
+    margin: 5px 0;
+    height: 2px;
+    width: 26px;
+  }
+
+  .Burger_open .Burger__line:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+
+  .Burger_open .Burger__line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .Burger_open .Burger__line:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  .Burger_open .Burger__line {
+    transition: all 0.1s ease-in;
+  }
+
+  .Burger__line {
+    background-color: #000000;
+    display: block;
+    margin: 5px 0;
+    height: 2px;
+    width: 20px;
+  }
+
+  .Burger_button {
+    all: unset
+  }
+
+}

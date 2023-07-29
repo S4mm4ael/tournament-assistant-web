@@ -1,4 +1,4 @@
-.LoginPage{
+.LoginPage {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -8,4 +8,58 @@
   max-width: 1110px;
   margin: 0 auto;
   gap: 20px;
+}
+
+
+
+.LoginPage__ItemWrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  gap: 20px;
+
+}
+
+.LoginPage__inputWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.LoginPage__inputWrapper label {
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.LoginPage__inputWrapper label:hover {
+  color: red;
+}
+
+.LoginPage__inputWrapper input {
+  font-size: 1.2rem;
+}
+
+.LoginPage__registrationLink {
+  color: red;
+}
+
+.LoginPage__formButton {
+  all: unset;
+  display: block;
+  text-align: center;
+  width: 80px;
+  height: 40px;
+  font-size: 1.5rem;
+  margin: 0 auto;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: .3s;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(189, 189, 189, 0.6);
+}
+
+.LoginPage__formButton:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
 }

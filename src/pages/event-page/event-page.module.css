@@ -1,4 +1,4 @@
-.EventPage{
+.EventPage {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -9,72 +9,97 @@
   margin: 0 auto;
   gap: 10px;
 }
-.EventPage__info p{
+
+.EventPage__info p {
   max-width: 1110px;
 }
 
-.EventPage__playersAndPairings{
+.EventPage__playersAndPairings {
   display: flex;
   flex-direction: column;
   gap: 40px;
   max-width: 100%;
 }
+
 .EventPage__info,
-.EventPage__infoFormat
-{
+.EventPage__infoFormat {
   display: flex;
   gap: 20px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-.EventPage__infoItem{
-  color:gray;
+
+.EventPage__infoItem {
+  color: gray;
 }
-.EventPage__info p{
+
+.EventPage__info p {
   font-size: 20px;
 
 }
+
 .EventPage__table {
   font-size: 20px;
   margin: 0 auto;
   width: 80%;
 }
 
-.EventPage__table thead{
- font-weight: 700;
+.EventPage__table thead {
+  font-weight: 700;
 }
-.EventPage__table tr{
+
+.EventPage__table tr {
   height: 40px;
 }
-.EventPage__toursHeader{
+
+.EventPage__toursHeader {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin:  0 auto;
+  margin: 0 auto;
   font-weight: 700;
   font-size: 24px;
   border: none;
 
 }
-.EventPage__title{
+
+.EventPage__title {
   width: 80%;
   margin: 0 auto;
 }
+
 .EventPage__players h3,
-.EventPage__pairings h3{
+.EventPage__pairings h3 {
   margin-bottom: 10px;
   font-size: 1.3rem;
 }
-.EventPage__tablePoints{
+
+.EventPage__tablePoints {
   width: 10%;
   text-align: center;
 }
-.EventPage__tableNames{
+
+.EventPage__tableNames {
   width: 60%;
 }
-@media screen and (max-width:450px){
-  .EventPage__table{
+
+@media screen and (max-width:450px) {
+  .EventPage__table {
     font-size: 14px;
   }
+}
+
+.EventPage__deleteButton {
+  all: unset;
+  cursor: pointer;
+  border: 2px solid red;
+  border-radius: 5px;
+  padding: 5px;
+  transition: .3s;
+}
+
+.EventPage__deleteButton:hover {
+  background-color: red;
+  color: white;
 }

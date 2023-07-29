@@ -77,9 +77,6 @@ export function Pairings({ tourQuantity }: PairingsProps) {
       if (checkIfAlreadyPlayed(player1, player2)) {
         const playerToMove = playersArray.splice(i + 1, 1)[0];
         playersArray.splice(i + 2, 0, playerToMove);
-        console.log('Moved:' + playerToMove.name + 'from' + `${i + 1}` + 'to' + `${i + 2}`);
-
-
       }
     }
 
@@ -116,7 +113,6 @@ export function Pairings({ tourQuantity }: PairingsProps) {
 
     if (pairs && tourPairs.length == pairs[0].length) {
       setPairs([...pairs, tourPairs]);
-      console.log('pairs after first tour', pairs);
 
     }
   }
@@ -139,8 +135,8 @@ export function Pairings({ tourQuantity }: PairingsProps) {
           </p>
         ))
     ) : (
-        <p>There is no players</p>
-      );
+      <p>There is no players</p>
+    );
   };
   const renderPairs = (tour: number) => {
     if (pairs) {

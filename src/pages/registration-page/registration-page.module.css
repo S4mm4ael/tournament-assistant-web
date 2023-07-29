@@ -9,3 +9,71 @@
   margin: 0 auto;
   gap: 20px;
 }
+
+
+.RegistrationPage__formTips {
+  color: orange;
+  font-size: 0.8rem;
+}
+
+.RegistrationPage__ItemWrapper {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  gap: 20px;
+
+}
+
+.RegistrationPage__errorMessage {
+  color: red;
+  margin: 0 auto;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.9rem;
+}
+
+.RegistrationPage__inputWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  height: 80px;
+}
+
+.RegistrationPage__inputWrapper label {
+  font-weight: 600;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.RegistrationPage__inputWrapper label:hover {
+  color: red;
+}
+
+.RegistrationPage__inputWrapper input {
+  font-size: 1.2rem;
+}
+
+.RegistrationPage__registrationLink {
+  color: red;
+}
+
+.RegistrationPage__formButton {
+  all: unset;
+  display: block;
+  text-align: center;
+  width: 90px;
+  height: 40px;
+  font-size: 1.5rem;
+  margin: 0 auto;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: .3s;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(189, 189, 189, 0.6);
+}
+
+.RegistrationPage__formButton:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+}

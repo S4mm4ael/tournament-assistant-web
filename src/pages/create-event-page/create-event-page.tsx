@@ -1,39 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './create-event-page.module.css';
 import { getAuth } from 'firebase/auth';
 import { EventType } from 'types/Event.type';
 import generateID from 'helpers/generateID';
+import uploadEvent from 'utils/upload-event';
+import { useNavigate } from 'react-router-dom';
 
 export function CreateEventPage() {
   const auth = getAuth();
   const user = auth.currentUser;
   const email = user?.email;
   const isAdmin = email === 'homer1996@gmail.com';
-  const [eventInfo, setEventInfo] = useState<EventType>({
-    date: ' ',
-    description: null,
-    elo: null,
-    id: ' ',
-    name: ' ',
-    pts: 2000,
-    tours: 3,
-    type: 'SOLO',
-    link: '',
-    playersNumber: 0,
-  });
-  const [eventDate, setEventDate] = useState(eventInfo.date);
-  const [eventDescription, setEventDescription] = useState(eventInfo.description);
-  const [eventELO, setEventELO] = useState(eventInfo.elo);
-  const [eventID, setEventID] = useState(generateID());
-  const [eventName, setEventName] = useState(eventInfo.name);
-  const [eventPts, setEventPts] = useState(eventInfo.pts);
-  const [eventPlayersNumber, setEventPlayersNumber] = useState(eventInfo.playersNumber);
-  const [eventTours, setEventTours] = useState(eventInfo.tours);
-  const [eventLink, setEventLink] = useState(eventInfo.link);
-  const [eventType, setEventType] = useState(eventInfo.type);
+  //const isAdmin = true;
 
-  function handleFormSubmit() {
-    const newEventInfo: EventType = {
+  const [eventDate, setEventDate] = useState<string>(String(new Date()));
+  const [eventDescription, setEventDescription] = useState<string>();
+  const [eventELO, setEventELO] = useState<number>(2500);
+  const [eventID, setEventID] = useState(generateID());
+  const [eventName, setEventName] = useState<string>();
+  const [eventPts, setEventPts] = useState<number>(2000);
+  const [memberNumber, setMemberNumber] = useState<number>();
+  const [eventTours, setEventTours] = useState<number>(3);
+  const [eventLink, setEventLink] = useState<string>();
+  const [eventType, setEventType] = useState<string>('SOLO');
+  const [uploadStatus, setUploadStatus] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  async function handleFormSubmit() {
+    const newEventInfo: EventType = await {
       date: eventDate,
       description: eventDescription,
       elo: eventELO,
@@ -43,9 +37,12 @@ export function CreateEventPage() {
       tours: eventTours,
       type: eventType,
       link: eventLink,
+      memberNumber: memberNumber,
     };
-    console.log(newEventInfo);
-    setEventInfo(newEventInfo);
+    uploadEvent(newEventInfo)
+      .then(() => setUploadStatus(true))
+      .then(() => alert('Event is created!'))
+      .then(() => navigate('/'));
   }
 
   return (
@@ -65,36 +62,50 @@ export function CreateEventPage() {
             }}
           >
             <div className={styles.CreateEventPage__inputContainer}>
-              <label htmlFor="date">Date</label>
+              <label htmlFor="date">
+                Date<span>*</span>
+              </label>
               <input
                 className={styles.CreateEventPage__inputDate}
                 type="date"
                 id="date"
                 onChange={(e) => setEventDate(e.target.value)}
+                required={true}
               />
             </div>
             <div className={styles.CreateEventPage__inputContainer}>
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name">
+                Name<span>*</span>
+              </label>
               <input
                 type="text"
                 id="name"
                 className={styles.CreateEventPage__inputText}
                 onChange={(e) => setEventName(e.target.value)}
+                required={true}
               />
             </div>
-            <div className={styles.CreateEventPage__inputContainer}>
-              <label htmlFor="Description">Description</label>
+            <div
+              className={`${styles.CreateEventPage__inputContainer} ${styles.CreateEventPage__inputContainer_description}`}
+            >
+              <label htmlFor="Description">
+                Description<span>*</span>
+              </label>
               <textarea
                 id="Description"
                 onChange={(e) => setEventDescription(e.target.value)}
                 className={styles.CreateEventPage__inputDescription}
+                required={true}
               />
-              <label htmlFor="link">Reglament link</label>
+              <label htmlFor="link">
+                Reglament link<span>*</span>
+              </label>
               <input
                 type="text"
                 id="link"
                 className={styles.CreateEventPage__inputLink}
                 onChange={(e) => setEventLink(e.target.value)}
+                required={true}
               />
             </div>
             <div className={styles.CreateEventPage__inputContainer}>
@@ -112,13 +123,16 @@ export function CreateEventPage() {
               </select>
             </div>
             <div className={styles.CreateEventPage__inputContainer}>
-              <p>Points</p>
+              <label>
+                Points<span>*</span>
+              </label>
               <select
                 className={styles.CreateEventPage__inputSelect}
                 name="points"
                 id="points"
                 value={eventPts.toString()}
                 onChange={(e) => setEventPts(+e.target.value)}
+                required={true}
               >
                 <option value="1000">1000</option>
                 <option value="1250">1250</option>
@@ -138,14 +152,17 @@ export function CreateEventPage() {
               />
             </div>
             <div className={styles.CreateEventPage__inputContainer}>
-              <label htmlFor="players">Max players</label>
+              <label htmlFor="players">
+                Max players<span>*</span>
+              </label>
               <input
                 type="number"
                 min={0}
                 max={50}
                 id="players"
                 className={styles.CreateEventPage__inputNumber}
-                onChange={(e) => setEventPlayersNumber(+e.target.value)}
+                onChange={(e) => setMemberNumber(+e.target.value)}
+                required={true}
               />
             </div>
 
@@ -159,9 +176,9 @@ export function CreateEventPage() {
                 onChange={(e) => setEventTours(+e.target.value)}
               >
                 <option value="2">2</option>
-                <option value="2">3</option>
-                <option value="2">4</option>
-                <option value="2">5</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
               </select>
             </div>
             <input

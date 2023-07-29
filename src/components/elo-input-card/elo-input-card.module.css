@@ -1,7 +1,7 @@
 .EloInputCard {
   display: flex;
   font-size: 1.2rem;
-    gap: 100px;
+  gap: 100px;
   justify-content: center;
   align-items: center;
   margin-bottom: 5px;
@@ -9,10 +9,13 @@
   height: 100px;
   padding: 10px;
   border: 1px solid black;
+  border-radius: 5px;
 }
+
 .EloInputCard h4 {
   font-size: 1.5rem;
 }
+
 .EloInputCard__sideWrapper {
   display: flex;
   flex-direction: column;
@@ -22,7 +25,23 @@
 .EloInputCard__customElo {
   font-size: 1.2rem;
   width: 195px;
-    height: 28px;
+  height: 28px;
   text-align: center;
   font-weight: 700;
+}
+
+@media screen and (max-width:768px) {
+  .EloInputCard {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    width: 350px;
+    height: 200px;
+    font-size: 1rem;
+  }
+
+  .EloInputCard__sideWrapper {
+    align-items: center;
+    gap: 5px;
+  }
 }
