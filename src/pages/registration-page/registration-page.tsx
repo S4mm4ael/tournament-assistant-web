@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { useController, useForm } from 'react-hook-form';
 
 import styles from './registration-page.module.css';
+import createUser from 'utils/create-user';
+import generateID from 'helpers/generateID';
 
 export function RegistrationPage() {
   const auth = getAuth();
@@ -11,6 +13,10 @@ export function RegistrationPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState();
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [nickname, setNickname] = useState('');
 
   const hasUpperCaseLetter = (value: string) => /[A-ZА-Я]/.test(value);
   const hasNumber = (value: string) => /\d+/.test(value);
@@ -67,8 +73,21 @@ export function RegistrationPage() {
   async function registrationWithPassword() {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        const userToCreate = {
+          id: generateID(),
+          elo: 1700,
+          email: email,
+          firstname: firstName,
+          lastname: lastName,
+          nickname: nickname,
+          userType: ['PLAYER'],
+        };
         const user = userCredential.user;
+
         localStorage.setItem('user', JSON.stringify(user));
+
+        createUser(userToCreate);
+
         alert('User is created!');
         navigate('/');
       })
@@ -85,6 +104,48 @@ export function RegistrationPage() {
     <div className={styles.RegistrationPage}>
       <h1>Registration</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <div className={styles.RegistrationPage__inputWrapper}>
+          <label htmlFor="first-name" className={styles.RegistrationPage__placeholder}>
+            First name
+          </label>
+          <input
+            className={styles.RegistrationPage__formItem}
+            key="first-name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            type="text"
+            required={true}
+            id="first-name"
+          />
+        </div>
+        <div className={styles.RegistrationPage__inputWrapper}>
+          <label htmlFor="last-name" className={styles.RegistrationPage__placeholder}>
+            Last name
+          </label>
+          <input
+            className={styles.RegistrationPage__formItem}
+            key="last-name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            type="text"
+            required={true}
+            id="last-name"
+          />
+        </div>
+        <div className={styles.RegistrationPage__inputWrapper}>
+          <label htmlFor="nickname" className={styles.RegistrationPage__placeholder}>
+            Nickname
+          </label>
+          <input
+            className={styles.RegistrationPage__formItem}
+            key="nickname"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            type="text"
+            required={true}
+            id="nickname"
+          />
+        </div>
         <div className={styles.RegistrationPage__inputWrapper}>
           <label htmlFor="e-mail" className={styles.RegistrationPage__placeholder}>
             E-mail
@@ -121,8 +182,8 @@ export function RegistrationPage() {
             className={styles.RegistrationPage__formItem}
             type={'password'}
             required={true}
-            autoFocus={true}
           />
+          {!passwordFieldState.invalid && <p className={styles.RegistrationPage__formTips}></p>}
           {passwordFieldState.invalid && (
             <p
               className={`${styles.RegistrationPage__formTips} ${styles.RegistrationPage__formTips_error}`}
@@ -144,8 +205,8 @@ export function RegistrationPage() {
             className={styles.RegistrationPage__formItem}
             type={'password'}
             required={true}
-            autoFocus={true}
           />
+          {!repeatFieldState.invalid && <p className={styles.RegistrationPage__formTips}></p>}
           {repeatFieldState.invalid && (
             <p
               className={`${styles.RegistrationPage__formTips} ${styles.RegistrationPage__formTips_error}`}
