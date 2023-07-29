@@ -10,11 +10,12 @@ export function RegistrationPage() {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState();
 
   const hasUpperCaseLetter = (value: string) => /[A-ZА-Я]/.test(value);
   const hasNumber = (value: string) => /\d+/.test(value);
   const minLength = (value: string) => /^(?=.*\d).{8,}$/.test(value);
+  const equalToPassword = (value: string) => value == passwordField.value;
 
   const {
     control,
@@ -44,8 +45,20 @@ export function RegistrationPage() {
       },
     },
   });
+
+  const { field: repeatField, fieldState: repeatFieldState } = useController({
+    name: 'repeat-password',
+    control,
+    rules: {
+      required: true,
+      validate: {
+        equalToPassword,
+      },
+    },
+  });
+
   const onSubmit = () => {
-    if (!emailFieldState.invalid && !passwordFieldState.invalid) {
+    if (!emailFieldState.invalid && !passwordFieldState.invalid && !repeatFieldState.invalid) {
       setEmail(emailField.value);
       setPassword(passwordField.value);
       registrationWithPassword();
@@ -56,11 +69,13 @@ export function RegistrationPage() {
       .then((userCredential) => {
         const user = userCredential.user;
         localStorage.setItem('user', JSON.stringify(user));
+        alert('User is created!');
         navigate('/');
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        setErrorMessage(error.message);
         console.log(error);
         // ..
       });
@@ -123,17 +138,15 @@ export function RegistrationPage() {
           <input
             key="repeat-password"
             id="repeat-password"
-            {...passwordField}
-            value={repeatPassword}
-            onChange={(e) => {
-              setRepeatPassword(e.target.value);
-            }}
+            {...repeatField}
+            value={repeatField.value || ''}
+            onChange={repeatField.onChange}
             className={styles.RegistrationPage__formItem}
             type={'password'}
             required={true}
             autoFocus={true}
           />
-          {password != repeatPassword && (
+          {repeatFieldState.invalid && (
             <p
               className={`${styles.RegistrationPage__formTips} ${styles.RegistrationPage__formTips_error}`}
             >
@@ -144,6 +157,7 @@ export function RegistrationPage() {
         <button className={styles.RegistrationPage__formButton} type="submit">
           Sign up
         </button>
+        {errorMessage && <p className={styles.RegistrationPage__errorMessage}>{errorMessage}</p>}
       </form>
     </div>
   );
