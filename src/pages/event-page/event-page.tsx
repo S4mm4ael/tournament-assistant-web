@@ -31,6 +31,7 @@ export function EventPage() {
     async function findEvent(events: EventType[]) {
       const currentEvent = await events.find((x) => x.id === id);
       setEvent(currentEvent);
+      console.log(currentEvent);
       return currentEvent;
     }
     async function getPlayers(currentEvent: EventType) {
@@ -84,7 +85,7 @@ export function EventPage() {
               style={{ backgroundColor: defineColors(index) }}
               className={styles.EventPage__tableNames}
             >
-              {player.name}
+              {player.firstname} {player.nickname ?? ' '} {player.lastname}
             </td>
             <td
               style={{ backgroundColor: defineColors(index) }}
@@ -157,32 +158,33 @@ export function EventPage() {
             )}
           </div>
         </div>
-        <div className={styles.EventPage__playersAndPairings}>
-          <div className={styles.EventPage__players}>
-            <div className={styles.EventPage__title}>
-              <h3>Standings:</h3>
+        {event.status != 'INCOMING' && (
+          <div className={styles.EventPage__playersAndPairings}>
+            <div className={styles.EventPage__players}>
+              <div className={styles.EventPage__title}>
+                <h3>Standings:</h3>
+              </div>
+              <table className={styles.EventPage__table} border={2} cellSpacing={2} cellPadding={1}>
+                <thead>
+                  <tr>
+                    <td className={styles.EventPage__tablePoints}>Position</td>
+                    <td className={styles.EventPage__tableNames}>Player</td>
+                    <td className={styles.EventPage__tablePoints}>TO</td>
+                    <td className={styles.EventPage__tablePoints}>TO opponents</td>
+                    <td className={styles.EventPage__tablePoints}>VP</td>
+                  </tr>
+                </thead>
+                <tbody>{renderPlayers()}</tbody>
+              </table>
             </div>
-
-            <table className={styles.EventPage__table} border={2} cellSpacing={2} cellPadding={1}>
-              <thead>
-                <tr>
-                  <td className={styles.EventPage__tablePoints}>Position</td>
-                  <td className={styles.EventPage__tableNames}>Player</td>
-                  <td className={styles.EventPage__tablePoints}>TO</td>
-                  <td className={styles.EventPage__tablePoints}>TO opponents</td>
-                  <td className={styles.EventPage__tablePoints}>VP</td>
-                </tr>
-              </thead>
-              <tbody>{renderPlayers()}</tbody>
-            </table>
-          </div>
-          <div className={styles.EventPage__pairings}>
-            <div className={styles.EventPage__title}>
-              <h3>Pairings:</h3>
+            <div className={styles.EventPage__pairings}>
+              <div className={styles.EventPage__title}>
+                <h3>Pairings:</h3>
+              </div>
+              {players && <PairingTable eventP={event} playersP={players} />}
             </div>
-            {players && <PairingTable eventP={event} playersP={players} />}
           </div>
-        </div>
+        )}
       </div>
     </>
   ) : (
