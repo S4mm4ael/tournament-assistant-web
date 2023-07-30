@@ -11,7 +11,7 @@ import { deleteEvent } from 'utils/delete-event';
 export function EventPage() {
   const [event, setEvent] = useState<EventType>();
   const [players, setPlayers] = useState<Array<PlayerType> | undefined>([]);
-  const id = window.location.href.slice(-8);
+  const id = window.location.href.split('/').pop()?.substring(1);
 
   const navigate = useNavigate();
 
@@ -19,7 +19,6 @@ export function EventPage() {
   const user = auth.currentUser;
   const email = user?.email;
   const isAdmin = email === 'homer1996@gmail.com';
-  //const isAdmin = true;
 
   useEffect(() => {
     async function fetchDocs() {
@@ -29,7 +28,8 @@ export function EventPage() {
       return eventsList;
     }
     async function findEvent(events: EventType[]) {
-      const currentEvent = await events.find((x) => x.id === id);
+      console.log(id);
+      const currentEvent = await events.find((x) => x.id == id);
       setEvent(currentEvent);
       console.log(currentEvent);
       return currentEvent;
@@ -112,7 +112,7 @@ export function EventPage() {
 
   function handleEventDelete() {
     const result = confirm('Are you sure to delete this event?');
-    if (result) {
+    if (result && id) {
       deleteEvent(id);
       navigate('/');
       alert('Event succesfuly deleted!');
