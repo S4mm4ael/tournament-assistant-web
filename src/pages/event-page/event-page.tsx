@@ -150,6 +150,11 @@ export function EventPage() {
               <b>Desctiption: </b>
               {event.description}
             </p>
+            {event.link && (
+              <a className={styles.EventPage__infoLink} href={event.link}>
+                Reglament link
+              </a>
+            )}
           </div>
         </div>
         <div className={styles.EventPage__playersAndPairings}>
