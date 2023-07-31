@@ -23,6 +23,7 @@ export function CreateEventPage() {
   const [eventTours, setEventTours] = useState<number>(3);
   const [eventLink, setEventLink] = useState<string>();
   const [eventType, setEventType] = useState<string>('SOLO');
+  const [eventStatus, setEventStatus] = useState<string>('INCOMING');
   const [uploadStatus, setUploadStatus] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -38,6 +39,7 @@ export function CreateEventPage() {
       type: eventType,
       link: eventLink,
       memberNumber: memberNumber,
+      status: eventStatus,
     };
     uploadEvent(newEventInfo)
       .then(() => setUploadStatus(true))
@@ -179,6 +181,20 @@ export function CreateEventPage() {
                 <option value="3">3</option>
                 <option value="4">4</option>
                 <option value="5">5</option>
+              </select>
+            </div>
+            <div className={styles.CreateEventPage__inputContainer}>
+              <p>Status</p>
+              <select
+                className={styles.CreateEventPage__inputSelect}
+                name="status"
+                id="status"
+                value={eventStatus}
+                onChange={(e) => setEventStatus(e.target.value)}
+              >
+                <option value="INCOMING">Incoming</option>
+                <option value="ACTIVE">Active</option>
+                <option value="FINISHED">Finished</option>
               </select>
             </div>
             <input

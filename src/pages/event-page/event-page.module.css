@@ -103,3 +103,30 @@
   background-color: red;
   color: white;
 }
+
+
+.EventPage__infoLink {
+  text-transform: uppercase;
+  background-image: linear-gradient(-225deg,
+      #000000 0%,
+      #9b9b9b 29%,
+      red 100%);
+  background-size: auto auto;
+  background-clip: border-box;
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textclip 2s linear infinite;
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+@keyframes textclip {
+  to {
+    background-position: 200% center;
+  }
+}
