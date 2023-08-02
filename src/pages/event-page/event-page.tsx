@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { PairingTable } from 'components/pairing-table';
 import { getAuth } from 'firebase/auth';
 import { deleteEvent } from 'utils/delete-event';
+import { EventParticipantsList } from 'components/event-participants-list';
 
 export function EventPage() {
   const [event, setEvent] = useState<EventType>();
@@ -183,6 +184,12 @@ export function EventPage() {
               </div>
               {players && <PairingTable eventP={event} playersP={players} />}
             </div>
+          </div>
+        )}
+        {event.status === 'INCOMING' && (
+          <div className={styles.EventPage__container}>
+            <h2>List of participants</h2>
+            <EventParticipantsList />
           </div>
         )}
       </div>

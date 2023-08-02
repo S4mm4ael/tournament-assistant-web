@@ -104,6 +104,13 @@
   color: white;
 }
 
+.EventPage__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
 
 .EventPage__infoLink {
   text-transform: uppercase;
