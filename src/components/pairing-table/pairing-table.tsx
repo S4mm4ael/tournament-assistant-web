@@ -74,7 +74,7 @@ export function PairingTable({ eventP, playersP }: EventProps) {
             style={{ backgroundColor: comparePlayers(tourItem, 0) }}
             className={styles.EventPage__tableNames}
           >
-            {players.find((x) => x.id === tourItem.players[0])?.name}
+            {players.find((x) => x.id === tourItem.players[0])?.lastname}
           </td>
           <td className={styles.EventPage__tablePoints}>{tourItem.toRes[0]}</td>
           <td className={styles.EventPage__tablePoints}>{tourItem.vpRes[0]}</td>
@@ -84,7 +84,7 @@ export function PairingTable({ eventP, playersP }: EventProps) {
             style={{ backgroundColor: comparePlayers(tourItem, 1) }}
             className={styles.EventPage__tableNames}
           >
-            {players.find((x) => x.id === tourItem.players[1])?.name}
+            {players.find((x) => x.id === tourItem.players[1])?.lastname}
           </td>
         </tr>
       ));

@@ -32,7 +32,8 @@ export function Pairings({ tourQuantity }: PairingsProps) {
     startPlayersArray.map((player) => {
       const playerUpdated: PlayerType = {
         id: player.id,
-        name: player.nickname,
+        firstname: player.firstname,
+        lastname: player.lastname,
         primary: 0,
         to: 0,
         toOpponents: 0,
@@ -130,7 +131,7 @@ export function Pairings({ tourQuantity }: PairingsProps) {
         .sort((a, b) => b.primary - a.primary)
         .map((player: PlayerType) => (
           <p key={player.id}>
-            <b>{player.name}</b> - Primary:{player.primary} TO:{player.to} VP:{player.vp} OPP_IDs:
+            <b>{player.lastname}</b> - Primary:{player.primary} TO:{player.to} VP:{player.vp} OPP_IDs:
             {player.opponentsIDs?.map((opp) => opp + ', ')} ELO:{player.elo}{' '}
           </p>
         ))
@@ -145,7 +146,7 @@ export function Pairings({ tourQuantity }: PairingsProps) {
         const player2 = findPlayerById(pair.player2id);
 
         return (
-          <div key={player1.name + '-' + player2.name} className={styles.PairingsPage__pairCard}>
+          <div key={player1.lastname + '-' + player2.lastname} className={styles.PairingsPage__pairCard}>
             <p>Table: {pair.table}</p>
             <div className={styles.PairingsPage__pairFormWrapper}>
               <form
@@ -154,10 +155,10 @@ export function Pairings({ tourQuantity }: PairingsProps) {
               >
                 <div className={styles.PairingsPage__pairFormNames}>
                   <b>
-                    {player1.name}</b>
+                    {player1.lastname}</b>
                   {player1.proxy ? 'PROXY' : player1.elo}
 
-                  <b>{player2.name}</b>
+                  <b>{player2.lastname}</b>
                   {
                     player2.proxy ? 'PROXY' : player2.elo
                   }
@@ -168,7 +169,7 @@ export function Pairings({ tourQuantity }: PairingsProps) {
                     type="number"
                     min="0"
                     max="100"
-                    name={`${player1.name} VP`}
+                    name={`${player1.lastname} VP`}
                     id={findPlayerById(pair.player1id).id}
                     onChange={(e) => {
                       setVpFirstPlayer(+e.target.value);
@@ -178,7 +179,7 @@ export function Pairings({ tourQuantity }: PairingsProps) {
                     type="number"
                     min="0"
                     max="100"
-                    name={`${player2.name} VP`}
+                    name={`${player2.lastname} VP`}
                     id={player2.id}
                     onChange={(e) => {
                       setVpSecondPlayer(+e.target.value);

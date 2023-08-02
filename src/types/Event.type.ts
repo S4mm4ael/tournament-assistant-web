@@ -22,14 +22,14 @@ export type EventType = {
 
 export type PlayerType = {
   id: string;
-  firstname?: string;
-  lastname?: string;
+  firstname: string;
+  lastname: string;
   nickname?: string;
-  name: string;
-  primary: number;
-  to: number;
-  toOpponents: number;
   vp: number;
+  to: number;
+  primary: number;
+  toOpponents: number;
+  faction?: string;
   opponentsIDs?: number[];
   elo?: number;
   proxy?: boolean;
