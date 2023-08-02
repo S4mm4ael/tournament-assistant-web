@@ -104,6 +104,11 @@
   color: white;
 }
 
+.EventPage__infoFormat_wrapper {
+  display: flex;
+  gap: 10px;
+}
+
 .EventPage__container {
   display: flex;
   flex-direction: column;

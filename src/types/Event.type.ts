@@ -4,7 +4,7 @@ export type EventType = {
   date: string;
   description?: string | undefined;
   elo: number | undefined;
-  id: string | undefined;
+  id: string;
   name: string | undefined;
   pts: number | undefined;
   tours: number | undefined;

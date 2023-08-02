@@ -29,10 +29,8 @@ export function EventPage() {
       return eventsList;
     }
     async function findEvent(events: EventType[]) {
-      console.log(id);
       const currentEvent = await events.find((x) => x.id == id);
       setEvent(currentEvent);
-      console.log(currentEvent);
       return currentEvent;
     }
     async function getPlayers(currentEvent: EventType) {
@@ -144,10 +142,17 @@ export function EventPage() {
             {event.date && event.date.toString().slice(0, 10)}
           </p>
           <div className={styles.EventPage__infoFormat}>
-            <p>
-              <b>ELO restriction: </b>
-              {event.elo ? `${event.elo}` : 'none'}
-            </p>
+            <div className={styles.EventPage__infoFormat_wrapper}>
+              <p>
+                <b>Points: </b>
+                {event.pts}
+              </p>
+              <p>
+                <b>ELO restriction: </b>
+                {event.elo ? `${event.elo}` : 'none'}
+              </p>
+            </div>
+
             <p>
               <b>Desctiption: </b>
               {event.description}
@@ -189,7 +194,7 @@ export function EventPage() {
         {event.status === 'INCOMING' && (
           <div className={styles.EventPage__container}>
             <h2>List of participants</h2>
-            <EventParticipantsList />
+            <EventParticipantsList event={event} />
           </div>
         )}
       </div>
