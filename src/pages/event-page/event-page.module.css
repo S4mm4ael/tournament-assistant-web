@@ -43,6 +43,7 @@
   font-size: 20px;
   margin: 0 auto;
   width: 80%;
+  border-radius: 10px;
 }
 
 .EventPage__table thead {
@@ -51,6 +52,10 @@
 
 .EventPage__table tr {
   height: 40px;
+}
+
+.EventPage__table td {
+  padding: 5px;
 }
 
 .EventPage__toursHeader {
