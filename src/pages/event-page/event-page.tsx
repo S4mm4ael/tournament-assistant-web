@@ -6,7 +6,7 @@ import styles from './event-page.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { PairingTable } from 'components/pairing-table';
 import { getAuth } from 'firebase/auth';
-import { deleteEvent } from 'utils/delete-event';
+import { deleteEvent } from 'utils/events/event-delete';
 import { EventParticipantsList } from 'components/event-participants-list';
 
 export function EventPage() {
@@ -30,7 +30,6 @@ export function EventPage() {
     async function findEvent(events: EventType[]) {
       const currentEvent = await events.find((x) => x.id == id);
       setEvent(currentEvent);
-      console.log(event);
       return currentEvent;
     }
     async function getPlayers(currentEvent: EventType) {

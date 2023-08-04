@@ -1,5 +1,5 @@
 import { addDoc, collection } from 'firebase/firestore';
-import { db } from './firebase-config';
+import { db } from '../firebase-config';
 import { EventType } from 'types/Event.type';
 
 export default async function uploadEvent(event: EventType | undefined) {
