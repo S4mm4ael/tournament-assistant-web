@@ -1,6 +1,36 @@
 .EventParticipantsList {
   min-height: 200px;
-  width: 100%;
+  width: 95%;
+  padding: 10px;
   border: 1px solid black;
   border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.EventParticipantsList span {
+  color: gray;
+}
+
+.EventParticipantsList__submit {
+  all: unset;
+  display: block;
+  text-align: center;
+  width: 150px;
+  height: 40px;
+  font-size: 1.2rem;
+  margin: 0 auto;
+  margin-top: 20px;
+  cursor: pointer;
+  transition: .3s;
+  border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(189, 189, 189, 0.6);
+}
+
+.EventParticipantsList__submit:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
 }
