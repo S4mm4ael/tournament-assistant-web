@@ -4,14 +4,13 @@ import getUsersList from 'utils/users/users-get-list';
 
 import styles from './users-dropdown.module.css';
 
-export async function UsersDropdown() {
+export function UsersDropdown() {
   const [usersList, setUsersList] = useState<Array<UserType>>();
 
   useEffect(() => {
-    async () => {
-      const data = await getUsersList();
-      setUsersList(data);
-    };
+    (async () => {
+      setUsersList(await getUsersList());
+    })();
   }, []);
 
   function handleSelect(id: string) {
@@ -20,17 +19,16 @@ export async function UsersDropdown() {
 
   return (
     <div>
-      {usersList! && ' '}
-      {/* {usersList && (
+      {usersList && (
         <select className={styles.UsersDropdown} onChange={(e) => handleSelect(e.target.value)}>
           <option>Select user</option>
           {usersList.map((user) => (
             <option key={user.id} value={user.id}>
-              {user.firstname} + {user.nickname ?? ' '} + {user.lastname}
+              {user.firstname} {user.nickname ?? ' '} {user.lastname}
             </option>
           ))}
         </select>
-      )} */}
+      )}
     </div>
   );
 }

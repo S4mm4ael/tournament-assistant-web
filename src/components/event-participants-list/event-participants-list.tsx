@@ -27,7 +27,7 @@ export function EventParticipantsList(props: EventParticipantsListProps) {
   return (
     <div className={styles.EventParticipantsList}>
       <div className={styles.EventParticipantsList__participants}>{renderParticipantsList()}</div>
-      {/* <UsersDropdown /> */}
+      <UsersDropdown />
       <button onClick={() => handlePlayerAdding()} className={styles.EventParticipantsList__submit}>
         Submit changes
       </button>
