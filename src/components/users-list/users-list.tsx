@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { usersCol } from '../../utils/firebase-config';
-import { getDocs } from 'firebase/firestore';
 import { UserType } from 'types/User.type';
 import styles from './users-list.module.css';
 import { User } from 'components/user';
+import getUsersList from 'utils/users/users-get-list';
 
 export function UsersList() {
   const [users, setUsers] = useState<Array<UserType>>([]);
 
   useEffect(() => {
     (async () => {
-      const usersDocs = await getDocs(usersCol);
-      setUsers(usersDocs.docs.map((userDoc) => userDoc.data()));
+      setUsers(await getUsersList());
     })();
   }, []);
 

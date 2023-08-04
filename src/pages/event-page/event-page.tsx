@@ -6,7 +6,7 @@ import styles from './event-page.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import { PairingTable } from 'components/pairing-table';
 import { getAuth } from 'firebase/auth';
-import { deleteEvent } from 'utils/delete-event';
+import { deleteEvent } from 'utils/events/event-delete';
 import { EventParticipantsList } from 'components/event-participants-list';
 
 export function EventPage() {
@@ -25,7 +25,6 @@ export function EventPage() {
     async function fetchDocs() {
       const eventsDocs = await getDocs(eventsCol);
       const eventsList = eventsDocs.docs.map((eventDoc) => eventDoc.data());
-
       return eventsList;
     }
     async function findEvent(events: EventType[]) {
@@ -35,7 +34,6 @@ export function EventPage() {
     }
     async function getPlayers(currentEvent: EventType) {
       const players = await currentEvent.appliedPlayers;
-
       setPlayers(players);
     }
 
@@ -106,6 +104,33 @@ export function EventPage() {
             </td>
           </tr>
         ))
+    );
+  }
+
+  function renderAppliedPlayers() {
+    return event?.appliedPlayers ? (
+      <table className={styles.EventPage__table} border={2} cellSpacing={2} cellPadding={1}>
+        <tbody>
+          <tr>
+            <td className={styles.EventPage__tablePoints}>
+              <b>№</b>
+            </td>
+            <td className={styles.EventPage__tableNames}>
+              <b>Player name</b>
+            </td>
+          </tr>
+          {event?.appliedPlayers.map((player, index) => (
+            <tr key={player.id}>
+              <td className={styles.EventPage__tablePoints}>{index + 1}</td>
+              <td className={styles.EventPage__tableNames}>
+                {player.firstname} <b>{player.nickname ?? ' '}</b> {player.lastname}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    ) : (
+      <p className={styles.EventPage__infoItem}>There is no players registered yet</p>
     );
   }
 
@@ -193,8 +218,14 @@ export function EventPage() {
         )}
         {event.status === 'INCOMING' && (
           <div className={styles.EventPage__container}>
-            <h2>List of participants</h2>
-            <EventParticipantsList event={event} />
+            <h2>
+              List of participants{' '}
+              <span style={{ color: 'red' }}>
+                {event.appliedPlayers?.length ?? '0'}/{event.memberNumber}
+              </span>
+            </h2>
+            {renderAppliedPlayers()}
+            {isAdmin && <EventParticipantsList event={event} />}
           </div>
         )}
       </div>

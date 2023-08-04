@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useController, useForm } from 'react-hook-form';
 
 import styles from './registration-page.module.css';
-import createUser from 'utils/create-user';
+import createUser from 'utils/users/user-create';
 import generateID from 'helpers/generateID';
 
 export function RegistrationPage() {

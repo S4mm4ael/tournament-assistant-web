@@ -3,7 +3,7 @@ import styles from './create-event-page.module.css';
 import { getAuth } from 'firebase/auth';
 import { EventType } from 'types/Event.type';
 import generateID from 'helpers/generateID';
-import uploadEvent from 'utils/upload-event';
+import uploadEvent from 'utils/events/event-upload';
 import { useNavigate } from 'react-router-dom';
 
 export function CreateEventPage() {

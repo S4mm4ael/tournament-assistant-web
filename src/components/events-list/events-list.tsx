@@ -1,17 +1,15 @@
 import { EventType } from 'types/Event.type';
-import { getDocs } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
-import { eventsCol } from 'utils/firebase-config';
 import styles from './events-list.module.css';
 import { Event } from 'components/event';
+import getEventsList from 'utils/events/events-get-list';
 
 export function EventsList() {
   const [events, setEvents] = useState<Array<EventType>>([]);
 
   useEffect(() => {
     (async () => {
-      const eventsDocs = await getDocs(eventsCol);
-      setEvents(eventsDocs.docs.map((eventDoc) => eventDoc.data()));
+      setEvents(await getEventsList());
     })();
   }, []);
 
