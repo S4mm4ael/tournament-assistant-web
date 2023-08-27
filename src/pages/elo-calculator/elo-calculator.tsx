@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styles from './elo-calculator.module.css';
 import { PairCard } from 'components/pair-card';
 import { EloInputCard } from 'components/elo-input-card';
